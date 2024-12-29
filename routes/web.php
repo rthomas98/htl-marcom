@@ -5,14 +5,12 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\UserLegalnarDashboardController;
+use App\Http\Controllers\LegalnarRegistrationController;
+use App\Http\Controllers\LegalnarPaymentController;
 
 Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Home');
 })->name('home');
 
 // New Marketing Pages
@@ -52,6 +50,84 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Stripe Webhook
+Route::post(
+    'stripe/webhook',
+    [App\Http\Controllers\StripeWebhookController::class, 'handleWebhook']
+)->name('cashier.webhook');
+
+// Legalnar Payment Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/legalnar/{attendee}/payment/initialize', [App\Http\Controllers\LegalnarPaymentController::class, 'initializePayment'])
+        ->name('legalnar.payment.initialize');
+    Route::get('/legalnar/payment/complete', [App\Http\Controllers\LegalnarPaymentController::class, 'handlePaymentComplete'])
+        ->name('legalnar.payment.complete');
+    Route::get('/legalnar/{attendee}/payment/status', [App\Http\Controllers\LegalnarPaymentController::class, 'checkPaymentStatus'])
+        ->name('legalnar.payment.status');
+});
+
+// Legalnar Registration Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/legalnar/{legalnar}/register', [App\Http\Controllers\LegalnarRegistrationController::class, 'show'])
+        ->name('legalnar.register.show');
+    Route::post('/legalnar/{legalnar}/register', [App\Http\Controllers\LegalnarRegistrationController::class, 'register'])
+        ->name('legalnar.register');
+});
+
+// Legalnar Dashboard Routes
+Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/legalnars', [UserLegalnarDashboardController::class, 'index'])->name('legalnars.index');
+    Route::get('/legalnars/{registration}', [UserLegalnarDashboardController::class, 'show'])->name('legalnars.show');
+});
+
+// Legalnar Registration Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/legalnars/{legalnar}/register', [LegalnarRegistrationController::class, 'create'])->name('legalnars.register');
+    Route::get('/legalnars/{attendee}/payment', [LegalnarPaymentController::class, 'initializePayment'])->name('legalnars.payment.initialize');
+    Route::post('/legalnars/payment/complete', [LegalnarPaymentController::class, 'handlePaymentComplete'])->name('legalnars.payment.complete');
+    Route::get('/legalnars/{attendee}/payment/status', [LegalnarPaymentController::class, 'checkPaymentStatus'])->name('legalnars.payment.status');
+});
+
+// Legalnar Routes
+Route::prefix('legalnars')->name('legalnars.')->group(function () {
+    // Public routes
+    Route::get('/', [App\Http\Controllers\LegalnarController::class, 'index'])->name('index');
+    Route::get('/upcoming', [App\Http\Controllers\LegalnarController::class, 'upcoming'])->name('upcoming');
+    Route::get('/on-demand', [App\Http\Controllers\LegalnarController::class, 'onDemand'])->name('on-demand');
+    
+    // Authenticated routes
+    Route::middleware(['auth'])->group(function () {
+        // My Registrations (must come before the show route)
+        Route::get('/my-registrations', [App\Http\Controllers\LegalnarController::class, 'myRegistrations'])->name('my-registrations');
+        
+        // Registration
+        Route::get('/{legalnar}/register', [App\Http\Controllers\LegalnarRegistrationController::class, 'show'])->name('register');
+        Route::post('/{legalnar}/register', [App\Http\Controllers\LegalnarRegistrationController::class, 'create'])->name('register.store');
+        
+        // Payment
+        Route::get('/{attendee}/payment', [App\Http\Controllers\LegalnarPaymentController::class, 'initializePayment'])->name('payment.initialize');
+        Route::post('/payment/complete', [App\Http\Controllers\LegalnarPaymentController::class, 'handlePaymentComplete'])->name('payment.complete');
+        Route::get('/{attendee}/payment/status', [App\Http\Controllers\LegalnarPaymentController::class, 'checkPaymentStatus'])->name('payment.status');
+        
+        // Registration cancellation
+        Route::delete('/legalnars/registrations/{attendee}/cancel', [LegalnarRegistrationController::class, 'cancel'])
+            ->name('legalnars.registrations.cancel');
+    });
+
+    // Show route must come last
+    Route::get('/{legalnar}', [App\Http\Controllers\LegalnarController::class, 'show'])->name('show');
+});
+
+// Legalnar Payment Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/legalnars/payment/{attendee}/initialize', [LegalnarPaymentController::class, 'initialize'])
+        ->name('legalnars.payment.initialize');
+    Route::get('/legalnars/payment/{attendee}/success', [LegalnarPaymentController::class, 'success'])
+        ->name('legalnars.payment.success');
+    Route::get('/legalnars/payment/{attendee}/cancel', [LegalnarPaymentController::class, 'cancel'])
+        ->name('legalnars.payment.cancel');
 });
 
 require __DIR__.'/auth.php';

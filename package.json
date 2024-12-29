@@ -23,6 +23,8 @@
     "dependencies": {
         "@relume_io/relume-tailwind": "^1.0.0",
         "@relume_io/relume-ui": "^1.0.1",
+        "@stripe/react-stripe-js": "^3.1.1",
+        "@stripe/stripe-js": "^5.4.0",
         "framer-motion": "^11.14.1",
         "lucide-react": "^0.468.0"
     }

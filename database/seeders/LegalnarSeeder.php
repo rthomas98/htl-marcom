@@ -3,105 +3,80 @@
 namespace Database\Seeders;
 
 use App\Models\Legalnar;
-use App\Models\LegalnarFeedback;
-use App\Models\LegalnarQuestion;
-use App\Models\LegalnarSeries;
-use App\Models\User;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class LegalnarSeeder extends Seeder
 {
     public function run(): void
     {
-        // Get all series
-        $series = LegalnarSeries::all();
-        
-        // Create some instructors if none exist
-        if (User::where('role', 'instructor')->count() === 0) {
-            $instructors = User::factory()->count(3)->create([
-                'role' => 'instructor'
+        $faker = Faker::create();
+
+        $topics = [
+            'Corporate Law',
+            'Criminal Law',
+            'Family Law',
+            'Intellectual Property',
+            'Real Estate',
+            'Tax Law',
+            'Employment Law',
+            'Immigration Law',
+            'Environmental Law',
+            'Constitutional Law'
+        ];
+
+        // Create live sessions
+        foreach (range(1, 10) as $index) {
+            $startDate = now()->addDays(rand(1, 30))->setHour(rand(9, 17))->setMinute(0)->setSecond(0);
+            
+            Legalnar::create([
+                'title' => $faker->sentence(4),
+                'slug' => $faker->slug(),
+                'description' => $faker->paragraphs(3, true),
+                'learning_outcomes' => $faker->paragraphs(2, true),
+                'level' => $faker->randomElement(['beginner', 'intermediate', 'advanced']),
+                'type' => 'live',
+                'duration_minutes' => $faker->randomElement([30, 45, 60, 90, 120]),
+                'price' => $faker->randomElement([0, 49.99, 99.99, 149.99]),
+                'max_attendees' => $faker->randomElement([null, 20, 30, 50, 100]),
+                'status' => 'scheduled',
+                'is_featured' => $faker->boolean(20),
+                'scheduled_start' => $startDate,
+                'scheduled_end' => $startDate->copy()->addMinutes(60),
+                'timezone' => 'UTC',
+                'is_published' => true,
+                'published_at' => now(),
+                'instructor_id' => $faker->randomElement([1, 2, 3]),
+                'meta_data' => [
+                    'topics' => $faker->randomElements($topics, rand(1, 3)),
+                    'target_audience' => $faker->randomElement(['Students', 'Professionals', 'Both']),
+                    'certification' => $faker->boolean(70),
+                ],
             ]);
-        } else {
-            $instructors = User::where('role', 'instructor')->get();
         }
 
-        // Create some attendees
-        $attendees = User::factory()->count(20)->create();
-
-        // Create live Legalnars for each series
-        foreach ($series as $series) {
-            $legalnars = Legalnar::factory()
-                ->count(rand(3, 6))
-                ->state(fn (array $attributes) => [
-                    'series_id' => $series->id,
-                    'instructor_id' => $series->instructor_id,
-                    'type' => 'live',
-                ])
-                ->create();
-
-            // Add questions and feedback for each Legalnar
-            foreach ($legalnars as $legalnar) {
-                // Create questions
-                LegalnarQuestion::factory()
-                    ->count(rand(2, 8))
-                    ->state(fn (array $attributes) => [
-                        'legalnar_id' => $legalnar->id,
-                        'user_id' => $attendees->random()->id,
-                    ])
-                    ->create();
-
-                // Create feedback
-                LegalnarFeedback::factory()
-                    ->count(rand(5, 15))
-                    ->state(fn (array $attributes) => [
-                        'legalnar_id' => $legalnar->id,
-                        'user_id' => $attendees->random()->id,
-                    ])
-                    ->create();
-            }
-        }
-
-        // Create some standalone on-demand Legalnars
-        $onDemandLegalnars = Legalnar::factory()
-            ->count(5)
-            ->state(fn (array $attributes) => [
-                'instructor_id' => $instructors->random()->id,
+        // Create on-demand sessions
+        foreach (range(1, 5) as $index) {
+            Legalnar::create([
+                'title' => $faker->sentence(4),
+                'slug' => $faker->slug(),
+                'description' => $faker->paragraphs(3, true),
+                'learning_outcomes' => $faker->paragraphs(2, true),
+                'level' => $faker->randomElement(['beginner', 'intermediate', 'advanced']),
                 'type' => 'on-demand',
+                'duration_minutes' => $faker->randomElement([30, 45, 60, 90, 120]),
+                'price' => $faker->randomElement([0, 29.99, 49.99, 99.99]),
+                'status' => 'completed',
+                'is_featured' => $faker->boolean(20),
                 'is_published' => true,
                 'published_at' => now()->subDays(rand(1, 30)),
-            ])
-            ->create();
-
-        // Add questions and feedback for on-demand Legalnars
-        foreach ($onDemandLegalnars as $legalnar) {
-            // Create questions
-            LegalnarQuestion::factory()
-                ->count(rand(5, 15))
-                ->state(fn (array $attributes) => [
-                    'legalnar_id' => $legalnar->id,
-                    'user_id' => $attendees->random()->id,
-                ])
-                ->create();
-
-            // Create feedback
-            LegalnarFeedback::factory()
-                ->count(rand(10, 30))
-                ->state(fn (array $attributes) => [
-                    'legalnar_id' => $legalnar->id,
-                    'user_id' => $attendees->random()->id,
-                ])
-                ->create();
+                'instructor_id' => $faker->randomElement([1, 2, 3]),
+                'meta_data' => [
+                    'topics' => $faker->randomElements($topics, rand(1, 3)),
+                    'target_audience' => $faker->randomElement(['Students', 'Professionals', 'Both']),
+                    'certification' => $faker->boolean(70),
+                ],
+            ]);
         }
-
-        // Create some upcoming live Legalnars
-        Legalnar::factory()
-            ->count(3)
-            ->state(fn (array $attributes) => [
-                'instructor_id' => $instructors->random()->id,
-                'type' => 'live',
-                'scheduled_start' => now()->addDays(rand(1, 30)),
-                'status' => 'scheduled',
-            ])
-            ->create();
     }
 } 

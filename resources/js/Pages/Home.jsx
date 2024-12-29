@@ -1,4 +1,5 @@
 import React from 'react';
+import { Head } from '@inertiajs/react';
 import MarcomLayout from '@/Layouts/MarcomLayout';
 import HomeHero from '@/Components/Home/HomeHero';
 import ServicesSection from '@/Components/Home/ServicesSection';
@@ -197,4 +198,4 @@ export default function Home() {
             <CTASection {...ctaData} />
         </MarcomLayout>
     );
-}
+} 

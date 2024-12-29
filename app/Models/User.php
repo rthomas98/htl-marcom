@@ -13,11 +13,14 @@ use Filament\Panel;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use App\Notifications\UserInvitation;
+use Laravel\Cashier\Billable;
+use Laravel\Sanctum\HasApiTokens;
+use App\Models\LegalnarAttendee;
 
 class User extends Authenticatable implements MustVerifyEmail, FilamentUser, HasName
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, Billable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -100,5 +103,13 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     public function unreadNotifications(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->notifications()->whereNull('read_at');
+    }
+
+    /**
+     * Get the Legalnar registrations for the user.
+     */
+    public function legalnarAttendees()
+    {
+        return $this->hasMany(LegalnarAttendee::class);
     }
 }

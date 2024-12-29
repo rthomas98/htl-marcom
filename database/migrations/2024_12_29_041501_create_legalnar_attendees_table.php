@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('legalnar_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('email');
+            $table->string('company')->nullable();
+            $table->text('special_requirements')->nullable();
             $table->enum('status', ['registered', 'attended', 'no-show', 'cancelled'])->default('registered');
             $table->decimal('amount_paid', 10, 2)->nullable();
             $table->enum('payment_status', ['pending', 'completed', 'failed', 'refunded'])->default('pending');

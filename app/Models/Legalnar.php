@@ -134,4 +134,23 @@ class Legalnar extends Model implements HasMedia
     {
         return $this->attendees()->cancelled();
     }
+
+    public function registerUser($user, array $metadata = [])
+    {
+        $attendee = $this->attendees()->create([
+            'user_id' => $user->id,
+            'status' => 'registered',
+            'registered_at' => now(),
+            'meta_data' => $metadata,
+            'amount_paid' => $this->price,
+            'payment_status' => $this->price ? 'pending' : 'completed',
+        ]);
+
+        // If the Legalnar is free, send confirmation immediately
+        if (!$this->price) {
+            $attendee->sendRegistrationConfirmation();
+        }
+
+        return $attendee;
+    }
 }

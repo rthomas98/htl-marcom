@@ -44,22 +44,6 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        // Create pivot table for attendees
-        Schema::create('legalnar_attendees', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('legalnar_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('status')->default('registered'); // registered, attended, no-show, cancelled
-            $table->timestamp('registered_at')->useCurrent();
-            $table->timestamp('attended_at')->nullable();
-            $table->decimal('amount_paid', 10, 2)->nullable();
-            $table->string('payment_status')->nullable();
-            $table->jsonb('meta_data')->nullable();
-            $table->timestamps();
-            
-            $table->unique(['legalnar_id', 'user_id']);
-        });
-
         // Create table for questions/interactions during legalnars
         Schema::create('legalnar_questions', function (Blueprint $table) {
             $table->id();
@@ -97,7 +81,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('legalnar_feedback');
         Schema::dropIfExists('legalnar_questions');
-        Schema::dropIfExists('legalnar_attendees');
         Schema::dropIfExists('legalnars');
     }
 };

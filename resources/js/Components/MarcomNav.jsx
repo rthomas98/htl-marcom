@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from '@inertiajs/react';
-import { Menu, ChevronDown } from 'lucide-react';
+import { Link, usePage, router } from '@inertiajs/react';
+import { Menu, ChevronDown, User, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@relume_io/relume-ui';
 
 export default function MarcomNav() {
+    const { auth } = usePage().props;
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
+
+    const handleLogout = () => {
+        router.post(route('logout'));
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,22 +25,34 @@ export default function MarcomNav() {
     }, []);
 
     const trademarkServices = [
-        { name: 'Overview', href: '/trademark-services' },
-        { name: 'Trademark Search & Clearance', href: '/trademark-services/clearance-search' },
-        { name: 'Trademark Registration', href: '/trademark-services/registration' },
-        { name: 'Trademark Monitoring', href: '/trademark-services/monitoring' },
-        { name: 'Trademark Enforcement', href: '/trademark-services/enforcement' },
-        { name: 'Trademark Renewal', href: '/trademark-services/renewal' },
-        { name: 'Trademark Licensing', href: '/trademark-services/licensing' },
-        { name: 'International Trademarks', href: '/trademark-services/international' }
+        { name: 'Overview', href: route('trademark-services.overview') },
+        { name: 'Trademark Search & Clearance', href: route('trademark-services.clearance-search') },
+        { name: 'Trademark Registration', href: route('trademark-services.registration') },
+        { name: 'Trademark Monitoring', href: route('trademark-services.monitoring') },
+        { name: 'Trademark Enforcement', href: route('trademark-services.enforcement') },
+        { name: 'Trademark Renewal', href: route('trademark-services.renewal') },
+        { name: 'Trademark Licensing', href: route('trademark-services.licensing') },
+        { name: 'International Trademarks', href: route('trademark-services.international') }
     ];
 
     const otherServices = [
-        { name: 'Overview', href: '/legal-services' },
-        { name: 'Business Law', href: '/legal-services/business-law' },
-        { name: 'Estate Planning', href: '/legal-services/estate-planning' },
-        { name: 'General Counsel', href: '/legal-services/general-counsel' },
-        { name: 'Privacy & Data Protection', href: '/legal-services/privacy-data-protection' }
+        { name: 'Overview', href: route('legal-services.overview') },
+        { name: 'Business Law', href: route('legal-services.business-law') },
+        { name: 'Estate Planning', href: route('legal-services.estate-planning') },
+        { name: 'General Counsel', href: route('legal-services.general-counsel') },
+        { name: 'Privacy & Data Protection', href: route('legal-services.privacy-data') }
+    ];
+
+    const legalnars = [
+        { name: 'All Legalnars', href: route('legalnars.index') },
+        { name: 'Upcoming Live Sessions', href: route('legalnars.upcoming') },
+        { name: 'On-Demand Content', href: route('legalnars.on-demand') },
+        { name: 'My Registrations', href: route('legalnars.my-registrations') }
+    ];
+
+    const userMenu = [
+        { name: 'Profile', href: route('profile.edit') },
+        { name: 'My Registrations', href: route('legalnars.my-registrations') }
     ];
 
     const DropdownMenu = ({ items, isOpen, dropdownType }) => (
@@ -88,6 +105,24 @@ export default function MarcomNav() {
         );
     };
 
+    const navigation = [
+        { name: 'Home', href: route('home') },
+        { name: 'About', href: route('about-me') },
+        { name: 'Trademark Services', href: route('trademark-services.overview') },
+        { name: 'Legal Services', href: route('legal-services.overview') },
+        { 
+            name: 'Legalnars', 
+            href: route('legalnars.index'),
+            children: [
+                { name: 'All Legalnars', href: route('legalnars.index') },
+                { name: 'Upcoming Live Sessions', href: route('legalnars.upcoming') },
+                { name: 'On-Demand Content', href: route('legalnars.on-demand') },
+                { name: 'My Registrations', href: route('legalnars.my-registrations') },
+            ]
+        },
+        { name: 'Contact', href: route('contact') },
+    ];
+
     return (
         <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${
             scrolled 
@@ -110,7 +145,7 @@ export default function MarcomNav() {
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex lg:flex-1 lg:justify-center">
                         <div className="flex items-center space-x-6 xl:space-x-8">
-                            <Link href="/" className="text-sm text-cod-gray hover:text-cod-gray-light">
+                            <Link href={route('home')} className="text-sm text-cod-gray hover:text-cod-gray-light">
                                 Home
                             </Link>
                             <NavDropdown type="trademark" items={trademarkServices}>
@@ -129,13 +164,18 @@ export default function MarcomNav() {
                                     <ChevronDown className="size-4" />
                                 </button>
                             </NavDropdown>
-                            <Link href="/about-me" className="text-sm text-cod-gray hover:text-cod-gray-light">
+                            <NavDropdown type="legalnars" items={legalnars}>
+                                <button
+                                    className="flex items-center space-x-1 text-sm text-cod-gray hover:text-cod-gray-light"
+                                >
+                                    <span>Legalnars</span>
+                                    <ChevronDown className="size-4" />
+                                </button>
+                            </NavDropdown>
+                            <Link href={route('about-me')} className="text-sm text-cod-gray hover:text-cod-gray-light">
                                 About
                             </Link>
-                            <Link href="/blog" className="text-sm text-cod-gray hover:text-cod-gray-light">
-                                Blog
-                            </Link>
-                            <Link href="/contact" className="text-sm text-cod-gray hover:text-cod-gray-light">
+                            <Link href={route('contact')} className="text-sm text-cod-gray hover:text-cod-gray-light">
                                 Contact
                             </Link>
                         </div>
@@ -143,24 +183,57 @@ export default function MarcomNav() {
 
                     {/* Desktop Buttons */}
                     <div className="hidden lg:flex lg:items-center lg:space-x-3">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white"
-                        >
-                            Schedule Call
-                        </Button>
-                        <Button
-                            variant="solid"
-                            size="sm"
-                            className="bg-cod-gray text-white hover:bg-cod-gray-light"
-                        >
-                            Get Started
-                        </Button>
+                        {auth.user ? (
+                            <NavDropdown type="user" items={userMenu}>
+                                <div className="flex items-center space-x-4">
+                                    <div className="flex cursor-pointer items-center space-x-2 text-sm text-cod-gray">
+                                        <User className="size-4" />
+                                        <span>{auth.user.name}</span>
+                                        <ChevronDown className="size-4" />
+                                    </div>
+                                    <Button
+                                        onClick={handleLogout}
+                                        variant="outline"
+                                        size="sm"
+                                        className="flex items-center space-x-2 border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white"
+                                    >
+                                        <LogOut className="size-4" />
+                                        <span>Logout</span>
+                                    </Button>
+                                </div>
+                            </NavDropdown>
+                        ) : (
+                            <>
+                                <Link href={route('login')}>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white"
+                                    >
+                                        Login
+                                    </Button>
+                                </Link>
+                                <Link href={route('register')}>
+                                    <Button
+                                        variant="solid"
+                                        size="sm"
+                                        className="bg-cod-gray text-white hover:bg-cod-gray-light"
+                                    >
+                                        Get Started
+                                    </Button>
+                                </Link>
+                            </>
+                        )}
                     </div>
 
                     {/* Mobile/Tablet Menu Button */}
                     <div className="flex items-center space-x-4 lg:hidden">
+                        {auth.user && (
+                            <div className="flex items-center space-x-2 text-sm text-cod-gray">
+                                <User className="size-4" />
+                                <span>{auth.user.name}</span>
+                            </div>
+                        )}
                         <button
                             className="text-cod-gray"
                             onClick={() => setIsOpen(!isOpen)}
@@ -181,7 +254,7 @@ export default function MarcomNav() {
                         >
                             <div className="mt-4 space-y-4 border-t border-cod-gray/10 pb-6 pt-4">
                                 <Link
-                                    href="/"
+                                    href={route('home')}
                                     className="block text-sm text-cod-gray hover:text-cod-gray-light"
                                     onClick={() => setIsOpen(false)}
                                 >
@@ -257,43 +330,82 @@ export default function MarcomNav() {
                                         )}
                                     </AnimatePresence>
                                 </div>
+                                <div className="space-y-2">
+                                    <button
+                                        className="flex w-full items-center justify-between text-sm text-cod-gray hover:text-cod-gray-light"
+                                        onClick={() => setActiveDropdown(activeDropdown === 'legalnars' ? null : 'legalnars')}
+                                    >
+                                        <span>Legalnars</span>
+                                        <ChevronDown className={`size-4 transform transition-transform ${
+                                            activeDropdown === 'legalnars' ? 'rotate-180' : ''
+                                        }`} />
+                                    </button>
+                                    <AnimatePresence>
+                                        {activeDropdown === 'legalnars' && (
+                                            <motion.div
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: 'auto' }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                className="ml-4 space-y-2"
+                                            >
+                                                {legalnars.map((item) => (
+                                                    <Link
+                                                        key={item.href}
+                                                        href={item.href}
+                                                        className="block py-1 text-sm text-cod-gray-light hover:text-cod-gray"
+                                                        onClick={() => {
+                                                            setActiveDropdown(null);
+                                                            setIsOpen(false);
+                                                        }}
+                                                    >
+                                                        {item.name}
+                                                    </Link>
+                                                ))}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
                                 <Link
-                                    href="/blog"
-                                    className="block text-sm text-cod-gray hover:text-cod-gray-light"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    Blog
-                                </Link>
-                                <Link
-                                    href="/about-me"
+                                    href={route('about-me')}
                                     className="block text-sm text-cod-gray hover:text-cod-gray-light"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     About
                                 </Link>
                                 <Link
-                                    href="/contact"
+                                    href={route('contact')}
                                     className="block text-sm text-cod-gray hover:text-cod-gray-light"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     Contact
                                 </Link>
-                                <div className="grid gap-2 pt-2 sm:grid-cols-2">
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="w-full border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white"
+                                
+                                {auth.user ? (
+                                    <button
+                                        onClick={handleLogout}
+                                        className="flex w-full items-center space-x-2 text-sm text-cod-gray hover:text-cod-gray-light"
                                     >
-                                        Schedule Call
-                                    </Button>
-                                    <Button
-                                        variant="solid"
-                                        size="sm"
-                                        className="w-full bg-cod-gray text-white hover:bg-cod-gray-light"
-                                    >
-                                        Get Started
-                                    </Button>
-                                </div>
+                                        <LogOut className="size-4" />
+                                        <span>Logout</span>
+                                    </button>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href={route('login')}
+                                            className="block text-sm text-cod-gray hover:text-cod-gray-light"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            Login
+                                        </Link>
+                                        <Link
+                                            href={route('register')}
+                                            className="block text-sm text-cod-gray hover:text-cod-gray-light"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            Get Started
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </motion.div>
                     )}

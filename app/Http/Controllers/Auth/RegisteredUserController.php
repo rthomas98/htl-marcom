@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -20,6 +21,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
+        // Store return URL in session if provided
+        if (request()->has('return_url')) {
+            session(['return_url' => request()->get('return_url')]);
+        }
+
         return Inertia::render('Auth/Register');
     }
 
@@ -32,7 +38,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -46,6 +52,13 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Check if there's a return URL in the session
+        $returnUrl = $request->session()->get('return_url');
+        if ($returnUrl) {
+            $request->session()->forget('return_url');
+            return redirect($returnUrl);
+        }
+
+        return redirect(RouteServiceProvider::HOME);
     }
 }

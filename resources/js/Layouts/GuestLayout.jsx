@@ -12,8 +12,11 @@ export default function GuestLayout({ children, title, description }) {
                 <meta name="description" content={description} />
             </Head>
             <div>
-                <Link href="/">
-                    <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
+                <Link href="/" className="flex flex-col items-center">
+                    <ApplicationLogo className="h-20 w-auto" />
+                    <span className="mt-2 text-xl font-heading font-bold text-cod-gray">
+                        Hebert-Thomas Law
+                    </span>
                 </Link>
             </div>
 

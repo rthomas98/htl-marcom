@@ -1,3 +1,4 @@
+# Workspace AI Rules for Hebert Thomas Law Project
 
 ## Project Structure
 1. All React components must be `.jsx` files (not `.tsx`)
@@ -49,6 +50,13 @@
    - Primary: @relume_io/relume-ui
    - Styling: @relume_io/relume-tailwind
    - Convert all template code to JSX format
+
+
+## Filament
+- Installed Filament
+- Remember to not change the styles of the filament components unless I ask that includes sidebar, navbar, etc.
+- Please use Filament built in feature before trying anything else.
+- Please use use JSONB instead of JSON for PostgreSQL compatibility
 
 ## Best Practices
 1. Image Handling:
@@ -109,3 +117,10 @@
    - Clear hierarchy of information
    - Accessible language
    - Strong calls-to-action
+
+## Fixing Errors
+- If you see an error, please fix it.
+- If you see a warning, please fix it.
+- If you see a suggestion, please fix it.
+- If you see a suggestion, please fix it.
+- Please do not cghange something that is already working when I ask you to fix it.

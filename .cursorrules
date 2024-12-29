@@ -1,5 +1,11 @@
 # Workspace AI Rules for Hebert Thomas Law Project
 
+## Whats been done:
+
+- Added in the User Management and Role Management
+- Added in the Permission Management
+- Added in the Blog Management
+
 ## Project Structure
 1. All React components must be `.jsx` files (not `.tsx`)
 2. Components should be organized in subdirectories based on pages they belong to

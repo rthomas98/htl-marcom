@@ -4,6 +4,7 @@ import MarcomLayout from '@/Layouts/MarcomLayout';
 import { Button } from '@relume_io/relume-ui';
 import { Calendar, Clock, User, MapPin, Tag, Share2, Download, BarChart2, Timer, ChevronDown, Bell, FileText, Mail, X } from 'lucide-react';
 import { Disclosure, Transition, Dialog } from '@headlessui/react';
+import RegistrationButton from '@/Components/Legalnar/RegistrationButton';
 
 const placeholderImage = '/images/placeholders/legalnar-placeholder.svg';
 const placeholderAvatar = '/images/placeholders/avatar-placeholder.svg';
@@ -258,13 +259,10 @@ export default function Show({ legalnar, relatedLegalnars }) {
 
         return (
             <div className="mt-6">
-                <Button
-                    as={Link}
-                    href={route('legalnars.register', legalnar.id)}
-                    className="w-full justify-center bg-cod-gray text-white hover:bg-cod-gray-light"
-                >
-                    Register Now
-                </Button>
+                <RegistrationButton 
+                    legalnar={legalnar}
+                    className="w-full justify-center"
+                />
             </div>
         );
     };

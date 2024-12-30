@@ -7,6 +7,7 @@ use App\Models\LegalnarAttendee;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Notifications\LegalnarRegistrationConfirmed;
 
 class LegalnarRegistrationController extends Controller
 {
@@ -29,54 +30,79 @@ class LegalnarRegistrationController extends Controller
 
     public function create(Request $request, Legalnar $legalnar)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'company' => 'nullable|string|max:255',
-            'special_requirements' => 'nullable|string|max:1000',
-        ]);
-
-        // Check if user is already registered
-        $existingRegistration = LegalnarAttendee::where('user_id', auth()->id())
-            ->where('legalnar_id', $legalnar->id)
-            ->first();
-
-        if ($existingRegistration) {
-            return back()->with('error', 'You are already registered for this Legalnar.');
-        }
-
-        // Create registration
-        $attendee = LegalnarAttendee::create([
-            'user_id' => auth()->id(),
-            'legalnar_id' => $legalnar->id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'company' => $request->company,
-            'special_requirements' => $request->special_requirements,
-            'status' => 'registered',
-            'registered_at' => now(),
-            'meta_data' => [
-                'registration_ip' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-            ],
-        ]);
-
-        // If the Legalnar is free, complete the registration immediately
-        if ($legalnar->price <= 0) {
-            $attendee->update([
-                'payment_status' => 'completed',
-                'amount_paid' => 0,
+        try {
+            \Log::info('Registration attempt', [
+                'user_id' => auth()->id(),
+                'legalnar_id' => $legalnar->id,
+                'request_data' => $request->all()
             ]);
 
-            return redirect()->route('legalnars.my-registrations')
-                ->with('success', 'Registration completed successfully!');
-        }
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'company' => 'nullable|string|max:255',
+                'special_requirements' => 'nullable|string|max:1000',
+            ]);
 
-        // For paid registrations, redirect to payment page
-        return Inertia::render('Legalnar/Payment', [
-            'legalnar' => $legalnar,
-            'attendee' => $attendee,
-        ]);
+            // Check if user is already registered
+            $existingRegistration = LegalnarAttendee::where('user_id', auth()->id())
+                ->where('legalnar_id', $legalnar->id)
+                ->first();
+
+            if ($existingRegistration) {
+                return back()->with('error', 'You are already registered for this Legalnar.');
+            }
+
+            // Create registration
+            $attendee = LegalnarAttendee::create([
+                'user_id' => auth()->id(),
+                'legalnar_id' => $legalnar->id,
+                'name' => $request->name,
+                'email' => $request->email,
+                'company' => $request->company,
+                'special_requirements' => $request->special_requirements,
+                'status' => 'registered',
+                'payment_status' => $legalnar->price > 0 ? 'pending' : 'completed',
+                'registered_at' => now(),
+                'meta_data' => [
+                    'registration_ip' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                ],
+            ]);
+
+            \Log::info('Registration created', [
+                'attendee_id' => $attendee->id,
+                'legalnar_id' => $legalnar->id,
+                'user_id' => auth()->id()
+            ]);
+
+            // If the Legalnar is free, complete the registration immediately
+            if ($legalnar->price <= 0) {
+                $attendee->update([
+                    'payment_status' => 'completed',
+                    'amount_paid' => 0,
+                ]);
+
+                // Send confirmation notification
+                $attendee->user->notify(new LegalnarRegistrationConfirmed($attendee));
+
+                return redirect()->route('legalnars.my-registrations')
+                    ->with('success', 'Registration completed successfully!');
+            }
+
+            // For paid registrations, redirect to payment page
+            return redirect()->route('legalnars.payment.initialize', ['attendee' => $attendee->id]);
+
+        } catch (\Exception $e) {
+            \Log::error('Legalnar registration failed', [
+                'error' => $e->getMessage(),
+                'user_id' => auth()->id(),
+                'legalnar_id' => $legalnar->id,
+                'request_data' => $request->all()
+            ]);
+
+            return back()->with('error', 'Registration failed. Please try again or contact support if the problem persists.');
+        }
     }
 
     public function cancel(LegalnarAttendee $attendee)

@@ -13,7 +13,7 @@ export default function Register({ legalnar }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    post(route('legalnars.register.store', legalnar.id));
+    post(route('legalnars.register', legalnar.id));
   };
 
   return (

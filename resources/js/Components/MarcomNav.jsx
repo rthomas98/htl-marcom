@@ -59,21 +59,21 @@ export default function MarcomNav() {
     const isActive = (href) => {
         if (!href || !currentPath) return false;
         const hrefPath = new URL(href, window.location.origin).pathname;
-        return currentPath === hrefPath || currentPath.startsWith(hrefPath + '/');
+        return currentPath === hrefPath;
     };
 
     const getLinkClasses = (href) => {
-        return `transition-colors duration-200 hover:text-pippin-dark ${
+        return `transition-colors duration-200 hover:text-cod-gray ${
             isActive(href) 
-                ? 'text-pippin font-medium border-b-2 border-pippin' 
+                ? 'text-cod-gray font-medium border-b-2 border-cod-gray' 
                 : 'text-cod-gray'
         }`;
     };
 
     const getDropdownLinkClasses = (href) => {
-        return `block px-4 py-2 text-sm transition-colors duration-200 hover:bg-gallery ${
+        return `block px-4 py-2 text-sm transition-colors duration-200 hover:bg-cod-gray hover:text-white ${
             isActive(href)
-                ? 'bg-pippin-lighter text-cod-gray font-medium'
+                ? 'bg-cod-gray text-white font-medium'
                 : 'text-cod-gray-light'
         }`;
     };

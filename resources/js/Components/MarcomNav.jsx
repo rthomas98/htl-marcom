@@ -6,6 +6,7 @@ import { Button } from '@relume_io/relume-ui';
 
 export default function MarcomNav() {
     const { auth } = usePage().props;
+    const currentPath = usePage().url;
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
@@ -55,6 +56,28 @@ export default function MarcomNav() {
         { name: 'My Registrations', href: route('legalnars.my-registrations') }
     ];
 
+    const isActive = (href) => {
+        if (!href || !currentPath) return false;
+        const hrefPath = new URL(href, window.location.origin).pathname;
+        return currentPath === hrefPath || currentPath.startsWith(hrefPath + '/');
+    };
+
+    const getLinkClasses = (href) => {
+        return `transition-colors duration-200 hover:text-pippin-dark ${
+            isActive(href) 
+                ? 'text-pippin font-medium border-b-2 border-pippin' 
+                : 'text-cod-gray'
+        }`;
+    };
+
+    const getDropdownLinkClasses = (href) => {
+        return `block px-4 py-2 text-sm transition-colors duration-200 hover:bg-gallery ${
+            isActive(href)
+                ? 'bg-pippin-lighter text-cod-gray font-medium'
+                : 'text-cod-gray-light'
+        }`;
+    };
+
     const DropdownMenu = ({ items, isOpen, dropdownType }) => (
         <AnimatePresence>
             {isOpen && (
@@ -68,7 +91,7 @@ export default function MarcomNav() {
                         <Link
                             key={item.href}
                             href={item.href}
-                            className="block px-4 py-2 text-sm text-cod-gray transition-colors hover:bg-pippin-lighter"
+                            className={getDropdownLinkClasses(item.href)}
                         >
                             {item.name}
                         </Link>
@@ -145,7 +168,10 @@ export default function MarcomNav() {
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex lg:flex-1 lg:justify-center">
                         <div className="flex items-center space-x-6 xl:space-x-8">
-                            <Link href={route('home')} className="text-sm text-cod-gray hover:text-cod-gray-light">
+                            <Link
+                                href={route('home')}
+                                className={getLinkClasses(route('home'))}
+                            >
                                 Home
                             </Link>
                             <NavDropdown type="trademark" items={trademarkServices}>
@@ -172,10 +198,16 @@ export default function MarcomNav() {
                                     <ChevronDown className="size-4" />
                                 </button>
                             </NavDropdown>
-                            <Link href={route('about-me')} className="text-sm text-cod-gray hover:text-cod-gray-light">
+                            <Link
+                                href={route('about-me')}
+                                className={getLinkClasses(route('about-me'))}
+                            >
                                 About
                             </Link>
-                            <Link href={route('contact')} className="text-sm text-cod-gray hover:text-cod-gray-light">
+                            <Link
+                                href={route('contact')}
+                                className={getLinkClasses(route('contact'))}
+                            >
                                 Contact
                             </Link>
                         </div>
@@ -255,7 +287,7 @@ export default function MarcomNav() {
                             <div className="mt-4 space-y-4 border-t border-cod-gray/10 pb-6 pt-4">
                                 <Link
                                     href={route('home')}
-                                    className="block text-sm text-cod-gray hover:text-cod-gray-light"
+                                    className={getLinkClasses(route('home'))}
                                     onClick={() => setIsOpen(false)}
                                 >
                                     Home
@@ -282,7 +314,7 @@ export default function MarcomNav() {
                                                     <Link
                                                         key={item.href}
                                                         href={item.href}
-                                                        className="block py-1 text-sm text-cod-gray-light hover:text-cod-gray"
+                                                        className={getDropdownLinkClasses(item.href)}
                                                         onClick={() => {
                                                             setActiveDropdown(null);
                                                             setIsOpen(false);
@@ -317,7 +349,7 @@ export default function MarcomNav() {
                                                     <Link
                                                         key={item.href}
                                                         href={item.href}
-                                                        className="block py-1 text-sm text-cod-gray-light hover:text-cod-gray"
+                                                        className={getDropdownLinkClasses(item.href)}
                                                         onClick={() => {
                                                             setActiveDropdown(null);
                                                             setIsOpen(false);
@@ -352,7 +384,7 @@ export default function MarcomNav() {
                                                     <Link
                                                         key={item.href}
                                                         href={item.href}
-                                                        className="block py-1 text-sm text-cod-gray-light hover:text-cod-gray"
+                                                        className={getDropdownLinkClasses(item.href)}
                                                         onClick={() => {
                                                             setActiveDropdown(null);
                                                             setIsOpen(false);
@@ -367,14 +399,14 @@ export default function MarcomNav() {
                                 </div>
                                 <Link
                                     href={route('about-me')}
-                                    className="block text-sm text-cod-gray hover:text-cod-gray-light"
+                                    className={getLinkClasses(route('about-me'))}
                                     onClick={() => setIsOpen(false)}
                                 >
                                     About
                                 </Link>
                                 <Link
                                     href={route('contact')}
-                                    className="block text-sm text-cod-gray hover:text-cod-gray-light"
+                                    className={getLinkClasses(route('contact'))}
                                     onClick={() => setIsOpen(false)}
                                 >
                                     Contact
@@ -392,14 +424,14 @@ export default function MarcomNav() {
                                     <>
                                         <Link
                                             href={route('login')}
-                                            className="block text-sm text-cod-gray hover:text-cod-gray-light"
+                                            className={getLinkClasses(route('login'))}
                                             onClick={() => setIsOpen(false)}
                                         >
                                             Login
                                         </Link>
                                         <Link
                                             href={route('register')}
-                                            className="block text-sm text-cod-gray hover:text-cod-gray-light"
+                                            className={getLinkClasses(route('register'))}
                                             onClick={() => setIsOpen(false)}
                                         >
                                             Get Started

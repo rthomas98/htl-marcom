@@ -1,15 +1,26 @@
-import React from 'react'
-import MarcomLayout from '@/Layouts/MarcomLayout'
+import React from 'react';
+import MarcomLayout from '@/Layouts/MarcomLayout';
+import { Header5 } from '@/Components/Common/Header5';
+import { Layout235 } from '@/Components/Common/Layout235';
+import { Layout237 } from '@/Components/Common/Layout237';
+import { Faq3 } from '@/Components/Common/Faq3';
+import { Cta27 } from '@/Components/Common/Cta27';
 
-export default function EstatePlanning() {
-    return (
-        <MarcomLayout
-            title="Estate Planning Services | Hebert Thomas Law"
-            description="Professional estate planning and wealth management services in Louisiana"
-        >
-            <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-                <h1 className="font-heading text-4xl font-bold text-cod-gray">Estate Planning Services</h1>
-            </div>
-        </MarcomLayout>
-    )
-}
+const EstatePlanning = () => {
+  return (
+    <MarcomLayout
+      title="Estate Planning Services | Hebert Thomas Law"
+      description="Professional estate planning and wealth management services in Louisiana"
+    >
+      <main>
+        <Header5 />
+        <Layout235 />
+        <Layout237 />
+        <Faq3 />
+        <Cta27 />
+      </main>
+    </MarcomLayout>
+  );
+};
+
+export default EstatePlanning;

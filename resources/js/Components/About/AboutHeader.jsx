@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@relume_io/relume-ui';
+import { ChevronRight } from 'lucide-react';
 
 export default function AboutHeader({ className = '', ...props }) {
     const content = {
@@ -8,13 +9,16 @@ export default function AboutHeader({ className = '', ...props }) {
         buttons: [
             { 
                 title: "Schedule a Call",
-                variant: "outline",
-                className: "border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white"
+                variant: "secondary",
+                href: "/contact",
+                className: "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-lightest hover:text-cod-gray flex items-center"
             },
             { 
                 title: "Learn More",
-                variant: "solid",
-                className: "bg-cod-gray text-white hover:bg-cod-gray-light"
+                variant: "link",
+                href: "/services",
+                className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+                iconRight: <ChevronRight className="h-4 w-4" />
             }
         ],
         firstImage: {
@@ -45,8 +49,12 @@ export default function AboutHeader({ className = '', ...props }) {
                         </p>
                         <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
                             {content.buttons.map((button, index) => (
-                                <Button key={index} {...button}>
+                                <Button 
+                                    key={index} 
+                                    {...button}
+                                >
                                     {button.title}
+                                    {button.iconRight}
                                 </Button>
                             ))}
                         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
-import { ChevronRight, FileCheck, Shield, Scale } from 'lucide-react';
+import { ChevronRight, Building2, FileText, Scale, Shield } from 'lucide-react';
 
 const placeholderImage = '/images/placeholder.svg';
 
@@ -10,39 +10,56 @@ export const Layout10 = (props) => {
     ...props,
   };
   return (
-    <section id="relume" className={`px-[5%] py-16 md:py-24 lg:py-28 ${className}`}>
-      <div className="container">
-        <div className="grid grid-cols-1 gap-y-12 md:grid-flow-row md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
+    <section id="relume" className={`px-5 sm:px-[5%] py-12 sm:py-16 md:py-24 lg:py-28 ${className}`}>
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 gap-y-8 sm:gap-y-12 md:grid-flow-row md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
           <div>
-            <p className="mb-3 font-semibold text-pippin-darker md:mb-4">{tagline}</p>
-            <h1 className="mb-5 font-heading text-5xl font-bold text-cod-gray md:mb-6 md:text-7xl lg:text-8xl">
+            <p className="mb-3 font-heading text-base sm:text-lg font-semibold text-pippin-darker md:mb-4">
+              {tagline}
+            </p>
+            <h2 className="mb-4 sm:mb-5 font-heading text-3xl sm:text-4xl font-bold text-cod-gray md:mb-6 md:text-5xl lg:text-6xl">
               {heading}
-            </h1>
-            <p className="mb-6 font-sans text-cod-gray-light md:mb-8 md:text-lg">{description}</p>
+            </h2>
+            <p className="mb-6 font-sans text-base sm:text-lg text-cod-gray-light md:mb-8">
+              {description}
+            </p>
             <div className="grid grid-cols-1 gap-6 py-2 sm:grid-cols-2">
               {subHeadings.map((subHeading, index) => (
-                <div key={index}>
-                  <div className="mb-3 text-pippin-darker md:mb-4">
-                    {subHeading.icon}
+                <div key={index} className="group">
+                  <div className="mb-3 text-pippin-darker transition-colors duration-300 group-hover:text-pippin-darkest md:mb-4">
+                    <subHeading.icon className="size-12" />
                   </div>
-                  <h6 className="mb-3 font-heading text-lg font-bold leading-[1.4] text-cod-gray md:mb-4 md:text-xl">
+                  <h6 className="mb-3 font-heading text-lg font-bold text-cod-gray leading-snug md:mb-4 md:text-xl">
                     {subHeading.title}
                   </h6>
-                  <p className="text-cod-gray-light">{subHeading.description}</p>
+                  <p className="font-sans text-cod-gray-light">
+                    {subHeading.description}
+                  </p>
                 </div>
               ))}
             </div>
             <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
               {buttons.map((button, index) => (
-                <Button key={index} {...button}>
+                <Button 
+                  key={index} 
+                  {...button}
+                  className={button.variant === 'primary' 
+                    ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light inline-flex items-center gap-2"
+                    : "text-pippin-darker hover:text-pippin-darkest font-semibold inline-flex items-center gap-1"}
+                >
                   {button.title}
-                  {button.iconRight && <ChevronRight className="ml-2 size-5" />}
+                  {button.iconRight && <ChevronRight className="size-4" />}
                 </Button>
               ))}
             </div>
           </div>
-          <div>
-            <img src={image.src} className="w-full object-cover" alt={image.alt} />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-lg">
+            <img 
+              src={image.src} 
+              className="h-full w-full object-cover" 
+              alt={image.alt}
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
@@ -51,37 +68,45 @@ export const Layout10 = (props) => {
 };
 
 export const Layout10Defaults = {
-  tagline: "Expert Legal Services",
-  heading: "Drafting Licensing Agreements",
-  description: "We meticulously draft licensing agreements tailored to your business needs, ensuring all legal aspects are covered.",
+  tagline: "Business Law Services",
+  heading: "Comprehensive Legal Solutions for Texas Businesses",
+  description: "Our business law services are designed to support companies at every stage of their journey, from formation to expansion and beyond. We provide strategic legal guidance to help your business thrive while ensuring compliance and minimizing risk.",
   subHeadings: [
     {
-      icon: <FileCheck className="size-12" />,
-      title: "Comprehensive Coverage",
-      description: "Our agreements cover all essential aspects including royalties, quality control, territory rights, and term conditions.",
+      icon: Building2,
+      title: "Entity Formation",
+      description: "Expert guidance on business structure selection and formation, including corporations, LLCs, and partnerships.",
     },
     {
-      icon: <Shield className="size-12" />,
-      title: "Brand Protection",
-      description: "We include robust provisions to protect your trademark's integrity and maintain brand value throughout the licensing term.",
+      icon: FileText,
+      title: "Contract Management",
+      description: "Drafting, review, and negotiation of business contracts, agreements, and commercial transactions.",
+    },
+    {
+      icon: Scale,
+      title: "Regulatory Compliance",
+      description: "Ensuring your business meets all state and federal regulations while maintaining operational efficiency.",
+    },
+    {
+      icon: Shield,
+      title: "Dispute Resolution",
+      description: "Strategic representation in business disputes, litigation, and alternative dispute resolution.",
     },
   ],
   buttons: [
     { 
       title: "Schedule Consultation",
-      variant: "primary",
-      className: "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
+      variant: "primary"
     },
     {
       title: "Learn More",
       variant: "link",
       size: "link",
-      iconRight: true,
-      className: "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
-    },
+      iconRight: true
+    }
   ],
   image: {
     src: placeholderImage,
-    alt: "Trademark Licensing Agreement Drafting",
+    alt: "Business Law Services - Hebert-Thomas Law",
   },
 };

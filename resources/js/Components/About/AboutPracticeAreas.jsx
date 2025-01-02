@@ -29,6 +29,13 @@ export default function AboutPracticeAreas({
                 },
                 heading: "Trademark Registration",
                 description: "Expert guidance through the entire trademark registration process, from comprehensive searches to application filing and office action responses.",
+                button: {
+                    title: "Learn More",
+                    variant: "link",
+                    href: "/services/trademark",
+                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+                    iconRight: <ChevronRight className="h-4 w-4" />
+                }
             },
             {
                 image: {
@@ -37,6 +44,13 @@ export default function AboutPracticeAreas({
                 },
                 heading: "IP Portfolio Management",
                 description: "Strategic management of your intellectual property portfolio, including trademark monitoring, maintenance, and enforcement strategies.",
+                button: {
+                    title: "Learn More",
+                    variant: "link",
+                    href: "/services/business",
+                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+                    iconRight: <ChevronRight className="h-4 w-4" />
+                }
             },
             {
                 image: {
@@ -45,6 +59,13 @@ export default function AboutPracticeAreas({
                 },
                 heading: "Business Law Services",
                 description: "Comprehensive business law services including contract review, business formation, and legal compliance to protect your company's interests.",
+                button: {
+                    title: "Learn More",
+                    variant: "link",
+                    href: "/services/copyright",
+                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+                    iconRight: <ChevronRight className="h-4 w-4" />
+                }
             },
         ],
         buttons: buttons || [
@@ -99,12 +120,9 @@ export default function AboutPracticeAreas({
                                 {section.heading}
                             </h3>
                             <p className="text-white/80">{section.description}</p>
-                            <Button 
-                                variant="secondary"
-                                className="mt-6 bg-pippin text-cod-gray hover:bg-white hover:text-cod-gray"
-                                href="#contact"
-                            >
-                                Learn More
+                            <Button {...section.button}>
+                                {section.button.title}
+                                {section.button.iconRight}
                             </Button>
                         </motion.div>
                     ))}

@@ -17,12 +17,15 @@ export default function AboutCTA({
         buttons: buttons || [
             { 
                 title: "Schedule Consultation",
-                variant: "primary"
+                variant: "secondary",
+                href: "/contact"
             },
             { 
                 title: "Learn More",
-                variant: "secondary-alt",
-                iconRight: <ChevronRight className="h-4 w-4" />
+                variant: "link",
+                size: "link",
+                iconRight: <ChevronRight className="h-4 w-4" />,
+                href: "/services"
             }
         ],
         image: image || {
@@ -54,8 +57,17 @@ export default function AboutCTA({
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         {content.buttons.map((button, index) => (
-                            <Button key={index} {...button}>
+                            <Button 
+                                key={index} 
+                                {...button}
+                                className={
+                                    button.variant === 'secondary' 
+                                        ? 'bg-white text-cod-gray hover:bg-cod-gray-lightest hover:text-cod-gray transition-colors duration-200'
+                                        : 'text-white hover:text-pippin transition-colors duration-200'
+                                }
+                            >
                                 {button.title}
+                                {button.iconRight}
                             </Button>
                         ))}
                     </motion.div>

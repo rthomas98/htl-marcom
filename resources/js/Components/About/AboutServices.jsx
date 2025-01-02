@@ -33,8 +33,9 @@ export default function AboutServices({
                 button: {
                     title: "Learn More",
                     variant: "link",
-                    size: "link",
-                    iconRight: <ChevronRight className="h-4 w-4" />,
+                    href: "/services/trademark",
+                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+                    iconRight: <ChevronRight className="h-4 w-4" />
                 }
             },
             {
@@ -48,110 +49,95 @@ export default function AboutServices({
                 button: {
                     title: "Learn More",
                     variant: "link",
-                    size: "link",
-                    iconRight: <ChevronRight className="h-4 w-4" />,
+                    href: "/services/ip-strategy",
+                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+                    iconRight: <ChevronRight className="h-4 w-4" />
                 }
             }
         ],
         cardBig: cardBig || {
-            tagline: "Legal Consultation",
+            tagline: "Business Law",
             image: {
-                src: "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?auto=format&fit=crop&q=80&w=1000",
-                alt: "Legal consultation meeting",
+                src: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=2000",
+                alt: "Business meeting",
             },
-            heading: "Personalized Legal Solutions",
-            description: "Get expert legal guidance tailored to your specific needs. We work closely with you to understand your business and provide strategic solutions that protect your interests and support your growth.",
-            buttons: [
-                { 
-                    title: "Schedule Consultation",
-                    variant: "secondary"
-                },
-                {
-                    title: "Learn More",
-                    variant: "link",
-                    size: "link",
-                    iconRight: <ChevronRight className="h-4 w-4" />,
-                }
-            ]
+            heading: "Comprehensive Business Law Services",
+            description: "From startup formation to ongoing legal support, we provide the guidance your business needs to thrive in today's competitive landscape.",
+            button: {
+                title: "Schedule Consultation",
+                variant: "secondary",
+                href: "/contact",
+                className: "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-lightest hover:text-cod-gray flex items-center"
+            }
         }
     };
 
     return (
-        <section className={`bg-gallery px-[5%] py-16 md:py-24 lg:py-28 ${className}`} {...props}>
+        <section className={`px-[5%] py-16 md:py-24 lg:py-28 ${className}`} {...props}>
             <div className="container">
-                <motion.div 
-                    className="mb-12 md:mb-18 lg:mb-20"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <div className="mx-auto max-w-lg text-center">
+                <div className="rb-12 mb-12 grid grid-cols-1 items-start justify-between gap-5 md:mb-18 md:grid-cols-2 md:gap-x-12 md:gap-y-8 lg:mb-20 lg:gap-x-20">
+                    <div>
                         <p className="mb-3 font-semibold text-cod-gray md:mb-4">{content.tagline}</p>
-                        <h2 className="font-heading mb-5 text-5xl font-bold text-cod-gray md:mb-6 md:text-7xl lg:text-8xl">
-                            {content.heading}
-                        </h2>
-                        <p className="text-cod-gray/90 md:text-lg">{content.description}</p>
+                        <h2 className="font-heading text-5xl font-bold text-cod-gray md:text-7xl lg:text-8xl">{content.heading}</h2>
                     </div>
-                </motion.div>
-                <div className="grid grid-cols-1 gap-6 md:gap-8">
-                    <div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2">
-                        {content.cardsSmall.map((card, index) => (
-                            <motion.div
-                                key={index}
-                                variants={cardVariants}
-                                initial="hidden"
-                                animate="visible"
-                                transition={{ duration: 0.6, delay: index * 0.2 }}
-                                className="flex flex-col overflow-hidden rounded-lg border border-cod-gray/10 bg-white shadow-lg md:grid md:grid-cols-2"
-                            >
-                                <div className="block flex-col justify-center p-6 md:flex">
-                                    <div>
-                                        <p className="mb-2 font-semibold text-cod-gray">{card.tagline}</p>
-                                        <h3 className="mb-2 text-xl font-bold text-cod-gray md:text-2xl">{card.heading}</h3>
-                                        <p className="text-cod-gray/90">{card.description}</p>
-                                    </div>
-                                    <div className="mt-5 flex items-center gap-4 md:mt-6">
-                                        <Button {...card.button}>{card.button.title}</Button>
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-center">
-                                    <img src={card.image.src} alt={card.image.alt} className="h-full w-full object-cover" />
-                                </div>
-                            </motion.div>
-                        ))}
-                        <motion.div 
+                    <p className="text-base text-cod-gray md:text-lg">{content.description}</p>
+                </div>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                    {content.cardsSmall.map((card, index) => (
+                        <motion.div
+                            key={index}
+                            className="flex flex-col"
                             variants={cardVariants}
                             initial="hidden"
                             animate="visible"
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            className="flex flex-col items-stretch overflow-hidden rounded-lg border border-cod-gray/10 bg-white shadow-lg lg:col-start-2 lg:col-end-3 lg:row-start-1 lg:row-end-3"
+                            transition={{ duration: 0.6, delay: index * 0.2 }}
                         >
-                            <div className="block flex-1 flex-col items-stretch justify-center p-6 md:flex md:p-8 lg:p-12">
-                                <div>
-                                    <p className="mb-2 font-semibold text-cod-gray">{content.cardBig.tagline}</p>
-                                    <h3 className="font-heading mb-5 text-4xl font-bold leading-[1.2] text-cod-gray md:mb-6 md:text-5xl lg:text-6xl">
-                                        {content.cardBig.heading}
-                                    </h3>
-                                    <p className="text-cod-gray/90">{content.cardBig.description}</p>
-                                </div>
-                                <div className="mt-6 flex items-center gap-4 md:mt-8">
-                                    {content.cardBig.buttons.map((button, index) => (
-                                        <Button key={index} {...button}>
-                                            {button.title}
-                                        </Button>
-                                    ))}
-                                </div>
-                            </div>
-                            <div>
+                            <div className="mb-6 overflow-hidden rounded-2xl">
                                 <img
-                                    src={content.cardBig.image.src}
-                                    alt={content.cardBig.image.alt}
-                                    className="h-full w-full object-cover"
+                                    src={card.image.src}
+                                    alt={card.image.alt}
+                                    className="aspect-video w-full object-cover"
                                 />
                             </div>
+                            <p className="mb-3 font-semibold text-cod-gray md:mb-4">{card.tagline}</p>
+                            <h3 className="mb-5 font-heading text-2xl font-bold text-cod-gray md:mb-6 md:text-3xl md:leading-[1.3] lg:text-4xl">
+                                {card.heading}
+                            </h3>
+                            <p className="mb-6 text-cod-gray">{card.description}</p>
+                            <Button {...card.button}>
+                                {card.button.title}
+                                {card.button.iconRight}
+                            </Button>
                         </motion.div>
-                    </div>
+                    ))}
                 </div>
+                <motion.div
+                    className="mt-8 overflow-hidden rounded-2xl bg-cod-gray p-8 md:mt-12 md:p-12 lg:mt-16"
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                    <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 lg:gap-20">
+                        <div>
+                            <img
+                                src={content.cardBig.image.src}
+                                alt={content.cardBig.image.alt}
+                                className="aspect-video w-full rounded-lg object-cover"
+                            />
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <p className="mb-3 font-semibold text-white md:mb-4">{content.cardBig.tagline}</p>
+                            <h3 className="mb-5 font-heading text-2xl font-bold text-white md:mb-6 md:text-3xl md:leading-[1.3] lg:text-4xl">
+                                {content.cardBig.heading}
+                            </h3>
+                            <p className="mb-6 text-white/90">{content.cardBig.description}</p>
+                            <Button {...content.cardBig.button}>
+                                {content.cardBig.button.title}
+                            </Button>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );

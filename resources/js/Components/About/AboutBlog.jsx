@@ -17,7 +17,8 @@ const blogPost = {
         title: "Read more",
         variant: "link",
         size: "link",
-        iconRight: <ChevronRight className="h-4 w-4" />,
+        className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray-light flex items-center",
+        iconRight: <ChevronRight className="ml-2 h-4 w-4" />,
     },
 };
 
@@ -31,6 +32,13 @@ const defaultBlogPosts = [
         category: "Trademark Law",
         title: "Understanding the Trademark Registration Process",
         description: "A comprehensive guide to navigating the trademark registration process, from initial search to final registration...",
+        button: {
+            title: "Read More",
+            variant: "link",
+            href: "/blog/trademark-registration-process",
+            className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+            iconRight: <ChevronRight className="h-4 w-4" />,
+        },
     },
     {
         ...blogPost,
@@ -41,6 +49,13 @@ const defaultBlogPosts = [
         category: "IP Strategy",
         title: "Building a Strong IP Portfolio for Your Business",
         description: "Learn how to develop and maintain a comprehensive intellectual property portfolio that protects your business assets...",
+        button: {
+            title: "Read More",
+            variant: "link",
+            href: "/blog/ip-portfolio-management",
+            className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+            iconRight: <ChevronRight className="h-4 w-4" />,
+        },
     },
     {
         ...blogPost,
@@ -51,6 +66,13 @@ const defaultBlogPosts = [
         category: "Business Law",
         title: "Legal Considerations for Business Formation",
         description: "Essential legal steps and considerations when forming your business, from entity selection to compliance requirements...",
+        button: {
+            title: "Read More",
+            variant: "link",
+            href: "/blog/business-formation",
+            className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+            iconRight: <ChevronRight className="h-4 w-4" />,
+        },
     },
     {
         ...blogPost,
@@ -61,6 +83,13 @@ const defaultBlogPosts = [
         category: "IP Protection",
         title: "Modern Strategies for IP Protection",
         description: "Discover the latest strategies and best practices for protecting your intellectual property in the digital age...",
+        button: {
+            title: "Read More",
+            variant: "link",
+            href: "/blog/ip-protection-strategies",
+            className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
+            iconRight: <ChevronRight className="h-4 w-4" />,
+        },
     },
 ];
 

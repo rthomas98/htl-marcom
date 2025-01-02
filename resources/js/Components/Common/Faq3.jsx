@@ -7,80 +7,68 @@ import {
   AccordionTrigger,
 } from "@relume_io/relume-ui";
 
-export const Faq3 = (props) => {
-  const { heading, description, button, questions, className = '' } = {
+export const Faq3 = ({ className, ...props }) => {
+  const { heading, description, button, questions } = {
     ...Faq3Defaults,
     ...props,
   };
   return (
-    <section id="relume" className={`px-5 sm:px-[5%] py-12 sm:py-16 md:py-24 lg:py-28 ${className}`}>
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 gap-8 sm:gap-y-12 md:grid-cols-2 md:gap-x-12 lg:grid-cols-[.75fr,1fr] lg:gap-x-20">
-          <div>
-            <h2 className="mb-4 sm:mb-5 font-heading text-3xl sm:text-4xl font-bold text-cod-gray md:mb-6 md:text-5xl lg:text-6xl">
-              {heading}
-            </h2>
-            <p className="font-sans text-base sm:text-lg text-cod-gray-light">{description}</p>
-            <div className="mt-6 md:mt-8">
-              <Button 
-                {...button}
-                className="rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-              >
-                {button.title}
-              </Button>
-            </div>
-          </div>
-          <div className="mt-8 md:mt-0">
-            <Accordion type="multiple" className="space-y-4">
-              {questions.map((question, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`item-${index}`}
-                  className="rounded-lg border border-gallery bg-white px-4 sm:px-6"
-                >
-                  <AccordionTrigger className="py-4 sm:py-5 font-heading text-base sm:text-lg font-semibold text-cod-gray">
-                    {question.title}
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4 sm:pb-6 font-sans text-sm sm:text-base text-cod-gray-light">
-                    {question.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+    <section className={`px-[5%] py-16 md:py-24 lg:py-28 bg-cod-gray text-white ${className || ''}`}>
+      <div className="container grid grid-cols-1 gap-y-12 md:grid-cols-2 md:gap-x-12 lg:grid-cols-[.75fr,1fr] lg:gap-x-20">
+        <div>
+          <h2 className="mb-5 text-5xl font-bold whitespace-pre-line md:mb-6 md:text-7xl lg:text-8xl">
+            {heading}
+          </h2>
+          <p className="text-white/90 md:text-md">{description}</p>
+          <div className="mt-6 md:mt-8">
+            <Button {...button} className="hover:bg-pippin">{button.title}</Button>
           </div>
         </div>
+        <Accordion type="multiple" className="text-white">
+          {questions.map((question, index) => (
+            <AccordionItem key={index} value={`item-${index}`} className="border-white/20">
+              <AccordionTrigger className="md:py-5 md:text-md text-white hover:text-pippin">
+                {question.title}
+              </AccordionTrigger>
+              <AccordionContent className="md:pb-6 text-white/90">
+                {question.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
     </section>
   );
 };
 
 export const Faq3Defaults = {
-  heading: "Common Questions",
-  description: "Common questions and answers about Trademark Licensing Agreements, including how the process works, what to expect, and how it benefits your business.",
+  heading: "Estate Planning\nFAQs",
+  description:
+    "Find answers to common questions about estate planning, tax implications, guardianship, and wealth transfer strategies.",
   button: {
     title: "Schedule Consultation",
-    variant: "primary",
+    variant: "secondary",
   },
   questions: [
     {
-      title: "What is a Trademark Licensing Agreement?",
-      answer: "A Trademark Licensing Agreement is a legal contract that allows a third party (licensee) to use your trademark under specific terms and conditions. It outlines the scope of use, quality standards, compensation, and duration of the license.",
+      title: "What is estate planning and why do I need it?",
+      answer: "Estate planning is the process of arranging for the management and distribution of your assets during life and after death. It's essential because it ensures your wishes are carried out, minimizes taxes and legal fees, protects your beneficiaries, and can help avoid family disputes.",
     },
     {
-      title: "Why do I need a Trademark Licensing Agreement?",
-      answer: "A licensing agreement helps you expand your brand's reach and create new revenue streams while maintaining control over your trademark. It protects your intellectual property rights and ensures consistent brand representation across different products or services.",
+      title: "When should I start planning my estate?",
+      answer: "The best time to start estate planning is now, regardless of your age or wealth level. Life circumstances can change unexpectedly, and having a plan in place ensures your assets and loved ones are protected. It's especially important if you have children, own property, or have specific wishes for your healthcare decisions.",
     },
     {
-      title: "What should be included in a Trademark Licensing Agreement?",
-      answer: "Key elements include the scope of rights granted, territory restrictions, quality control measures, royalty terms, duration, termination conditions, and dispute resolution procedures. We ensure all critical aspects are covered to protect your interests.",
+      title: "What happens if I die without an estate plan?",
+      answer: "If you die without an estate plan (intestate), your assets will be distributed according to state law, which may not align with your wishes. This can lead to lengthy probate proceedings, increased costs, and potential family conflicts. Additionally, the court will decide guardianship of minor children without your input.",
     },
     {
-      title: "How do you ensure quality control in licensing agreements?",
-      answer: "We incorporate specific quality standards, inspection rights, and approval processes in the agreement. This helps maintain your brand's reputation and ensures licensees meet your established standards.",
+      title: "How often should I update my estate plan?",
+      answer: "You should review your estate plan every 3-5 years or whenever significant life changes occur, such as marriage, divorce, birth of children, death of beneficiaries, major asset acquisitions or sales, or changes in tax laws. Regular reviews ensure your plan remains current and effective.",
     },
     {
-      title: "What happens if a licensee violates the agreement?",
-      answer: "The agreement includes enforcement provisions and remedies for violations. We can help you monitor compliance and take appropriate legal action if needed, including termination of the license and seeking damages.",
+      title: "What's the difference between a will and a trust?",
+      answer: "A will is a legal document that takes effect after death and specifies how your assets should be distributed. A trust, on the other hand, can take effect during your lifetime and can provide more control over asset distribution, potentially avoid probate, and offer tax benefits. Both can be valuable tools in your estate plan.",
     },
   ],
 };

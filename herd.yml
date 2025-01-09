@@ -1,0 +1,8 @@
+integrations:
+  forge:
+    default:
+      server-id: 874274
+      site-id: 2580137
+    htl.com:
+      server-id: 874274
+      site-id: 2581002

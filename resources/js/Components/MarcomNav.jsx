@@ -158,7 +158,7 @@ export default function MarcomNav() {
                         <img 
                             src="/images/web-logo-black (2).svg" 
                             alt="Hebert Thomas Law" 
-                            className="h-12 w-auto" 
+                            className="h-10 w-auto" 
                         />
                         <span className="hidden text-xl font-heading font-bold text-cod-gray lg:block">
                             Hebert-Thomas Law
@@ -240,7 +240,7 @@ export default function MarcomNav() {
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white"
+                                        className="border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white rounded-full"
                                     >
                                         Login
                                     </Button>
@@ -249,7 +249,7 @@ export default function MarcomNav() {
                                     <Button
                                         variant="solid"
                                         size="sm"
-                                        className="bg-cod-gray text-white hover:bg-cod-gray-light"
+                                        className="bg-cod-gray text-white hover:bg-cod-gray-light rounded-full"
                                     >
                                         Get Started
                                     </Button>

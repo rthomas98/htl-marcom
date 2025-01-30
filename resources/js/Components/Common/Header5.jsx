@@ -25,7 +25,7 @@ const Header5Defaults = {
   },
 };
 
-export const Header5 = (props) => {
+function Header5(props) {
   const { heading, description, buttons, image, ...rest } = {
     ...Header5Defaults,
     ...props,
@@ -72,3 +72,5 @@ export const Header5 = (props) => {
     </section>
   );
 };
+
+export default Header5;

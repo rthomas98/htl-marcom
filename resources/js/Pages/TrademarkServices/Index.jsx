@@ -85,7 +85,7 @@ export default function TrademarkServices() {
                             From search to registration and enforcement, we're here to protect your intellectual property.
                         </p>
                         <Button 
-                            className="bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                            className="bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray rounded-full"
                             size="lg"
                         >
                             Schedule Consultation

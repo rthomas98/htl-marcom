@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const faqContent = {
   heading: "Frequently Asked Questions",
@@ -44,7 +45,8 @@ const faqContent = {
   button: {
     title: "Schedule Consultation",
     variant: "secondary",
-    className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+    className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300 rounded-full",
+    href: "/contact"
   },
 };
 
@@ -106,9 +108,14 @@ export default function RegistrationFAQ({ className = "", ...props }) {
             {content.footerDescription}
           </p>
           <div className="mt-6 md:mt-8">
-            <Button {...content.button} className={content.button.className}>
-              {content.button.title}
-            </Button>
+            <Link href={content.button.href}>
+              <Button 
+                {...content.button}
+                className={content.button.className}
+              >
+                {content.button.title}
+              </Button>
+            </Link>
           </div>
         </motion.div>
       </div>

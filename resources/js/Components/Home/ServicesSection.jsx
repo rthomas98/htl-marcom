@@ -7,7 +7,7 @@ export default function ServicesSection() {
     const sections = [
         {
             image: {
-                src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                src: '/images/home/about/pexels-rdne-5921773.jpg',
                 alt: 'Professional legal team meeting with client',
             },
             heading: 'Our Commitment to Client Success',
@@ -15,7 +15,7 @@ export default function ServicesSection() {
         },
         {
             image: {
-                src: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                src: '/images/home/about/h-about-2.jpg',
                 alt: 'Modern business professional in office',
             },
             heading: 'Forward-Thinking Legal Solutions',
@@ -23,7 +23,7 @@ export default function ServicesSection() {
         },
         {
             image: {
-                src: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                src: '/images/home/about/h-about-3.jpg',
                 alt: 'Successful business client',
             },
             heading: 'Hear from Our Satisfied Clients',
@@ -70,13 +70,7 @@ export default function ServicesSection() {
                                     <p className="mb-4 text-gray-600">
                                         {section.description}
                                     </p>
-                                    <Link
-                                        href="/contact"
-                                        className="inline-flex items-center text-cod-gray hover:text-cod-gray-light"
-                                    >
-                                        Learn More
-                                        <ChevronRight className="ml-1 h-4 w-4" />
-                                    </Link>
+                                    
                                 </div>
                             </div>
                         ))}
@@ -85,12 +79,13 @@ export default function ServicesSection() {
                     <div className="mt-12 flex items-center gap-4 md:mt-16">
                         <Link
                             href="/contact"
+                            target="_blank"
                             className="rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
                         >
                             Schedule Consultation
                         </Link>
                         <Link
-                            href="/services"
+                            href="/about-me"
                             className="group inline-flex items-center gap-2 rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
                         >
                             Learn More

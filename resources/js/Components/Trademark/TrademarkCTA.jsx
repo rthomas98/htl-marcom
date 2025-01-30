@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const defaultContent = {
   heading: "Protect Your Brand Today",
@@ -10,12 +11,14 @@ const defaultContent = {
     { 
       title: "Schedule Consultation",
       variant: "primary",
-      className: "bg-white text-cod-gray hover:bg-pippin"
+      className: "bg-white text-cod-gray hover:bg-pippin",
+      href: "/contact"
     },
     { 
       title: "Learn More",
       variant: "secondary",
-      className: "bg-transparent border-white text-white hover:bg-white hover:text-cod-gray"
+      className: "bg-transparent border-white text-white hover:bg-white hover:text-cod-gray",
+      href: "/about-me"
     },
   ],
   image: {
@@ -43,15 +46,19 @@ export default function TrademarkCTA({ className = "", ...props }) {
               {content.description}
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
-              {content.buttons.map((button, index) => (
-                <Button 
-                  key={index} 
-                  {...button}
-                  className={`${button.className} transition-colors duration-300`}
-                >
-                  {button.title}
-                </Button>
-              ))}
+              {content.buttons.map((button, index) => {
+                const { href, ...buttonProps } = button;
+                return (
+                  <Link key={index} href={href}>
+                    <Button 
+                      {...buttonProps}
+                      className={`${buttonProps.className} rounded-full transition-colors duration-300`}
+                    >
+                      {button.title}
+                    </Button>
+                  </Link>
+                );
+              })}
             </div>
           </div>
           <div className="absolute inset-0 -z-10">

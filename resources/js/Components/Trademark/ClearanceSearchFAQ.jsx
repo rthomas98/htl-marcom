@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const defaultContent = {
   heading: "Common Questions",
@@ -38,7 +39,8 @@ const defaultContent = {
   button: {
     title: "Schedule Consultation",
     variant: "secondary",
-    className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white"
+    className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full rounded-full",
+    href: "/contact"
   },
 };
 
@@ -106,12 +108,14 @@ export default function ClearanceSearchFAQ({ className = "", ...props }) {
             {content.footerDescription}
           </p>
           <div className="mt-6 md:mt-8">
-            <Button 
-              {...content.button}
-              className={`${content.button.className} transition-colors duration-300`}
-            >
-              {content.button.title}
-            </Button>
+            <Link href={content.button.href}>
+              <Button 
+                {...content.button}
+                className={`${content.button.className} transition-colors duration-300`}
+              >
+                {content.button.title}
+              </Button>
+            </Link>
           </div>
         </motion.div>
       </motion.div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const defaultContent = {
   heading: "Ready to Protect Your Brand?",
@@ -10,16 +11,13 @@ const defaultContent = {
     { 
       title: "Start Your Search",
       variant: "primary",
-      className: "bg-white text-cod-gray hover:bg-pippin"
+      className: "bg-white text-cod-gray hover:bg-pippin rounded-full",
+      href: "/contact"
     },
-    { 
-      title: "Schedule Consultation",
-      variant: "secondary",
-      className: "border-white text-white bg-transparent hover:bg-white hover:text-cod-gray transition-colors duration-300"
-    }
+    
   ],
   image: {
-    src: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80",
+    src: "/images/tm/search/shutterstock_503699314.jpg",
     alt: "Professional trademark attorney consultation",
   },
 };
@@ -46,16 +44,20 @@ export default function ClearanceSearchCTA({ className = "", ...props }) {
             <p className="font-sans text-lg text-white/80 md:text-xl">
               {content.description}
             </p>
-            <div className="mt-8 flex flex-wrap gap-4 md:mt-10">
-              {content.buttons.map((button, index) => (
-                <Button 
-                  key={index} 
-                  {...button}
-                  className={`${button.className} transition-colors duration-300`}
-                >
-                  {button.title}
-                </Button>
-              ))}
+            <div className="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
+              {content.buttons.map((button, index) => {
+                const { href, ...buttonProps } = button;
+                return (
+                  <Link key={index} href={href}>
+                    <Button 
+                      {...buttonProps}
+                      className={`${buttonProps.className} transition-colors duration-300`}
+                    >
+                      {button.title}
+                    </Button>
+                  </Link>
+                );
+              })}
             </div>
           </motion.div>
           <motion.div

@@ -59,10 +59,8 @@ export const Layout245 = (props) => {
                 key={index} 
                 {...button}
                 className={button.variant === 'primary' 
-                  ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light inline-flex items-center gap-2"
-                  : button.variant === 'link'
-                  ? "text-pippin-darker hover:text-pippin-darkest font-semibold inline-flex items-center gap-1"
-                  : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light inline-flex items-center gap-2"}
+                  ? 'bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray rounded-full'
+                  : 'border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white rounded-full'}
               >
                 {button.title}
                 {button.iconRight && <ChevronRight className="size-4" />}

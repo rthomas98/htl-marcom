@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@relume_io/relume-ui";
 import { ChevronRight, Search, FileCheck, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 export default function TrademarkProcess({ className = "", ...props }) {
     const content = {
@@ -33,17 +34,19 @@ export default function TrademarkProcess({ className = "", ...props }) {
             { 
                 title: "Schedule Consultation",
                 variant: "secondary-alt",
-                className: "bg-white text-cod-gray hover:bg-pippin"
+                className: "bg-white text-cod-gray hover:bg-pippin rounded-full",
+                href: "/contact"
             },
             {
                 title: "Learn More",
                 variant: "link-alt",
                 size: "link",
                 iconRight: <ChevronRight className="size-4" />,
-                className: "text-white hover:text-pippin"
+                className: "text-white hover:text-pippin inline-flex items-center p-3",
+                href: "/about-me"
             },
         ],
-        backgroundImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2000"
+        backgroundImage: "/images/tm/overview/shutterstock_2510293451.jpg"
     };
 
     const containerVariants = {
@@ -124,11 +127,16 @@ export default function TrademarkProcess({ className = "", ...props }) {
                         className="mt-12 flex flex-wrap gap-4 md:mt-18 lg:mt-20"
                         variants={itemVariants}
                     >
-                        {content.buttons.map((button, index) => (
-                            <Button key={index} {...button}>
-                                {button.title}
-                            </Button>
-                        ))}
+                        {content.buttons.map((button, index) => {
+                            const { href, ...buttonProps } = button;
+                            return (
+                                <Link key={index} href={href}>
+                                    <Button {...buttonProps}>
+                                        {button.title}
+                                    </Button>
+                                </Link>
+                            );
+                        })}
                     </motion.div>
                 </motion.div>
             </div>

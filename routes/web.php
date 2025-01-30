@@ -10,13 +10,93 @@ use App\Http\Controllers\LegalnarRegistrationController;
 use App\Http\Controllers\LegalnarPaymentController;
 
 Route::get('/', function () {
-    return Inertia::render('Home');
+    $blogPosts = \App\Models\BlogPost::where('status', 'published')
+        ->orderBy('published_at', 'desc')
+        ->take(3)
+        ->get()
+        ->map(function ($post) {
+            return [
+                'url' => "/blog/{$post->slug}",
+                'image' => [
+                    'src' => $post->featured_image,
+                    'alt' => $post->title,
+                ],
+                'category' => $post->category?->name ?? 'Blog',
+                'readTime' => ceil(str_word_count(strip_tags($post->content)) / 200) . ' min read',
+                'title' => $post->title,
+                'description' => $post->excerpt,
+                'button' => [
+                    'title' => 'Read More',
+                    'variant' => 'link',
+                ],
+            ];
+        });
+
+    return Inertia::render('Home', [
+        'blogData' => [
+            'tagline' => 'Latest Insights',
+            'heading' => 'Legal Knowledge Hub',
+            'description' => 'Stay informed with our latest articles on intellectual property law, trademark protection, and business strategies.',
+            'button' => [
+                'title' => 'View All Articles',
+                'variant' => 'secondary',
+                'href' => '/blog'
+            ],
+            'blogPosts' => $blogPosts
+        ]
+    ]);
 })->name('home');
 
 // New Marketing Pages
 Route::get('/about-me', fn() => Inertia::render('AboutMe'))->name('about-me');
 Route::get('/webinars', fn() => Inertia::render('Webinars'))->name('webinars');
 Route::get('/contact', fn() => Inertia::render('Contact'))->name('contact');
+Route::get('/insights', function () {
+    $category = request('category');
+    $search = request('search');
+    
+    $query = \App\Models\BlogPost::with(['category', 'author', 'seoMetadata'])
+        ->where('status', 'published')
+        ->orderBy('published_at', 'desc');
+
+    if ($category) {
+        $query->whereHas('category', function ($q) use ($category) {
+            $q->where('name', $category);
+        });
+    }
+
+    if ($search) {
+        $query->where(function($q) use ($search) {
+            $q->where('title', 'ilike', "%{$search}%")
+              ->orWhere('excerpt', 'ilike', "%{$search}%")
+              ->orWhereHas('category', function($q) use ($search) {
+                  $q->where('name', 'ilike', "%{$search}%");
+              });
+        });
+    }
+
+    $blogPosts = $query->paginate(6);
+    
+    // Transform the paginator to include the correct links
+    $paginationData = $blogPosts->toArray();
+    $paginationLinks = [
+        'prev' => $blogPosts->previousPageUrl(),
+        'next' => $blogPosts->nextPageUrl(),
+    ];
+    
+    $paginationData['links'] = $paginationLinks;
+
+    $categories = \App\Models\Category::whereHas('posts', function ($query) {
+        $query->where('status', 'published');
+    })->get();
+
+    return Inertia::render('Resources/Insights', [
+        'blogPosts' => $paginationData,
+        'categories' => $categories,
+        'currentCategory' => $category,
+        'search' => $search,
+    ]);
+})->name('insights');
 Route::get('/trademark-services', fn() => Inertia::render('TrademarkServices/Index'))->name('trademark-services');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 

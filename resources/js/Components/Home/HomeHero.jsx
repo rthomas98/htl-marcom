@@ -26,31 +26,31 @@ export default function HomeHero() {
 
     const images = [
         {
-            src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            src: '/images/home/hero/home-1.jpg',
             alt: 'Professional business meeting',
         },
         {
-            src: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            src: '/images/home/hero/h-hero-3.jpg',
             alt: 'Startup team collaboration',
         },
         {
-            src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            src: '/images/home/hero/h-hero-4.jpg',
             alt: 'Modern office environment',
         },
         {
-            src: 'https://images.unsplash.com/photo-1531973576160-7125cd663d86?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            src: '/images/home/hero/h-hero-5.jpg',
             alt: 'Business strategy session',
         },
         {
-            src: 'https://images.unsplash.com/photo-1573167243872-43c6433b9d40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            src: '/images/home/hero/h-hero-6.jpg',
             alt: 'Tech entrepreneur working',
         },
         {
-            src: 'https://images.unsplash.com/photo-1560264280-88b68371db39?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            src: '/images/home/hero/h-hreo-7.jpg',
             alt: 'Creative business discussion',
         },
         {
-            src: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            src: '/images/home/hero/h-hreo-8.jpg',
             alt: 'Business leadership meeting',
         },
     ];

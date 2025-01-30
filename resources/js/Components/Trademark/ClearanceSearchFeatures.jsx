@@ -3,6 +3,7 @@ import { Button, useMediaQuery } from "@relume_io/relume-ui";
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 import { ChevronRight } from 'lucide-react';
 import clsx from "clsx";
+import { Link } from '@inertiajs/react';
 
 const defaultContent = {
   tagline: "Our Process",
@@ -18,18 +19,14 @@ const defaultContent = {
         { 
           title: "Learn About USPTO Search", 
           variant: "secondary",
-          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white"
+          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full",
+          target: "_blank",
+          href: "https://www.uspto.gov/trademarks/search"
         },
-        {
-          title: "View Sample Report",
-          variant: "link",
-          size: "link",
-          className: "text-cod-gray hover:text-cod-gray/80",
-          iconRight: <ChevronRight className="size-4" />,
-        },
+      
       ],
       image: {
-        src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80",
+        src: "/images/tm/search/shutterstock_2225224027.jpg",
         alt: "Federal trademark database search",
       },
     },
@@ -42,18 +39,14 @@ const defaultContent = {
         { 
           title: "Common Law Rights", 
           variant: "secondary",
-          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white"
+          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full",
+          target: "_blank",
+          href: "https://www.bitlaw.com/trademark/common.html"
         },
-        {
-          title: "Search Coverage",
-          variant: "link",
-          size: "link",
-          className: "text-cod-gray hover:text-cod-gray/80",
-          iconRight: <ChevronRight className="size-4" />,
-        },
+        
       ],
       image: {
-        src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80",
+        src: "/images/tm/search/shutterstock_2412987691.jpg",
         alt: "Common law trademark search",
       },
     },
@@ -66,18 +59,13 @@ const defaultContent = {
         { 
           title: "View Analysis Process", 
           variant: "secondary",
-          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white"
-        },
-        {
-          title: "Sample Analysis",
-          variant: "link",
-          size: "link",
-          className: "text-cod-gray hover:text-cod-gray/80",
-          iconRight: <ChevronRight className="size-4" />,
-        },
+          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full",
+          target: "_blank",
+          href: "https://www.uspto.gov/trademarks/basics/trademark-process"
+        }
       ],
       image: {
-        src: "https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&fit=crop&q=80",
+        src: "/images/tm/search/shutterstock_2428972501.jpg",
         alt: "Trademark analysis and recommendations",
       },
     },
@@ -132,15 +120,19 @@ const FeatureSectionContent = ({ isEven, ...featureSection }) => (
       </h2>
       <p className="font-sans text-lg text-cod-gray/80">{featureSection.description}</p>
       <div className="mt-6 flex items-center gap-x-4 md:mt-8">
-        {featureSection.buttons.map((button, index) => (
-          <Button 
-            key={index} 
-            {...button}
-            className={`${button.className} transition-colors duration-300`}
-          >
-            {button.title}
-          </Button>
-        ))}
+        {featureSection.buttons.map((button, index) => {
+          const { href, target, ...buttonProps } = button;
+          return (
+            <a key={index} href={href} target={target} rel={target === "_blank" ? "noopener noreferrer" : undefined}>
+              <Button 
+                {...buttonProps}
+                className={`${buttonProps.className} transition-colors duration-300`}
+              >
+                {button.title}
+              </Button>
+            </a>
+          );
+        })}
       </div>
     </div>
     <div

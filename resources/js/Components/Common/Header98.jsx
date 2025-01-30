@@ -27,8 +27,8 @@ export const Header98 = (props) => {
                 key={index} 
                 {...button}
                 className={button.variant === 'primary' 
-                  ? "rounded-full bg-white px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-gallery inline-flex items-center gap-2"
-                  : "rounded-full bg-white/10 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-white/20 inline-flex items-center gap-2"}
+                  ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray rounded-full"
+                  : "border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white rounded-full"}
               >
                 {button.icon && <button.icon className="size-4" />}
                 {button.title}

@@ -12,11 +12,7 @@ const defaultContent = {
   heading: "Trademark FAQs",
   description:
     "Get answers to common questions about trademark registration, protection, and maintenance. Our expertise helps you navigate the complexities of intellectual property law.",
-  button: {
-    title: "Schedule Consultation",
-    variant: "primary",
-    className: "bg-cod-gray text-white hover:bg-white hover:text-cod-gray"
-  },
+ 
   questions: [
     {
       title: "What is a trademark and why do I need one?",
@@ -63,11 +59,7 @@ export default function TrademarkFAQ({ className = "", ...props }) {
           <p className="font-sans text-cod-gray/80 md:text-lg">
             {content.description}
           </p>
-          <div className="mt-6 md:mt-8">
-            <Button {...content.button}>
-              {content.button.title}
-            </Button>
-          </div>
+          
         </div>
         <Accordion type="multiple" className="space-y-4">
           {content.questions.map((question, index) => (

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 import clsx from "clsx";
 
 const defaultContent = {
@@ -13,20 +14,22 @@ const defaultContent = {
     { 
       title: "Schedule Consultation", 
       variant: "secondary",
-      className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white"
+      className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full",
+      href: "/contact"
     },
     { 
-      title: "View Sample Report", 
+      title: "About Our Service", 
       variant: "link", 
       size: "link",
-      className: "text-cod-gray hover:text-cod-gray/80",
-      iconRight: <ChevronRight className="size-4" />
+      className: "text-cod-gray hover:text-cod-gray/80 inline-flex items-center p-3",
+      iconRight: <ChevronRight className="size-4" />,
+      href: "/trademark-services/"
     },
   ],
   features: [
     {
       image: {
-        src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80",
+        src: "/images/tm/search/shutterstock_2515646991.jpg",
         alt: "Comprehensive database analysis",
       },
       heading: "Thorough Database Analysis",
@@ -35,7 +38,7 @@ const defaultContent = {
     },
     {
       image: {
-        src: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80",
+        src: "/images/tm/search/shutterstock_2530806127.jpg",
         alt: "Expert legal analysis",
       },
       heading: "Expert Legal Analysis",
@@ -44,7 +47,7 @@ const defaultContent = {
     },
     {
       image: {
-        src: "https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&q=80",
+        src: "/images/tm/search/shutterstock_2542842417.jpg",
         alt: "Strategic guidance",
       },
       heading: "Strategic Guidance",
@@ -88,15 +91,19 @@ export default function ClearanceSearchBenefits({ className = "", ...props }) {
               {content.description}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-              {content.buttons.map((button, index) => (
-                <Button 
-                  key={index} 
-                  {...button}
-                  className={`${button.className} transition-colors duration-300`}
-                >
-                  {button.title}
-                </Button>
-              ))}
+              {content.buttons.map((button, index) => {
+                const { href, ...buttonProps } = button;
+                return (
+                  <Link key={index} href={href}>
+                    <Button 
+                      {...buttonProps}
+                      className={`${buttonProps.className} transition-colors duration-300`}
+                    >
+                      {button.title}
+                    </Button>
+                  </Link>
+                );
+              })}
             </div>
           </motion.div>
         </div>

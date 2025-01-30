@@ -16,9 +16,22 @@ const BigCard = ({ tagline, image, heading, description, buttons }) => {
                 </div>
                 <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                     {buttons.map((button, index) => (
-                        <Button key={index} as={Link} {...button}>
+                        <Link
+                            key={index}
+                            href={button.href}
+                            className={
+                                button.variant === 'secondary'
+                                    ? 'rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light'
+                                    : 'group inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light'
+                            }
+                        >
                             {button.title}
-                        </Button>
+                            {button.iconRight && (
+                                <span className="transition-transform group-hover:translate-x-1">
+                                    {button.iconRight}
+                                </span>
+                            )}
+                        </Link>
                     ))}
                 </div>
             </div>
@@ -42,7 +55,17 @@ const SmallCard = ({ tagline, image, heading, description, button }) => {
                     <p className="text-gray-600">{description}</p>
                 </div>
                 <div className="mt-5 md:mt-6">
-                    <Button as={Link} {...button}>{button.title}</Button>
+                    <Link
+                        href={button.href}
+                        className="group inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light"
+                    >
+                        {button.title}
+                        {button.iconRight && (
+                            <span className="transition-transform group-hover:translate-x-1">
+                                {button.iconRight}
+                            </span>
+                        )}
+                    </Link>
                 </div>
             </div>
         </div>
@@ -60,7 +83,17 @@ const FeatureSection = ({ icon, heading, description, button }) => {
                 <p className="text-gray-600">{description}</p>
             </div>
             <div className="mt-5 md:mt-6">
-                <Button as={Link} {...button}>{button.title}</Button>
+                <Link
+                    href={button.href}
+                    className="group inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light"
+                >
+                    {button.title}
+                    {button.iconRight && (
+                        <span className="transition-transform group-hover:translate-x-1">
+                            {button.iconRight}
+                        </span>
+                    )}
+                </Link>
             </div>
         </div>
     );
@@ -74,14 +107,14 @@ export default function FeaturedSection() {
         smallCard: {
             tagline: "Integrity is the quality of being honest and moral.",
             image: {
-                src: "https://images.unsplash.com/photo-1565301660306-29e08751cc53?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                src: "/images/home/partner/h-part-1.jpg",
                 alt: "Professional legal consultation",
             },
             heading: "Your Trustworthy Legal Advisors",
             description: "Committed to your success and peace of mind.",
             button: {
                 href: "/about",
-                title: "About Our Firm",
+                title: "About My Firm",
                 variant: "link",
                 size: "link",
                 iconRight: <ChevronRight className="ml-1" />,
@@ -90,20 +123,20 @@ export default function FeaturedSection() {
         bigCard: {
             tagline: "Skill and knowledge in a specific field or subject.",
             image: {
-                src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80",
+                src: "/images/home/partner/h-part-2.jpg",
                 alt: "Modern legal office meeting",
             },
             heading: "Tailored Legal Solutions for You",
             description: "Our team is dedicated to offering customized legal services tailored specifically to address your individual needs and challenges, ensuring you receive the attention and support you deserve.",
             buttons: [
                 { 
-                    href: "/services",
-                    title: "Our Services",
+                    href: "/trademark-services",
+                    title: "Our TRademark Services",
                     variant: "secondary"
                 },
                 {
                     href: "/contact",
-                    title: "Contact Us",
+                    title: "Have Questions?",
                     variant: "link",
                     size: "link",
                     iconRight: <ChevronRight className="ml-1" />,
@@ -113,7 +146,7 @@ export default function FeaturedSection() {
         bigCard2: {
             tagline: "Assistance and support for various needs and requests.",
             image: {
-                src: "https://images.unsplash.com/photo-1577415124269-fc1140a69e91?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80",
+                src: "/images/home/partner/h-part-3.jpg",
                 alt: "Client consultation meeting",
             },
             heading: "Ready to Assist You",
@@ -121,12 +154,12 @@ export default function FeaturedSection() {
             buttons: [
                 { 
                     href: "/contact",
-                    title: "Get Started",
+                    title: "Rweady to Get Started?",
                     variant: "secondary"
                 },
                 {
-                    href: "/services",
-                    title: "View Services",
+                    href: "/legal-services",
+                    title: "My Other Leagal Services",
                     variant: "link",
                     size: "link",
                     iconRight: <ChevronRight className="ml-1" />,
@@ -143,7 +176,7 @@ export default function FeaturedSection() {
                 description: "Explore the various ways we can help you achieve your goals and enhance your experience today.",
                 button: {
                     href: "/services",
-                    title: "View All Services",
+                    title: "Learn  More",
                     variant: "link",
                     size: "link",
                     iconRight: <ChevronRight className="ml-1" />,
@@ -157,7 +190,7 @@ export default function FeaturedSection() {
                 heading: "What Our Clients Say",
                 description: "Ensuring our clients are satisfied is our highest priority and commitment to excellence.",
                 button: {
-                    href: "/testimonials",
+                    href: "/about",
                     title: "Read Testimonials",
                     variant: "link",
                     size: "link",

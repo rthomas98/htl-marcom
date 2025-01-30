@@ -1,30 +1,31 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const defaultImages = [
   {
-    src: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    src: "/images/tm/renewal/pexels-a-darmel-7710214.jpg",
     alt: "Business professional reviewing documents",
   },
   {
-    src: "https://images.pexels.com/photos/6615076/pexels-photo-6615076.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    src: "/images/tm/renewal/pexels-alexander-suhorucov-6457537.jpg",
     alt: "Legal consultation meeting",
   },
   {
-    src: "https://images.pexels.com/photos/4427430/pexels-photo-4427430.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    src: "/images/tm/renewal/pexels-alexander-suhorucov-6457555.jpg",
     alt: "Professional signing documents",
   },
   {
-    src: "https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    src: "/images/tm/renewal/pexels-kindelmedia-7688174.jpg",
     alt: "Legal documents review",
   },
   {
-    src: "https://images.pexels.com/photos/5439147/pexels-photo-5439147.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    src: "/images/tm/renewal/pexels-rethaferguson-3810831.jpg",
     alt: "Business meeting and consultation",
   },
   {
-    src: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    src: "/images/tm/renewal/pexels-thirdman-5684562.jpg",
     alt: "Legal professional at work",
   },
 ];
@@ -37,12 +38,14 @@ export default function RegistrationHeader({ className = "", ...props }) {
       { 
         title: "Start Registration",
         variant: "primary",
-        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300 rounded-full",
+        href: "/contact"
       },
       { 
         title: "Learn More",
         variant: "secondary",
-        className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white transition-colors duration-300"
+        className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white transition-colors duration-300 rounded-full",
+        href: "/trademark-services"
       }
     ],
     images: defaultImages,
@@ -64,15 +67,19 @@ export default function RegistrationHeader({ className = "", ...props }) {
           {content.description}
         </p>
         <div className="mt-8 flex flex-wrap gap-4 md:mt-10">
-          {content.buttons.map((button, index) => (
-            <Button 
-              key={index} 
-              {...button}
-              className={button.className}
-            >
-              {button.title}
-            </Button>
-          ))}
+          {content.buttons.map((button, index) => {
+            const { href, ...buttonProps } = button;
+            return (
+              <Link key={index} href={href}>
+                <Button 
+                  {...buttonProps}
+                  className={buttonProps.className}
+                >
+                  {button.title}
+                </Button>
+              </Link>
+            );
+          })}
         </div>
       </motion.div>
       

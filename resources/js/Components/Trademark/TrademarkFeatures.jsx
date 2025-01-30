@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@relume_io/relume-ui";
 import { ChevronRight, Search, Shield, Clock, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 export default function TrademarkFeatures({ className = "", ...props }) {
     const content = {
@@ -11,19 +12,19 @@ export default function TrademarkFeatures({ className = "", ...props }) {
             "Our experienced attorneys provide comprehensive trademark services tailored to your business needs. We combine legal expertise with strategic thinking to protect and enhance your brand value.",
         features: [
             {
-                icon: <Search className="size-6 text-pippin" />,
+                icon: <Search className="size-6 text-gray-500" />,
                 paragraph: "Thorough trademark searches and comprehensive clearance reports to minimize registration risks.",
             },
             {
-                icon: <Shield className="size-6 text-pippin" />,
+                icon: <Shield className="size-6 text-gray-500" />,
                 paragraph: "Strategic trademark portfolio management and proactive brand protection strategies.",
             },
             {
-                icon: <Clock className="size-6 text-pippin" />,
+                icon: <Clock className="size-6 text-gray-500" />,
                 paragraph: "Efficient handling of USPTO office actions and timely registration maintenance.",
             },
             {
-                icon: <Award className="size-6 text-pippin" />,
+                icon: <Award className="size-6 text-gray-500" />,
                 paragraph: "Experienced representation in trademark disputes and TTAB proceedings.",
             },
         ],
@@ -31,18 +32,20 @@ export default function TrademarkFeatures({ className = "", ...props }) {
             { 
                 title: "Schedule Consultation",
                 variant: "primary",
-                className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray hover:border-pippin rounded-full",
+                href: "/contact"
             },
             {
                 title: "Learn More",
                 variant: "link",
                 size: "link",
                 iconRight: <ChevronRight className="size-4" />,
-                className: "text-cod-gray hover:text-cod-gray/80"
+                className: "text-cod-gray hover:text-cod-gray/80 inline-flex items-center p-3",
+                href: "/trademark-services/registration"
             },
         ],
         image: {
-            src: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=2000",
+            src: "/images/tm/overview/pexels-marcus-aurelius-4063789.jpg",
             alt: "Trademark attorney reviewing documents",
         },
     };
@@ -103,14 +106,21 @@ export default function TrademarkFeatures({ className = "", ...props }) {
                             ))}
                         </ul>
                         <motion.div 
-                            className="mt-6 flex flex-wrap items-center gap-4 md:mt-8"
+                            className="mt-8 flex flex-wrap gap-4"
+                            initial="hidden"
+                            animate="visible"
                             variants={itemVariants}
                         >
-                            {content.buttons.map((button, index) => (
-                                <Button key={index} {...button}>
-                                    {button.title}
-                                </Button>
-                            ))}
+                            {content.buttons.map((button, index) => {
+                                const { href, ...buttonProps } = button;
+                                return (
+                                    <Link key={index} href={href}>
+                                        <Button {...buttonProps}>
+                                            {button.title}
+                                        </Button>
+                                    </Link>
+                                );
+                            })}
                         </motion.div>
                     </motion.div>
                     <motion.div 

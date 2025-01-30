@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
+import { Link } from '@inertiajs/react';
 
 const benefitsContent = [
   {
@@ -11,20 +12,14 @@ const benefitsContent = [
       "Federal trademark registration grants you exclusive rights to use your mark nationwide, preventing others from using similar marks that could confuse consumers.",
     buttons: [
       { 
-        title: "Get Started", 
+        title: "Ready To Get Started?", 
         variant: "secondary",
-        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
-      },
-      { 
-        title: "Learn More", 
-        variant: "link", 
-        size: "link", 
-        iconRight: <ChevronRight className="h-4 w-4" />,
-        className: "text-cod-gray hover:text-pippin transition-colors duration-300"
+        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300 rounded-full",
+        href: "/contact"
       },
     ],
     image: {
-      src: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/tm/renewal/shutterstock_2157348673.jpg",
       alt: "Legal professional reviewing documents",
     },
   },
@@ -37,18 +32,13 @@ const benefitsContent = [
       { 
         title: "Protect Your Brand", 
         variant: "secondary",
-        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300 rounded-full",
+        href: "/contact"
       },
-      { 
-        title: "Learn More", 
-        variant: "link", 
-        size: "link", 
-        iconRight: <ChevronRight className="h-4 w-4" />,
-        className: "text-cod-gray hover:text-pippin transition-colors duration-300"
-      },
+      
     ],
     image: {
-      src: "https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/tm/renewal/shutterstock_2258486971.jpg",
       alt: "Legal documents and trademark papers",
     },
   },
@@ -61,18 +51,13 @@ const benefitsContent = [
       { 
         title: "Start Registration", 
         variant: "secondary",
-        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300 rounded-full",
+        href: "/contact"
       },
-      { 
-        title: "Learn More", 
-        variant: "link", 
-        size: "link", 
-        iconRight: <ChevronRight className="h-4 w-4" />,
-        className: "text-cod-gray hover:text-pippin transition-colors duration-300"
-      },
+      
     ],
     image: {
-      src: "https://images.pexels.com/photos/6615076/pexels-photo-6615076.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/tm/renewal/shutterstock_2282908015.jpg",
       alt: "Business growth and success",
     },
   },
@@ -110,15 +95,19 @@ export default function RegistrationBenefits({ className = "", ...props }) {
                     {content.description}
                   </p>
                   <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-                    {content.buttons.map((button, index) => (
-                      <Button 
-                        key={index} 
-                        {...button}
-                        className={button.className}
-                      >
-                        {button.title}
-                      </Button>
-                    ))}
+                    {content.buttons.map((button, index) => {
+                      const { href, ...buttonProps } = button;
+                      return (
+                        <Link key={index} href={href}>
+                          <Button 
+                            {...buttonProps}
+                            className={buttonProps.className}
+                          >
+                            {button.title}
+                          </Button>
+                        </Link>
+                      );
+                    })}
                   </div>
                   <div className="mt-10 block w-full md:hidden">
                     <img 

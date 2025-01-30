@@ -6,43 +6,26 @@ import { motion } from 'framer-motion';
 const processSteps = [
   {
     image: {
-      src: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/tm/renewal/shutterstock_375557014.jpg",
       alt: "Initial trademark review process",
     },
     heading: "Initial Review & Strategy",
     description:
       "We begin with a comprehensive review of your trademark and develop a strategic plan for registration, considering your business goals and market position.",
-    buttons: [
-      {
-        title: "Learn More",
-        variant: "link",
-        size: "link",
-        iconRight: <ChevronRight className="h-4 w-4" />,
-        className: "text-cod-gray hover:text-pippin transition-colors duration-300"
-      },
-    ],
   },
   {
     image: {
-      src: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/tm/renewal/shutterstock_1829462777.jpg",
       alt: "Trademark application filing",
     },
     heading: "Application Filing",
     description:
       "Our experienced attorneys prepare and file your trademark application with the USPTO, ensuring all documentation is complete and accurate.",
-    buttons: [
-      {
-        title: "Learn More",
-        variant: "link",
-        size: "link",
-        iconRight: <ChevronRight className="h-4 w-4" />,
-        className: "text-cod-gray hover:text-pippin transition-colors duration-300"
-      },
-    ],
+
   },
   {
     image: {
-      src: "https://images.pexels.com/photos/4427430/pexels-photo-4427430.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/tm/renewal/shutterstock_2141946577.jpg",
       alt: "Trademark monitoring and protection",
     },
     heading: "Monitoring & Protection",
@@ -103,17 +86,7 @@ export default function RegistrationProcess({ className = "", ...props }) {
               <p className="font-sans text-cod-gray/80">
                 {section.description}
               </p>
-              <div className="mt-6 flex items-center gap-4 md:mt-8">
-                {section.buttons.map((button, index) => (
-                  <Button 
-                    key={index} 
-                    {...button}
-                    className={button.className}
-                  >
-                    {button.title}
-                  </Button>
-                ))}
-              </div>
+              
             </motion.div>
           ))}
         </div>

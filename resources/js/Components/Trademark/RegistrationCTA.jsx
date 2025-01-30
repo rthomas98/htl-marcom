@@ -11,16 +11,16 @@ export default function RegistrationCTA({ className = "", ...props }) {
       { 
         title: "Start Registration",
         variant: "primary",
-        className: "bg-white text-cod-gray hover:bg-pippin transition-colors duration-300"
+        className: "bg-white text-cod-gray hover:bg-pippin transition-colors duration-300 rounded-full"
       },
       { 
-        title: "Schedule Consultation",
+        title: "Learn More About Me",
         variant: "secondary",
-        className: "border border-white bg-transparent text-white hover:bg-white hover:text-cod-gray transition-all duration-300"
+        className: "border border-white bg-transparent text-white hover:bg-white hover:text-cod-gray transition-all duration-300 rounded-full"
       }
     ],
     image: {
-      src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2940&auto=format&fit=crop",
+      src: "/images/tm/renewal/shutterstock_2472683775.jpg",
       alt: "Modern business office meeting",
     },
     ...props

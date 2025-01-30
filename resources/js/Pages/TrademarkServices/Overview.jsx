@@ -20,16 +20,18 @@ export default function Overview() {
                 buttons={[
                     {
                         title: "Schedule Consultation",
-                        className: "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                        className: "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray rounded-full",
+                        href: "/contact"
                     },
                     {
                         title: "View Services",
                         variant: "outline",
-                        className: "border border-white bg-transparent text-white hover:bg-white hover:text-cod-gray transition-colors duration-200"
+                        className: "border border-white bg-transparent text-white hover:bg-white hover:text-cod-gray transition-colors duration-200 rounded-full",
+                        href: "/trademark-services/registration"
                     }
                 ]}
                 image={{
-                    src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=2000",
+                    src: "/images/tm/overview/pexels-alex-green-5699479.jpg",
                     alt: "Professional trademark attorney reviewing documents"
                 }}
             />

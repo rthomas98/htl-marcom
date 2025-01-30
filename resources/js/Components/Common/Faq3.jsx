@@ -13,24 +13,24 @@ export const Faq3 = ({ className, ...props }) => {
     ...props,
   };
   return (
-    <section className={`px-[5%] py-16 md:py-24 lg:py-28 bg-cod-gray text-white ${className || ''}`}>
+    <section className={`px-[5%] py-16 md:py-24 lg:py-28 bg-white ${className || ''}`}>
       <div className="container grid grid-cols-1 gap-y-12 md:grid-cols-2 md:gap-x-12 lg:grid-cols-[.75fr,1fr] lg:gap-x-20">
         <div>
-          <h2 className="mb-5 text-5xl font-bold whitespace-pre-line md:mb-6 md:text-7xl lg:text-8xl">
+          <h2 className="mb-5 text-5xl font-bold whitespace-pre-line md:mb-6 md:text-7xl lg:text-8xl text-cod-gray">
             {heading}
           </h2>
-          <p className="text-white/90 md:text-md">{description}</p>
+          <p className="text-cod-gray/90 md:text-md">{description}</p>
           <div className="mt-6 md:mt-8">
             <Button {...button} className="hover:bg-pippin">{button.title}</Button>
           </div>
         </div>
-        <Accordion type="multiple" className="text-white">
+        <Accordion type="multiple" className="text-cod-gray">
           {questions.map((question, index) => (
-            <AccordionItem key={index} value={`item-${index}`} className="border-white/20">
-              <AccordionTrigger className="md:py-5 md:text-md text-white hover:text-pippin">
+            <AccordionItem key={index} value={`item-${index}`} className="border-cod-gray/20">
+              <AccordionTrigger className="md:py-5 md:text-md text-cod-gray hover:text-pippin">
                 {question.title}
               </AccordionTrigger>
-              <AccordionContent className="md:pb-6 text-white/90">
+              <AccordionContent className="md:pb-6 text-cod-gray/90">
                 {question.answer}
               </AccordionContent>
             </AccordionItem>

@@ -45,8 +45,8 @@ const Layout245Section = ({ tagline, heading, description, sections, buttons }) 
                 {...button}
                 className={
                   button.variant === 'secondary' 
-                    ? 'bg-white text-cod-gray hover:bg-cod-gray-lightest hover:text-cod-gray transition-colors duration-200'
-                    : 'text-white hover:text-pippin transition-colors duration-200'
+                    ? 'rounded-full bg-white text-cod-gray hover:bg-cod-gray-lightest hover:text-cod-gray transition-colors duration-200'
+                    : 'rounded-full text-white hover:text-pippin transition-colors duration-200'
                 }
               >
                 {button.title}

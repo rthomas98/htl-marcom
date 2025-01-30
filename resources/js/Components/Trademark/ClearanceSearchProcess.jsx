@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const defaultContent = {
   tagline: "Our Search Process",
@@ -11,12 +12,8 @@ const defaultContent = {
     {
       title: "Start Your Search",
       variant: "primary",
-      className: "bg-white text-cod-gray hover:bg-pippin"
-    },
-    {
-      title: "View Sample Report",
-      variant: "secondary",
-      className: "bg-transparent border-white text-white hover:bg-white hover:text-cod-gray"
+      className: "bg-white text-cod-gray hover:bg-pippin rounded-full",
+      href: "/contact"
     },
   ],
 };
@@ -30,7 +27,7 @@ export default function ClearanceSearchProcess({ className = "", ...props }) {
       animate={{ opacity: 1 }}
       className="relative px-[5%] py-16 md:py-24 lg:py-28"
       style={{
-        backgroundImage: 'url("https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80")',
+        backgroundImage: 'url("/images/tm/search/shutterstock_566136202.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -67,15 +64,19 @@ export default function ClearanceSearchProcess({ className = "", ...props }) {
           transition={{ delay: 0.5 }}
           className="mt-8 flex flex-wrap items-center justify-center gap-4 md:mt-10"
         >
-          {content.buttons.map((button, index) => (
-            <Button 
-              key={index} 
-              {...button}
-              className={`${button.className} transition-colors duration-300`}
-            >
-              {button.title}
-            </Button>
-          ))}
+          {content.buttons.map((button, index) => {
+            const { href, ...buttonProps } = button;
+            return (
+              <Link key={index} href={href}>
+                <Button 
+                  {...buttonProps}
+                  className={`${buttonProps.className} transition-colors duration-300`}
+                >
+                  {button.title}
+                </Button>
+              </Link>
+            );
+          })}
         </motion.div>
       </div>
     </motion.section>

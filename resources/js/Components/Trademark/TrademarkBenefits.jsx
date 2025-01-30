@@ -9,20 +9,6 @@ export default function TrademarkBenefits({ className = "", ...props }) {
         heading: "Expert Trademark Protection",
         description:
             "With years of experience in intellectual property law, we provide comprehensive trademark services tailored to protect and enhance your brand value. Our expertise ensures your intellectual property rights are secured effectively.",
-        buttons: [
-            { 
-                title: "Schedule Consultation",
-                variant: "primary",
-                className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
-            },
-            {
-                title: "Learn More",
-                variant: "link",
-                size: "link",
-                iconRight: <ChevronRight className="size-4" />,
-                className: "text-cod-gray hover:text-cod-gray/80"
-            },
-        ],
         features: [
             {
                 icon: <Shield className="size-6 text-cod-gray" />,
@@ -92,13 +78,7 @@ export default function TrademarkBenefits({ className = "", ...props }) {
                         <p className="text-cod-gray/80 md:text-md">
                             {content.description}
                         </p>
-                        <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-                            {content.buttons.map((button, index) => (
-                                <Button key={index} {...button}>
-                                    {button.title}
-                                </Button>
-                            ))}
-                        </div>
+                       
                     </motion.div>
                     <div className="grid w-full auto-cols-fr grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:gap-y-16 lg:gap-x-12">
                         {content.features.map((feature, index) => (

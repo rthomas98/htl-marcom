@@ -65,27 +65,25 @@ export default function BusinessSection() {
                     ))}
                 </div>
                 <div className="mt-12 flex flex-wrap justify-start gap-4 md:mt-18 lg:mt-20">
-                    <Button
-                        as={Link}
-                        href="/contact"
-                        variant="secondary-alt"
+                    <Link
+                        href="https://hebertthomaslaw.cliogrow.com/intake/3z_4V3EUIFtGZXWTXHbIkg"
+                        target="_blank"
+                        className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin hover:text-cod-gray"
                     >
                         Schedule a Consultation
-                    </Button>
-                    <Button
-                        as={Link}
-                        href="/services"
-                        variant="link-alt"
-                        size="link"
-                        iconRight={<ChevronRight className="ml-1" />}
+                    </Link>
+                    <Link
+                        href="/trademark-services"
+                        className="group inline-flex items-center gap-2 rounded-full text-white transition hover:text-pippin"
                     >
                         Explore All Services
-                    </Button>
+                        <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
                 </div>
             </div>
             <div className="absolute inset-0">
                 <img 
-                    src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80" 
+                    src="/images/home/tr-bg.jpg" 
                     className="absolute inset-0 size-full object-cover" 
                     alt="Modern office building" 
                 />

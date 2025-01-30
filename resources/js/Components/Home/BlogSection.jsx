@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
 import { ChevronRight } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 
@@ -45,28 +44,25 @@ const BlogSection = ({ tagline, heading, description, button, blogPosts }) => {
                     </h2>
                   </Link>
                   <p className="font-sans text-cod-gray-light">{post.description}</p>
-                  <Button
-                    as={Link}
+                  <Link
                     href={post.url}
-                    variant="link"
-                    className="mt-6 flex items-center justify-center gap-x-2 text-cod-gray hover:text-cod-gray-light"
+                    className="group mt-4 inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light"
                   >
                     {post.button.title}
-                    <ChevronRight className="size-4" />
-                  </Button>
+                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </div>
               </div>
             </div>
           ))}
         </div>
         <div className="flex items-center justify-end">
-          <Button 
-            as={Link}
-            {...button}
-            className="mt-10 bg-cod-gray text-white hover:bg-cod-gray-dark md:mt-14 lg:mt-16"
+          <Link
+            href={button.href}
+            className="mt-10 rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light md:mt-14 lg:mt-16"
           >
             {button.title}
-          </Button>
+          </Link>
         </div>
       </div>
     </section>

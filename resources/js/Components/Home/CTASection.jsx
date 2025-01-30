@@ -18,8 +18,8 @@ const CTASection = ({ heading, description, buttons, image }) => {
                   {...button}
                   className={
                     button.variant === 'secondary'
-                      ? 'bg-white text-cod-gray hover:bg-cod-gray-lightest hover:text-cod-gray transition-colors duration-200'
-                      : 'bg-transparent text-white border-white hover:bg-white hover:text-cod-gray transition-colors duration-200'
+                      ? 'rounded-full bg-white text-cod-gray hover:bg-cod-gray-lightest hover:text-cod-gray transition-colors duration-200'
+                      : 'rounded-full bg-transparent text-white border-white hover:bg-white hover:text-cod-gray transition-colors duration-200'
                   }
                 >
                   {button.title}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@relume_io/relume-ui";
-import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 export default function TrademarkServices({ className = "", ...props }) {
     const content = {
@@ -15,7 +15,7 @@ export default function TrademarkServices({ className = "", ...props }) {
                 description:
                     "Comprehensive trademark searches and clearance reports to identify potential conflicts and assess registration risks. We analyze similar marks, common law usage, and domain names.",
                 image: {
-                    src: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000",
+                    src: "/images/tm/overview/pexels-rethaferguson-3810788.jpg",
                     alt: "Trademark search and analysis"
                 }
             },
@@ -24,7 +24,7 @@ export default function TrademarkServices({ className = "", ...props }) {
                 description:
                     "Strategic trademark filing and prosecution services. We handle USPTO office actions, maintain registrations, and develop protection strategies tailored to your business needs.",
                 image: {
-                    src: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=1000",
+                    src: "/images/tm/overview/pexels-rethaferguson-3810795.jpg",
                     alt: "Trademark registration and protection"
                 }
             },
@@ -33,23 +33,17 @@ export default function TrademarkServices({ className = "", ...props }) {
                 description:
                     "Global trademark portfolio management and international filing strategies. We coordinate with foreign counsel to secure protection in key markets worldwide.",
                 image: {
-                    src: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&q=80&w=1000",
+                    src: "/images/tm/overview/pexels-silverkblack-23496696.jpg",
                     alt: "International trademark protection"
                 }
             },
         ],
         buttons: [
             { 
-                title: "View All Services",
-                variant: "primary",
-                className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
-            },
-            {
-                title: "Contact Us",
-                variant: "link",
-                size: "link",
-                iconRight: <ChevronRight className="size-4" />,
-                className: "text-cod-gray hover:text-cod-gray/80"
+                title: "Learn More About Me",
+                variant: "secondary",
+                href: "/about-me", 
+                className: "bg-white text-cod-gray hover:bg-cod-gray hover:text-white rounded-full"
             },
         ],
     };
@@ -125,15 +119,22 @@ export default function TrademarkServices({ className = "", ...props }) {
                             </motion.div>
                         ))}
                     </div>
-                    <motion.div 
-                        className="mt-12 flex items-center gap-4 md:mt-18 lg:mt-20"
+                    <motion.div
+                        className="mt-8 flex flex-wrap gap-4"
+                        initial="hidden"
+                        animate="visible"
                         variants={itemVariants}
                     >
-                        {content.buttons.map((button, index) => (
-                            <Button key={index} {...button}>
-                                {button.title}
-                            </Button>
-                        ))}
+                        {content.buttons.map((button, index) => {
+                            const { href, ...buttonProps } = button;
+                            return (
+                                <Link key={index} href={href}>
+                                    <Button {...buttonProps}>
+                                        {button.title}
+                                    </Button>
+                                </Link>
+                            );
+                        })}
                     </motion.div>
                 </motion.div>
             </div>

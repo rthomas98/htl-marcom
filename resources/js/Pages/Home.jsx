@@ -193,7 +193,6 @@ export default function Home() {
             <BusinessSection />
             <FeaturedSection />
             <Layout245Section {...layout245Data} />
-            <TestimonialSection {...testimonialData} />
             <BlogSection {...blogData} />
             <CTASection {...ctaData} />
         </MarcomLayout>

@@ -44,11 +44,8 @@ export default function MarcomNav() {
         { name: 'Privacy & Data Protection', href: route('legal-services.privacy-data') }
     ];
 
-    const legalnars = [
-        { name: 'All Legalnars', href: route('legalnars.index') },
-        { name: 'Upcoming Live Sessions', href: route('legalnars.upcoming') },
-        { name: 'On-Demand Content', href: route('legalnars.on-demand') },
-        { name: 'My Registrations', href: route('legalnars.my-registrations') }
+    const resources = [
+        { name: 'Insights', href: route('insights') }
     ];
 
     const userMenu = [
@@ -104,21 +101,28 @@ export default function MarcomNav() {
     const NavDropdown = ({ type, items, children }) => {
         const isActive = activeDropdown === type;
         
+        const handleClick = (e) => {
+            e.preventDefault();
+            setActiveDropdown(isActive ? null : type);
+        };
+
+        // Close dropdown when clicking outside
+        useEffect(() => {
+            const handleClickOutside = (event) => {
+                if (isActive && !event.target.closest('.nav-dropdown')) {
+                    setActiveDropdown(null);
+                }
+            };
+
+            document.addEventListener('click', handleClickOutside);
+            return () => document.removeEventListener('click', handleClickOutside);
+        }, [isActive, type]);
+        
         return (
-            <div 
-                className="relative"
-                onMouseEnter={() => setActiveDropdown(type)}
-                onMouseLeave={(e) => {
-                    // Check if we're moving to the dropdown menu
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const isMovingDown = e.clientY > rect.bottom;
-                    
-                    if (!isMovingDown) {
-                        setActiveDropdown(null);
-                    }
-                }}
-            >
-                {children}
+            <div className="relative nav-dropdown">
+                <div onClick={handleClick}>
+                    {children}
+                </div>
                 <DropdownMenu
                     items={items}
                     isOpen={isActive}
@@ -190,11 +194,11 @@ export default function MarcomNav() {
                                     <ChevronDown className="size-4" />
                                 </button>
                             </NavDropdown>
-                            <NavDropdown type="legalnars" items={legalnars}>
+                            <NavDropdown type="resources" items={resources}>
                                 <button
                                     className="flex items-center space-x-1 text-sm text-cod-gray hover:text-cod-gray-light"
                                 >
-                                    <span>Legalnars</span>
+                                    <span>Resources</span>
                                     <ChevronDown className="size-4" />
                                 </button>
                             </NavDropdown>
@@ -236,15 +240,7 @@ export default function MarcomNav() {
                             </NavDropdown>
                         ) : (
                             <>
-                                <Link href={route('login')}>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white rounded-full"
-                                    >
-                                        Login
-                                    </Button>
-                                </Link>
+                                
                                 <Link href={route('register')}>
                                     <Button
                                         variant="solid"
@@ -346,6 +342,41 @@ export default function MarcomNav() {
                                                 className="ml-4 space-y-2"
                                             >
                                                 {otherServices.map((item) => (
+                                                    <Link
+                                                        key={item.href}
+                                                        href={item.href}
+                                                        className={getDropdownLinkClasses(item.href)}
+                                                        onClick={() => {
+                                                            setActiveDropdown(null);
+                                                            setIsOpen(false);
+                                                        }}
+                                                    >
+                                                        {item.name}
+                                                    </Link>
+                                                ))}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                                <div className="space-y-2">
+                                    <button
+                                        className="flex w-full items-center justify-between text-sm text-cod-gray hover:text-cod-gray-light"
+                                        onClick={() => setActiveDropdown(activeDropdown === 'resources' ? null : 'resources')}
+                                    >
+                                        <span>Resources</span>
+                                        <ChevronDown className={`size-4 transform transition-transform ${
+                                            activeDropdown === 'resources' ? 'rotate-180' : ''
+                                        }`} />
+                                    </button>
+                                    <AnimatePresence>
+                                        {activeDropdown === 'resources' && (
+                                            <motion.div
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: 'auto' }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                className="ml-4 space-y-2"
+                                            >
+                                                {resources.map((item) => (
                                                     <Link
                                                         key={item.href}
                                                         href={item.href}

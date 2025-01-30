@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const defaultContent = {
   heading: "Trademark Clearance Search",
@@ -10,16 +11,18 @@ const defaultContent = {
     { 
       title: "Schedule Consultation",
       variant: "primary",
-      className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+      className: "bg-cod-gray text-white hover:bg-pippin hover:border-pippin hover:text-cod-gray",
+      href: "/contact"
     },
     { 
-      title: "Learn More",
+      title: "Learn More About Me",
       variant: "secondary",
-      className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white"
+      className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white",
+      href: "/about-me"
     }
   ],
   image: {
-    src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80",
+    src: "/images/tm/search/shutterstock_417480088.jpg",
     alt: "Professional conducting trademark search",
   },
 };
@@ -56,15 +59,19 @@ export default function ClearanceSearchHeader({ className = "", ...props }) {
           transition={{ delay: 0.4 }}
           className="mt-6 flex flex-wrap gap-4 md:mt-8"
         >
-          {content.buttons.map((button, index) => (
-            <Button 
-              key={index} 
-              {...button}
-              className={`${button.className} transition-colors duration-300`}
-            >
-              {button.title}
-            </Button>
-          ))}
+          {content.buttons.map((button, index) => {
+            const { href, ...buttonProps } = button;
+            return (
+              <Link key={index} href={href}>
+                <Button 
+                  {...buttonProps}
+                  className={`${buttonProps.className} rounded-full transition-colors duration-300`}
+                >
+                  {button.title}
+                </Button>
+              </Link>
+            );
+          })}
         </motion.div>
       </div>
       <motion.div

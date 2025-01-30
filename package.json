@@ -25,7 +25,8 @@
         "@relume_io/relume-ui": "^1.0.1",
         "@stripe/react-stripe-js": "^3.1.1",
         "@stripe/stripe-js": "^5.4.0",
-        "framer-motion": "^11.14.1",
+        "framer-motion": "^11.18.2",
+        "lodash": "^4.17.21",
         "lucide-react": "^0.468.0",
         "ziggy-js": "^2.4.1"
     }

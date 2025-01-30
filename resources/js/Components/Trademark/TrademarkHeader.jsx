@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 export default function TrademarkHeader({ 
     heading = "Comprehensive Trademark Services",
@@ -8,16 +9,18 @@ export default function TrademarkHeader({
     buttons = [
         {
             title: "Schedule Consultation",
+            href: "/schedule-consultation",
             className: "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
         },
         {
             title: "Learn More",
             variant: "secondary",
+            href: "/learn-more",
             className: "border-white text-white hover:bg-white hover:text-cod-gray"
         }
     ],
     image = {
-        src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=2000",
+        src: "public/images/tm/overview/pexels-alex-green-5699479.jpg",
         alt: "Professional trademark attorney working at desk"
     },
     className = "",
@@ -46,11 +49,16 @@ export default function TrademarkHeader({
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.2 }}
                             >
-                                {buttons.map((button, index) => (
-                                    <Button key={index} {...button}>
-                                        {button.title}
-                                    </Button>
-                                ))}
+                                {buttons.map((button, index) => {
+                                    const { href, ...buttonProps } = button;
+                                    return (
+                                        <Link key={index} href={href}>
+                                            <Button {...buttonProps}>
+                                                {button.title}
+                                            </Button>
+                                        </Link>
+                                    );
+                                })}
                             </motion.div>
                         </div>
                     </motion.div>

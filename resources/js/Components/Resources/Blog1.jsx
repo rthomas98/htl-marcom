@@ -18,7 +18,8 @@ const BlogPost = {
   readTime: String,
   title: String,
   description: String,
-  avatar: ImageProps,
+  author_profile_image: String,
+  author: Object,
   fullName: String,
   date: String,
 };
@@ -149,9 +150,12 @@ export const Blog1 = (props) => {
             ))}
           </div>
           <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
-            {data.map((post, index) => (
-              <div key={index}>
-                <Link href={post.url} className="mb-6 inline-block w-full max-w-full">
+            {data?.map((post, index) => (
+              <div key={index} className="w-full">
+                <Link
+                  href={route('insight.detail', { slug: post.url.split('/').pop() })}
+                  className="group mb-4 block w-full overflow-hidden md:mb-5"
+                >
                   <div className="w-full overflow-hidden rounded-lg">
                     <img
                       src={post.image.src}
@@ -167,20 +171,20 @@ export const Blog1 = (props) => {
                   {post.category}
                 </Link>
 
-                <Link href={post.url} className="mb-2 block max-w-full group">
+                <Link href={route('insight.detail', { slug: post.url.split('/').pop() })} className="mb-2 block max-w-full group">
                   <h5 className="font-heading text-xl font-bold text-cod-gray transition-colors duration-200 group-hover:text-cod-gray-light md:text-2xl">{post.title}</h5>
                 </Link>
                 <p className="font-sans text-cod-gray-light">{post.description}</p>
                 <div className="mt-6 flex items-center">
                   <div className="mr-4 shrink-0">
                     <img
-                      src={post.avatar.src}
-                      alt={post.avatar.alt}
+                      src={post.author_profile_image}
+                      alt={post.author?.name || 'Author'}
                       className="size-12 min-h-12 min-w-12 rounded-full object-cover"
                     />
                   </div>
                   <div>
-                    <h6 className="font-sans text-sm font-semibold text-cod-gray">{post.fullName}</h6>
+                    <h6 className="font-sans text-sm font-semibold text-cod-gray">{post.author?.name || post.fullName}</h6>
                     <div className="flex items-center">
                       <p className="font-sans text-sm text-cod-gray-light">{post.date}</p>
                       <span className="mx-2 text-cod-gray-light">•</span>

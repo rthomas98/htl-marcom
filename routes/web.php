@@ -3,14 +3,17 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LegalnarController;
 use App\Http\Controllers\LegalnarRegistrationController;
 use App\Http\Controllers\LegalnarPaymentController;
+use App\Models\BlogPost;
+use App\Models\Category;
 
 Route::get('/', function () {
-    $blogPosts = \App\Models\BlogPost::where('status', 'published')
+    $blogPosts = BlogPost::where('status', 'published')
         ->orderBy('published_at', 'desc')
         ->take(3)
         ->get()
@@ -51,52 +54,80 @@ Route::get('/', function () {
 Route::get('/about-me', fn() => Inertia::render('AboutMe'))->name('about-me');
 Route::get('/webinars', fn() => Inertia::render('Webinars'))->name('webinars');
 Route::get('/contact', fn() => Inertia::render('Contact'))->name('contact');
-Route::get('/insights', function () {
-    $category = request('category');
-    $search = request('search');
+Route::get('/insights', function (Request $request) {
+    $search = $request->get('search');
+    $category = $request->get('category');
     
-    $query = \App\Models\BlogPost::with(['category', 'author', 'seoMetadata'])
+    $query = BlogPost::query()
+        ->with(['category', 'author'])
         ->where('status', 'published')
-        ->orderBy('published_at', 'desc');
-
-    if ($category) {
-        $query->whereHas('category', function ($q) use ($category) {
-            $q->where('name', $category);
-        });
-    }
-
-    if ($search) {
-        $query->where(function($q) use ($search) {
-            $q->where('title', 'ilike', "%{$search}%")
-              ->orWhere('excerpt', 'ilike', "%{$search}%")
-              ->orWhereHas('category', function($q) use ($search) {
-                  $q->where('name', 'ilike', "%{$search}%");
-              });
-        });
-    }
-
-    $blogPosts = $query->paginate(6);
-    
-    // Transform the paginator to include the correct links
-    $paginationData = $blogPosts->toArray();
-    $paginationLinks = [
-        'prev' => $blogPosts->previousPageUrl(),
-        'next' => $blogPosts->nextPageUrl(),
-    ];
-    
-    $paginationData['links'] = $paginationLinks;
-
-    $categories = \App\Models\Category::whereHas('posts', function ($query) {
-        $query->where('status', 'published');
-    })->get();
+        ->when($search, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('title', 'ilike', "%{$search}%")
+                    ->orWhere('excerpt', 'ilike', "%{$search}%")
+                    ->orWhereHas('category', function ($query) use ($search) {
+                        $query->where('name', 'ilike', "%{$search}%");
+                    });
+            });
+        })
+        ->when($category, function ($query, $category) {
+            $query->whereHas('category', function ($query) use ($category) {
+                $query->where('slug', $category);
+            });
+        })
+        ->orderBy('published_at', 'desc')
+        ->paginate(6);
 
     return Inertia::render('Resources/Insights', [
-        'blogPosts' => $paginationData,
-        'categories' => $categories,
+        'blogPosts' => $query,
+        'categories' => Category::all(),
         'currentCategory' => $category,
         'search' => $search,
     ]);
 })->name('insights');
+
+Route::get('/insights/{slug}', function (string $slug) {
+    $post = BlogPost::with(['category', 'author'])
+        ->where('status', 'published')
+        ->where('slug', $slug)
+        ->firstOrFail();
+
+    $relatedPosts = BlogPost::with(['category', 'author'])
+        ->where('status', 'published')
+        ->where('id', '!=', $post->id)
+        ->where(function($query) use ($post) {
+            $query->where('category_id', $post->category_id)
+                  ->orWhereJsonContains('meta_data->tags', $post->meta_data['tags'] ?? []);
+        })
+        ->latest('published_at')
+        ->take(3)
+        ->get()
+        ->map(function($post) {
+            return [
+                'url' => route('insight.detail', $post->slug),
+                'image' => [
+                    'src' => $post->featured_image,
+                    'alt' => $post->title
+                ],
+                'category' => $post->category->name,
+                'readTime' => ceil(str_word_count(strip_tags($post->content)) / 200) . ' min read',
+                'title' => $post->title,
+                'description' => $post->excerpt,
+                'avatar' => [
+                    'src' => $post->author_profile_image,
+                    'alt' => $post->author?->name ?? 'Author'
+                ],
+                'fullName' => $post->author?->name ?? 'Hebert-Thomas Law',
+                'date' => \Carbon\Carbon::parse($post->published_at)->format('d M Y')
+            ];
+        });
+
+    return Inertia::render('Resources/InsightDetail', [
+        'post' => $post,
+        'relatedPosts' => $relatedPosts
+    ]);
+})->name('insight.detail');
+
 Route::get('/trademark-services', fn() => Inertia::render('TrademarkServices/Index'))->name('trademark-services');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 

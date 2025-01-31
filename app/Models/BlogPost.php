@@ -39,6 +39,13 @@ class BlogPost extends Model
         'view_count' => 'integer',
     ];
 
+    protected $appends = ['author_profile_image'];
+
+    public function getAuthorProfileImageAttribute()
+    {
+        return $this->author?->profile_photo_url ?? '/images/web-logo-black (2).svg';
+    }
+
     public static function boot()
     {
         parent::boot();

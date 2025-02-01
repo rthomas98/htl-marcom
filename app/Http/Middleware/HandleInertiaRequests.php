@@ -31,10 +31,11 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            'csrf_token' => csrf_token(),
             'auth' => [
                 'user' => $request->user(),
             ],
-            'csrf_token' => csrf_token(),
+            'recaptcha_site_key' => config('services.recaptcha.site_key'),
             'stripe_key' => config('services.stripe.key'),
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),

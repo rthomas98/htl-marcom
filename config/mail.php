@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => 'resend',
 
     /*
     |--------------------------------------------------------------------------
@@ -63,6 +63,8 @@ return [
 
         'resend' => [
             'transport' => 'resend',
+            'token' => env('RESEND_API_KEY'),
+            'secret' => env('RESEND_API_KEY'),
         ],
 
         'sendmail' => [
@@ -109,8 +111,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@hebertthomaslaw.com'),
+        'name' => env('MAIL_FROM_NAME', 'Adrian Hebert-Thomas, Esq.'),
     ],
 
 ];

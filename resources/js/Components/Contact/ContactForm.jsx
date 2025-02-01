@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Select,
     SelectContent,
@@ -13,10 +13,11 @@ import {
     Textarea,
     Button,
 } from "@relume_io/relume-ui";
+import { useForm } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 
 export default function ContactForm({ className = "", ...props }) {
-    const [formData, setFormData] = useState({
+    const { data, setData, post, processing, errors, reset } = useForm({
         firstName: "",
         lastName: "",
         email: "",
@@ -24,20 +25,62 @@ export default function ContactForm({ className = "", ...props }) {
         serviceType: "",
         clientType: "",
         message: "",
-        acceptTerms: false
+        acceptTerms: false,
+        honey_pot: "", // Honeypot field
+        recaptcha_token: "", // reCAPTCHA token
     });
 
+    const [showMessage, setShowMessage] = useState(false);
+    const [messageType, setMessageType] = useState('');
+    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        // Load reCAPTCHA script
+        const script = document.createElement('script');
+        script.src = `https://www.google.com/recaptcha/api.js?render=${window.recaptchaSiteKey}`;
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
     const handleChange = (field, value) => {
-        setFormData(prev => ({
-            ...prev,
-            [field]: value
-        }));
+        setData(field, value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData);
-        // TODO: Implement form submission
+        setShowMessage(false);
+
+        try {
+            // Get reCAPTCHA token
+            const token = await window.grecaptcha.execute(window.recaptchaSiteKey, {
+                action: 'contact_form'
+            });
+            
+            setData('recaptcha_token', token);
+            
+            post(route('contact.submit'), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    reset();
+                    setMessageType('success');
+                    setMessage('Thank you for your message. We will get back to you soon!');
+                    setShowMessage(true);
+                    setTimeout(() => setShowMessage(false), 5000);
+                },
+                onError: () => {
+                    setMessageType('error');
+                    setMessage('Sorry, there was an error sending your message. Please try again.');
+                    setShowMessage(true);
+                }
+            });
+        } catch (error) {
+            setMessageType('error');
+            setMessage('There was an error verifying your request. Please try again.');
+            setShowMessage(true);
+        }
     };
 
     const serviceTypes = [
@@ -82,9 +125,23 @@ export default function ContactForm({ className = "", ...props }) {
                         Let's Discuss Your Case
                     </h2>
                     <p className="text-cod-gray/80 md:text-md">
-                        Fill out the form below and we'll get back to you within 24 hours to schedule your consultation.
+                        Fill out the form below and we’ll get back to you within 24 hours to schedule your consultation.
                     </p>
                 </motion.div>
+
+                {showMessage && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`mb-6 rounded-lg p-4 ${
+                            messageType === 'success' 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-red-100 text-red-800'
+                        }`}
+                    >
+                        {message}
+                    </motion.div>
+                )}
 
                 <motion.form 
                     className="grid grid-cols-1 grid-rows-[auto_auto] gap-6"
@@ -93,6 +150,16 @@ export default function ContactForm({ className = "", ...props }) {
                     animate="visible"
                     onSubmit={handleSubmit}
                 >
+                    <input
+                        type="text"
+                        name="honey_pot"
+                        value={data.honey_pot}
+                        onChange={(e) => setData('honey_pot', e.target.value)}
+                        style={{ display: 'none' }}
+                        tabIndex="-1"
+                        autoComplete="off"
+                    />
+
                     <div className="grid grid-cols-2 gap-6">
                         <div className="grid w-full items-center">
                             <Label htmlFor="firstName" className="mb-2 text-cod-gray">
@@ -101,7 +168,7 @@ export default function ContactForm({ className = "", ...props }) {
                             <Input
                                 type="text"
                                 id="firstName"
-                                value={formData.firstName}
+                                value={data.firstName}
                                 onChange={(e) => handleChange('firstName', e.target.value)}
                                 className="border-cod-gray/20 focus:border-pippin"
                                 required
@@ -115,7 +182,7 @@ export default function ContactForm({ className = "", ...props }) {
                             <Input
                                 type="text"
                                 id="lastName"
-                                value={formData.lastName}
+                                value={data.lastName}
                                 onChange={(e) => handleChange('lastName', e.target.value)}
                                 className="border-cod-gray/20 focus:border-pippin"
                                 required
@@ -131,7 +198,7 @@ export default function ContactForm({ className = "", ...props }) {
                             <Input
                                 type="email"
                                 id="email"
-                                value={formData.email}
+                                value={data.email}
                                 onChange={(e) => handleChange('email', e.target.value)}
                                 className="border-cod-gray/20 focus:border-pippin"
                                 required
@@ -145,7 +212,7 @@ export default function ContactForm({ className = "", ...props }) {
                             <Input
                                 type="tel"
                                 id="phone"
-                                value={formData.phone}
+                                value={data.phone}
                                 onChange={(e) => handleChange('phone', e.target.value)}
                                 className="border-cod-gray/20 focus:border-pippin"
                                 required
@@ -192,7 +259,7 @@ export default function ContactForm({ className = "", ...props }) {
                             id="message"
                             placeholder="Please provide a brief description of your legal needs..."
                             className="min-h-[11.25rem] overflow-auto border-cod-gray/20 focus:border-pippin"
-                            value={formData.message}
+                            value={data.message}
                             onChange={(e) => handleChange('message', e.target.value)}
                             required
                         />
@@ -201,7 +268,7 @@ export default function ContactForm({ className = "", ...props }) {
                     <div className="mb-3 flex items-center space-x-2 text-sm md:mb-4">
                         <Checkbox 
                             id="terms" 
-                            checked={formData.acceptTerms}
+                            checked={data.acceptTerms}
                             onCheckedChange={(checked) => handleChange('acceptTerms', checked)}
                             className="border-cod-gray/20 text-pippin"
                             required

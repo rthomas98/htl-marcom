@@ -12,7 +12,7 @@ use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
-use App\Notifications\UserInvitation;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\LegalnarAttendee;
@@ -76,7 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new UserInvitation($token));
+        $this->notify(new ResetPassword($token));
     }
 
     public function canAccessPanel(Panel $panel): bool

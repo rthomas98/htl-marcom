@@ -60,7 +60,7 @@ export default function MarcomNav() {
     };
 
     const getLinkClasses = (href) => {
-        return `transition-colors duration-200 hover:text-cod-gray ${
+        return `transition-colors font-medium duration-200 hover:text-cod-gray ${
             isActive(href) 
                 ? 'text-cod-gray font-medium border-b-2 border-cod-gray' 
                 : 'text-cod-gray'
@@ -68,7 +68,7 @@ export default function MarcomNav() {
     };
 
     const getDropdownLinkClasses = (href) => {
-        return `block px-4 py-2 text-sm transition-colors duration-200 hover:bg-cod-gray hover:text-white ${
+        return `block px-4 py-2 font-medium transition-colors duration-200 hover:bg-cod-gray hover:text-white ${
             isActive(href)
                 ? 'bg-cod-gray text-white font-medium'
                 : 'text-cod-gray-light'
@@ -180,7 +180,7 @@ export default function MarcomNav() {
                             </Link>
                             <NavDropdown type="trademark" items={trademarkServices}>
                                 <button
-                                    className="flex items-center space-x-1 text-sm text-cod-gray hover:text-cod-gray-light"
+                                    className="flex items-center space-x-1 font-medium text-cod-gray hover:text-cod-gray-light"
                                 >
                                     <span>Trademark Services</span>
                                     <ChevronDown className="size-4" />
@@ -188,7 +188,7 @@ export default function MarcomNav() {
                             </NavDropdown>
                             <NavDropdown type="other" items={otherServices}>
                                 <button
-                                    className="flex items-center space-x-1 text-sm text-cod-gray hover:text-cod-gray-light"
+                                    className="flex items-center space-x-1 font-medium text-cod-gray hover:text-cod-gray-light"
                                 >
                                     <span>Other Legal Services</span>
                                     <ChevronDown className="size-4" />
@@ -196,7 +196,7 @@ export default function MarcomNav() {
                             </NavDropdown>
                             <NavDropdown type="resources" items={resources}>
                                 <button
-                                    className="flex items-center space-x-1 text-sm text-cod-gray hover:text-cod-gray-light"
+                                    className="flex items-center space-x-1 font-medium text-cod-gray hover:text-cod-gray-light"
                                 >
                                     <span>Resources</span>
                                     <ChevronDown className="size-4" />
@@ -222,7 +222,7 @@ export default function MarcomNav() {
                         {auth.user ? (
                             <NavDropdown type="user" items={userMenu}>
                                 <div className="flex items-center space-x-4">
-                                    <div className="flex cursor-pointer items-center space-x-2 text-sm text-cod-gray">
+                                    <div className="flex cursor-pointer items-center space-x-2 font-medium text-cod-gray">
                                         <User className="size-4" />
                                         <span>{auth.user.name}</span>
                                         <ChevronDown className="size-4" />

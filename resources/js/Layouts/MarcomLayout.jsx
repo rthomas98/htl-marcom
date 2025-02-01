@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, Head, usePage } from '@inertiajs/react'
 import { Menu } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -7,8 +7,13 @@ import MarcomNav from '@/Components/MarcomNav'
 import MarcomFooter from '@/Components/MarcomFooter'
 
 export default function MarcomLayout({ children, title, description }) {
-    const { csrf_token } = usePage().props;
+    const { csrf_token, auth, recaptcha_site_key } = usePage().props;
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+
+    useEffect(() => {
+        // Make reCAPTCHA site key available globally
+        window.recaptchaSiteKey = recaptcha_site_key;
+    }, [recaptcha_site_key]);
 
     return (
         <div className="min-h-screen bg-gallery">

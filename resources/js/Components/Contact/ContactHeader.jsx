@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Input } from "@relume_io/relume-ui";
-import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 
 export default function ContactHeader({ 
@@ -62,37 +60,7 @@ export default function ContactHeader({
                                 {content.heading}
                             </h1>
                             <p className="text-white/90 md:text-lg">{content.description}</p>
-                            <motion.div 
-                                className="mt-6 w-full max-w-sm md:mt-8"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: 0.2 }}
-                            >
-                                <form
-                                    className="rb-4 mb-4 grid max-w-sm grid-cols-1 gap-y-3 sm:grid-cols-[1fr_max-content] sm:gap-4"
-                                    onSubmit={handleSubmit}
-                                >
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        placeholder={content.inputPlaceholder}
-                                        value={emailInput}
-                                        onChange={(e) => setEmailInput(e.target.value)}
-                                        className="bg-white/10 text-white placeholder:text-white/60 focus:border-pippin"
-                                    />
-                                    <Link
-                                        href={content.button.href}
-                                        className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
-                                            content.button.variant === 'primary'
-                                                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
-                                                : "bg-pippin text-cod-gray hover:bg-pippin-light"
-                                        }`}
-                                    >
-                                        {content.button.title}
-                                    </Link>
-                                </form>
-                                <div dangerouslySetInnerHTML={{ __html: content.termsAndConditions }} />
-                            </motion.div>
+                            
                         </div>
                     </motion.div>
                     <motion.div
@@ -102,7 +70,7 @@ export default function ContactHeader({
                     >
                         <img 
                             src={content.image.src} 
-                            className="h-[300px] w-full rounded-lg object-cover shadow-lg md:h-[400px] lg:h-[500px]" 
+                            className="h-[300px] w-full rounded-lg object-cover object-top shadow-lg md:h-[400px] lg:h-[500px]" 
                             alt={content.image.alt} 
                         />
                     </motion.div>

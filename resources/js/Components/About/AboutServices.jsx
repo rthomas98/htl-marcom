@@ -32,10 +32,8 @@ export default function AboutServices({
                 description: "Secure your brand identity with comprehensive trademark services, from search and registration to monitoring and enforcement.",
                 button: {
                     title: "Learn More",
-                    variant: "link",
-                    href: "/services/trademark",
-                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
-                    iconRight: <ChevronRight className="h-4 w-4" />
+                    href: route('legal-services.overview'),
+                    className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-pippin hover:text-white"
                 }
             },
             {
@@ -48,10 +46,8 @@ export default function AboutServices({
                 description: "Develop and maintain a strong IP portfolio that aligns with your business goals and provides competitive advantages.",
                 button: {
                     title: "Learn More",
-                    variant: "link",
-                    href: "/services/ip-strategy",
-                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
-                    iconRight: <ChevronRight className="h-4 w-4" />
+                    href: route('legal-services.overview'),
+                    className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-pippin hover:text-white"
                 }
             }
         ],
@@ -65,9 +61,8 @@ export default function AboutServices({
             description: "From startup formation to ongoing legal support, we provide the guidance your business needs to thrive in today's competitive landscape.",
             button: {
                 title: "Schedule Consultation",
-                variant: "secondary",
-                href: "/contact",
-                className: "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-lightest hover:text-cod-gray flex items-center"
+                href: route('contact'),
+                className: "inline-flex items-center justify-center rounded-full bg-pippin px-8 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin hover:text-cod-gray"
             }
         }
     };
@@ -106,7 +101,7 @@ export default function AboutServices({
                             <p className="mb-6 text-cod-gray">{card.description}</p>
                             <Link
                                 href={card.button.href}
-                                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                                className={`w-fit ${card.button.className}`}
                             >
                                 {card.button.title}
                             </Link>
@@ -136,7 +131,7 @@ export default function AboutServices({
                             <p className="mb-6 text-white/90">{content.cardBig.description}</p>
                             <Link
                                 href={content.cardBig.button.href}
-                                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                                className={`w-fit ${content.cardBig.button.className}`}
                             >
                                 {content.cardBig.button.title}
                             </Link>

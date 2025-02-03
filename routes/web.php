@@ -51,7 +51,17 @@ Route::get('/', function () {
 })->name('home');
 
 // New Marketing Pages
-Route::get('/about-me', fn() => Inertia::render('AboutMe'))->name('about-me');
+Route::get('/about-me', function() {
+    $posts = BlogPost::with('author')
+        ->where('status', 'published')
+        ->orderBy('published_at', 'desc')
+        ->take(3)
+        ->get();
+
+    return Inertia::render('AboutMe', [
+        'posts' => $posts
+    ]);
+})->name('about-me');
 Route::get('/webinars', fn() => Inertia::render('Webinars'))->name('webinars');
 Route::get('/contact', fn() => Inertia::render('Contact'))->name('contact');
 Route::get('/insights', function (Request $request) {

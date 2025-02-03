@@ -8,7 +8,7 @@ export default function ContactFeatures({ className = "", ...props }) {
         description:
             "Our firm combines deep legal expertise with a client-focused approach to deliver comprehensive intellectual property and business law solutions. We understand the challenges businesses face and provide strategic guidance to protect and grow your assets.",
         image: {
-            src: "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?auto=format&fit=crop&q=80&w=2000",
+            src: "/images/contact/shutterstock_2246367777.jpg",
             alt: "Legal team reviewing documents",
         },
         features: [

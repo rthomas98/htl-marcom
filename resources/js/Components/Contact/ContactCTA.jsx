@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from '@inertiajs/react';
-import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function ContactCTA({ className = "", ...props }) {
@@ -21,20 +19,8 @@ export default function ContactCTA({ className = "", ...props }) {
                     "Our successful history of trademark registrations and IP portfolio management speaks to our expertise and dedication.",
             },
         ],
-        buttons: [
-            { 
-                title: "Schedule Consultation",
-                variant: "primary",
-                href: route('contact'),
-            },
-            {
-                title: "Learn More",
-                variant: "link",
-                href: "#",
-            },
-        ],
         image: {
-            src: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=2000",
+            src: "/images/contact/shutterstock_758165362.jpg",
             alt: "Professional attorney working with client",
         },
     };
@@ -89,24 +75,7 @@ export default function ContactCTA({ className = "", ...props }) {
                                 </motion.div>
                             ))}
                         </div>
-                        <motion.div 
-                            className="mt-6 flex flex-wrap items-center gap-4 md:mt-8"
-                            variants={itemVariants}
-                        >
-                            {content.buttons.map((button, index) => (
-                                <Link
-                                    key={index}
-                                    href={button.href}
-                                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
-                                        button.variant === 'primary'
-                                            ? "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
-                                            : "border border-white text-white hover:bg-white hover:text-cod-gray"
-                                    }`}
-                                >
-                                    {button.title}
-                                </Link>
-                            ))}
-                        </motion.div>
+                        
                     </motion.div>
                     <motion.div 
                         variants={itemVariants}

@@ -31,10 +31,8 @@ export default function AboutPracticeAreas({
                 description: "Expert guidance through the entire trademark registration process, from comprehensive searches to application filing and office action responses.",
                 button: {
                     title: "Learn More",
-                    variant: "link",
-                    href: "/services/trademark",
-                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
-                    iconRight: <ChevronRight className="h-4 w-4" />
+                    href: route('trademark-services.overview'),
+                    className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-pippin hover:text-cod-gray"
                 }
             },
             {
@@ -46,10 +44,8 @@ export default function AboutPracticeAreas({
                 description: "Strategic management of your intellectual property portfolio, including trademark monitoring, maintenance, and enforcement strategies.",
                 button: {
                     title: "Learn More",
-                    variant: "link",
-                    href: "/services/business",
-                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
-                    iconRight: <ChevronRight className="h-4 w-4" />
+                    href: route('legal-services.overview'),
+                    className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-pippin hover:text-cod-gray"
                 }
             },
             {
@@ -58,26 +54,24 @@ export default function AboutPracticeAreas({
                     alt: "Business Law Services",
                 },
                 heading: "Business Law Services",
-                description: "Comprehensive business law services including contract review, business formation, and legal compliance to protect your company's interests.",
+                description: "Comprehensive business law services for your company's needs, including contract review, business formation, and ongoing legal compliance strategies.",
                 button: {
                     title: "Learn More",
-                    variant: "link",
-                    href: "/services/copyright",
-                    className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
-                    iconRight: <ChevronRight className="h-4 w-4" />
+                    href: route('legal-services.overview'),
+                    className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-pippin hover:text-cod-gray"
                 }
             },
         ],
         buttons: buttons || [
             { 
                 title: "Schedule Consultation",
-                variant: "primary",
-                className: "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                href: route('contact'),
+                className: "inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin hover:text-cod-gray"
             },
             {
                 title: "Learn More",
-                variant: "secondary",
-                className: "border-2 border-white bg-transparent text-white hover:bg-pippin hover:text-cod-gray hover:border-transparent"
+                href: route('legal-services.overview'),
+                className: "inline-flex items-center justify-center rounded-full bg-transparent px-8 py-3 text-sm font-semibold text-white shadow-sm border-2 border-white hover:bg-pippin hover:text-cod-gray hover:border-transparent"
             }
         ]
     };
@@ -122,7 +116,7 @@ export default function AboutPracticeAreas({
                             <p className="text-white/80">{section.description}</p>
                             <Link
                                 href={section.button.href}
-                                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                                className={`mt-6 ${section.button.className}`}
                             >
                                 {section.button.title}
                             </Link>
@@ -139,7 +133,7 @@ export default function AboutPracticeAreas({
                         <Link
                             key={index} 
                             href={button.href}
-                            className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                            className={button.className}
                         >
                             {button.title}
                         </Link>

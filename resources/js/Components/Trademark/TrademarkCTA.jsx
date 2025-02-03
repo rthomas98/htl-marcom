@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
-import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 
 const defaultContent = {
   heading: "Protect Your Brand Today",
@@ -9,16 +8,15 @@ const defaultContent = {
     "Don't wait until it's too late. Secure your trademark rights and build a strong foundation for your business's future. Our experienced team is ready to guide you through every step of the process.",
   buttons: [
     { 
-      title: "Schedule Consultation",
+      title: "Schedule a Call",
       variant: "primary",
-      className: "bg-white text-cod-gray hover:bg-pippin",
-      href: "/contact"
+      href: "/contact",
     },
     { 
       title: "Learn More",
       variant: "secondary",
-      className: "bg-transparent border-white text-white hover:bg-white hover:text-cod-gray",
-      href: "/about-me"
+      href: "/about-me",
+      iconRight: true
     },
   ],
   image: {
@@ -45,20 +43,20 @@ export default function TrademarkCTA({ className = "", ...props }) {
             <p className="font-sans text-lg text-white/90 md:text-xl">
               {content.description}
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
-              {content.buttons.map((button, index) => {
-                const { href, ...buttonProps } = button;
-                return (
-                  <Link key={index} href={href}>
-                    <Button 
-                      {...buttonProps}
-                      className={`${buttonProps.className} rounded-full transition-colors duration-300`}
-                    >
-                      {button.title}
-                    </Button>
-                  </Link>
-                );
-              })}
+            <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
+              {content.buttons.map((button, index) => (
+                <Link 
+                  key={index} 
+                  href={button.href}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                      button.variant === 'primary'
+                          ? "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                          : "border border-white text-white hover:bg-white hover:text-cod-gray"
+                  }`}
+                >
+                  {button.title}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="absolute inset-0 -z-10">

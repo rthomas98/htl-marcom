@@ -36,7 +36,7 @@ export const Layout194Defaults = {
   heading: "Negotiating Terms",
   description: "We assist in negotiating the terms of your licensing agreements to protect your interests and maximize benefits. Our experienced team ensures favorable terms while maintaining positive relationships with licensees.",
   image: {
-    src: placeholderImage,
+    src: "/images/tm/licensing/pexels-kindelmedia-6774452.jpg",
     alt: "Trademark Licensing Negotiation",
   },
 };

@@ -9,28 +9,16 @@ const Layout241Defaults = {
     "Our General Counsel services provide strategic legal guidance and practical solutions for businesses of all sizes. We focus on protecting your interests while enabling your growth.",
   sections: [
     {
-      icon: {
-        src: "/images/placeholder.svg",
-        alt: "Contract Review Icon",
-      },
       heading: "Contract Review & Negotiation",
       description:
         "Expert review and negotiation of all business contracts, from vendor agreements to employment contracts, ensuring your interests are protected and risks are minimized.",
     },
     {
-      icon: {
-        src: "/images/placeholder.svg",
-        alt: "Compliance Icon",
-      },
       heading: "Regulatory Compliance",
       description:
         "Stay compliant with industry regulations and legal requirements. We help you navigate complex regulatory landscapes and implement effective compliance programs.",
     },
     {
-      icon: {
-        src: "/images/placeholder.svg",
-        alt: "Risk Management Icon",
-      },
       heading: "Risk Management",
       description:
         "Proactive identification and mitigation of legal risks. We help you develop strategies to protect your business and maintain legal compliance in all operations.",
@@ -39,12 +27,13 @@ const Layout241Defaults = {
   buttons: [
     { 
       title: "View All Services",
-      href: "/services"
+      href: route('legal-services.overview'),
+      className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-cod-gray-dark"
     },
     {
       title: "Learn More",
-      href: "/about",
-      iconRight: <RxChevronRight />
+      href: route('about-me'),
+      className: "inline-flex items-center justify-center rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin-light"
     },
   ],
 };
@@ -71,9 +60,6 @@ export const Layout241 = ({ className, ...props }) => {
           <div className="grid grid-cols-1 items-start justify-center gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16 lg:gap-x-12">
             {sections.map((section, index) => (
               <div key={index} className="flex w-full flex-col">
-                <div className="mb-5 md:mb-6">
-                  <img src={section.icon.src} className="size-12" alt={section.icon.alt} />
-                </div>
                 <h3 className="mb-5 font-heading text-2xl font-bold text-cod-gray md:mb-6 md:text-3xl md:leading-[1.3] lg:text-4xl">
                   {section.heading}
                 </h3>
@@ -86,10 +72,7 @@ export const Layout241 = ({ className, ...props }) => {
               <Link
                 key={index}
                 href={button.href}
-                className={index === 0 
-                  ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-                  : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light flex items-center"
-                }
+                className={button.className}
               >
                 {button.title}
                 {button.iconRight && <span className="ml-2">{button.iconRight}</span>}

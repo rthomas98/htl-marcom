@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 
 const placeholderImage = '/images/placeholder.svg';
 
@@ -22,16 +22,19 @@ export const Cta53 = (props) => {
           </div>
           <div className="relative z-10 mt-6 flex flex-wrap items-center justify-center gap-4 md:mt-8">
             {buttons.map((button, index) => (
-              <Button 
-                key={index} 
-                {...button}
-                className={index === 0 ? 
-                  "rounded-full bg-gallery px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-gallery/90" :
-                  "rounded-full bg-transparent px-6 py-3 text-sm font-semibold text-gallery border border-gallery shadow-sm transition hover:bg-gallery/10"
-                }
+              <Link
+                key={index}
+                href={button.href}
+                className={`rounded-full ${
+                  button.variant === 'primary'
+                    ? 'bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-dark'
+                    : button.variant === 'secondary-alt'
+                    ? 'bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light'
+                    : 'text-cod-gray'
+                }`}
               >
                 {button.title}
-              </Button>
+              </Link>
             ))}
           </div>
           <div className="absolute inset-0 overflow-hidden rounded-2xl">
@@ -56,10 +59,12 @@ export const Cta53Defaults = {
     { 
       title: "Schedule Consultation",
       variant: "primary",
+      href: route('contact')
     },
     { 
       title: "Learn More",
       variant: "secondary-alt",
+      href: route('trademark-services.overview')
     }
   ],
   image: {

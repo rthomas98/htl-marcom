@@ -55,14 +55,13 @@ const CheckoutForm = ({ clientSecret, amount, onSuccess, onError }) => {
                 </div>
             )}
             
-            <Button
+            <button
                 type="submit"
                 disabled={!stripe || processing}
-                variant="primary"
-                className="w-full"
+                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {processing ? 'Processing...' : `Pay $${(amount / 100).toFixed(2)}`}
-            </Button>
+            </button>
         </form>
     );
 };

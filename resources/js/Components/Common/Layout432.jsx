@@ -10,24 +10,25 @@ export const Layout432Defaults = {
   buttons: [
     { 
       title: "View Services", 
-      href: "/services"
+      href: route('legal-services.overview'),
+      className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-cod-gray-dark"
     },
     {
       title: "Contact Us",
-      href: "/contact",
-      iconRight: <RxChevronRight />,
+      href: route('contact'),
+      className: "inline-flex items-center justify-center rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin-light"
     },
   ],
   firstImage: {
-    src: "/images/placeholder.svg",
+    src: "/images/other/general-counsel/shutterstock_2237655605.jpg",
     alt: "Legal Strategy Meeting",
   },
   secondImage: {
-    src: "/images/placeholder.svg",
+    src: "/images/other/general-counsel/shutterstock_2424449997.jpg",
     alt: "Contract Review",
   },
   thirdImage: {
-    src: "/images/placeholder.svg",
+    src: "/images/other/general-counsel/shutterstock_2500602907.jpg",
     alt: "Risk Management",
   },
 };
@@ -73,13 +74,9 @@ export const Layout432 = ({ className, ...props }) => {
                   <Link
                     key={index}
                     href={button.href}
-                    className={index === 0 
-                      ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-                      : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
-                    }
+                    className={button.className}
                   >
                     {button.title}
-                    {button.iconRight && <span className="ml-2">{button.iconRight}</span>}
                   </Link>
                 ))}
               </div>

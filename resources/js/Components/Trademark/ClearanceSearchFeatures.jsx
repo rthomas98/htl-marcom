@@ -19,7 +19,6 @@ const defaultContent = {
         { 
           title: "Learn About USPTO Search", 
           variant: "secondary",
-          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full",
           target: "_blank",
           href: "https://www.uspto.gov/trademarks/search"
         },
@@ -39,7 +38,6 @@ const defaultContent = {
         { 
           title: "Common Law Rights", 
           variant: "secondary",
-          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full",
           target: "_blank",
           href: "https://www.bitlaw.com/trademark/common.html"
         },
@@ -59,7 +57,6 @@ const defaultContent = {
         { 
           title: "View Analysis Process", 
           variant: "secondary",
-          className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full",
           target: "_blank",
           href: "https://www.uspto.gov/trademarks/basics/trademark-process"
         }
@@ -121,16 +118,20 @@ const FeatureSectionContent = ({ isEven, ...featureSection }) => (
       <p className="font-sans text-lg text-cod-gray/80">{featureSection.description}</p>
       <div className="mt-6 flex items-center gap-x-4 md:mt-8">
         {featureSection.buttons.map((button, index) => {
-          const { href, target, ...buttonProps } = button;
           return (
-            <a key={index} href={href} target={target} rel={target === "_blank" ? "noopener noreferrer" : undefined}>
-              <Button 
-                {...buttonProps}
-                className={`${buttonProps.className} transition-colors duration-300`}
-              >
-                {button.title}
-              </Button>
-            </a>
+            <Link
+              key={index}
+              href={button.href}
+              target={button.target}
+              rel={button.target === "_blank" ? "noopener noreferrer" : undefined}
+              className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                button.variant === 'primary'
+                  ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                  : "bg-pippin text-cod-gray hover:bg-pippin-light"
+              }`}
+            >
+              {button.title}
+            </Link>
           );
         })}
       </div>

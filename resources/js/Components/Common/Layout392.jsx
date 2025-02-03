@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
 import { ChevronRight, Globe2, Scale, Shield, FileCheck } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 
 const placeholderImage = '/images/placeholder.svg';
 
@@ -52,13 +52,17 @@ const Card = (card) => {
           </p>
         </div>
         <div className="mt-5 md:mt-6">
-          <Button 
-            {...card.button}
-            className="text-pippin-darker hover:text-pippin-darkest font-semibold inline-flex items-center gap-1"
+          <Link
+            href={card.button.href}
+            className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+              card.button.variant === 'primary'
+                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                : "bg-pippin text-cod-gray hover:bg-pippin-light"
+            }`}
           >
             {card.button.title}
             <ChevronRight className="size-4" />
-          </Button>
+          </Link>
         </div>
       </div>
       <div className="flex size-full flex-col items-center justify-center self-start bg-gallery/50 p-6 lg:h-auto">
@@ -88,13 +92,17 @@ const FeatureSection = (featureSection) => (
         </p>
       </div>
       <div className="mt-5 md:mt-6">
-        <Button 
-          {...featureSection.button}
-          className="text-pippin-darker hover:text-pippin-darkest font-semibold inline-flex items-center gap-1"
+        <Link
+          href={featureSection.button.href}
+          className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+            featureSection.button.variant === 'primary'
+              ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+              : "bg-pippin text-cod-gray hover:bg-pippin-light"
+          }`}
         >
           {featureSection.button.title}
           <ChevronRight className="size-4" />
-        </Button>
+        </Link>
       </div>
     </div>
   </div>
@@ -118,6 +126,7 @@ export const Layout392Defaults = {
         variant: "link",
         size: "link",
         iconRight: true,
+        href: route('trademark-services.international'),
       },
     },
     {
@@ -133,6 +142,7 @@ export const Layout392Defaults = {
         variant: "link",
         size: "link",
         iconRight: true,
+        href: route('trademark-services.registration'),
       },
     },
   ],
@@ -146,6 +156,7 @@ export const Layout392Defaults = {
         variant: "link",
         size: "link",
         iconRight: true,
+        href: route('trademark-services.international'),
       },
     },
     {
@@ -157,6 +168,7 @@ export const Layout392Defaults = {
         variant: "link",
         size: "link",
         iconRight: true,
+        href: route('trademark-services.registration'),
       },
     },
     {
@@ -168,6 +180,7 @@ export const Layout392Defaults = {
         variant: "link",
         size: "link",
         iconRight: true,
+        href: route('trademark-services.enforcement'),
       },
     },
     {
@@ -179,6 +192,7 @@ export const Layout392Defaults = {
         variant: "link",
         size: "link",
         iconRight: true,
+        href: route('contact'),
       },
     },
   ],

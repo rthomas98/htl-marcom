@@ -129,7 +129,11 @@ export default function Layout423({
                         variant="link"
                         size="link"
                         iconRight={<ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />}
-                        className="text-sm text-white transition-colors duration-300 hover:text-pippin sm:text-base"
+                        className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                            feature.button.variant === 'primary'
+                                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                        }`}
                       >
                         {feature.button.text || 'Learn More'}
                       </Button>
@@ -158,7 +162,11 @@ export default function Layout423({
                             variant="link"
                             size="link"
                             iconRight={<ChevronRight className="h-5 w-5" />}
-                            className="text-white transition-colors duration-300 hover:text-pippin"
+                            className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                feature.button.variant === 'primary'
+                                    ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                    : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                            }`}
                           >
                             {feature.button.text || 'Learn More'}
                           </Button>

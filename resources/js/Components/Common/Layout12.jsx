@@ -74,7 +74,7 @@ export const Layout12Defaults = {
     },
   ],
   image: {
-    src: placeholderImage,
+    src: "/images/tm/licensing/pexels-a-darmel-7710178.jpg",
     alt: "Ongoing Trademark Support",
   },
 };

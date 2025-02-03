@@ -16,17 +16,17 @@ const PrivacyData = () => {
     buttons: [
       { 
         title: "Schedule Consultation",
-        href: "/contact",
-        icon: <ChevronRight className="size-4" strokeWidth={1.5} />
+        href: route('contact'),
+        className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-cod-gray-dark"
       },
       { 
         title: "Learn More",
-        href: "#services",
-        icon: <ChevronRight className="size-4" strokeWidth={1.5} />
+        href: route('legal-services.overview'),
+        className: "inline-flex items-center justify-center rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin-light"
       }
     ],
     image: {
-      src: "/images/placeholder.svg",
+      src: "/images/other/privacy-data-protection/shutterstock_2014536923.jpg",
       alt: "Privacy & Data Protection",
     },
   };
@@ -65,8 +65,8 @@ const PrivacyData = () => {
     footerDescription: "Contact us to discuss your specific privacy and data protection needs.",
     button: {
       title: "Schedule Consultation",
-      href: "/contact",
-      icon: <ChevronRight className="size-4" strokeWidth={1.5} />
+      href: route('contact'),
+      className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-cod-gray-dark"
     },
   };
 
@@ -76,15 +76,13 @@ const PrivacyData = () => {
     buttons: [
       { 
         title: "Schedule Consultation",
-        href: "/contact",
-        primary: true,
-        icon: <ChevronRight className="size-4" strokeWidth={1.5} />
+        href: route('contact'),
+        className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-cod-gray-dark"
       },
       { 
         title: "Learn More",
-        href: "/services",
-        primary: false,
-        icon: <ChevronRight className="size-4" strokeWidth={1.5} />
+        href: route('legal-services.overview'),
+        className: "inline-flex items-center justify-center rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin-light"
       }
     ],
   };

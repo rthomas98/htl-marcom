@@ -227,15 +227,12 @@ export default function MarcomNav() {
                                         <span>{auth.user.name}</span>
                                         <ChevronDown className="size-4" />
                                     </div>
-                                    <Button
-                                        onClick={handleLogout}
-                                        variant="outline"
-                                        size="sm"
-                                        className="flex items-center space-x-2 border-cod-gray bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white"
+                                    <Link
+                                        href={route('contact')}
+                                        className="inline-flex items-center justify-center gap-2 px-6 py-3 transition-colors duration-300 bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray rounded-full"
                                     >
-                                        <LogOut className="size-4" />
-                                        <span>Logout</span>
-                                    </Button>
+                                        Contact Us
+                                    </Link>
                                 </div>
                             </NavDropdown>
                         ) : (

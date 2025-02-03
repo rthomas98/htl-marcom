@@ -58,13 +58,15 @@ export default function RegistrationButton({ legalnar, className = '' }) {
       whileTap={{ scale: 0.98 }}
     >
       <Button
+        as="button"
         onClick={handleRegister}
         disabled={isFullyBooked}
         variant="solid"
         className={`
+          inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300
           ${isFullyBooked
             ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            : 'bg-cod-gray text-white hover:bg-cod-gray-light'
+            : 'bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray'
           }
           ${className}
         `}

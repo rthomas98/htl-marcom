@@ -31,6 +31,19 @@ export default function ServicesSection() {
         },
     ];
 
+    const buttons = [
+        {
+            title: 'Schedule Consultation',
+            href: '/contact',
+            variant: 'primary',
+        },
+        {
+            title: 'Learn More',
+            href: '/about-me',
+            variant: 'secondary',
+        },
+    ];
+
     return (
         <section className="relative bg-gradient-to-b from-pippin-lighter to-white px-4 py-16 sm:px-6 md:py-24 lg:px-8 lg:py-28">
             <BackgroundPattern />
@@ -76,21 +89,24 @@ export default function ServicesSection() {
                         ))}
                     </div>
 
-                    <div className="mt-12 flex items-center gap-4 md:mt-16">
-                        <Link
-                            href="/contact"
-                            target="_blank"
-                            className="rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-                        >
-                            Schedule Consultation
-                        </Link>
-                        <Link
-                            href="/about-me"
-                            className="group inline-flex items-center gap-2 rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
-                        >
-                            Learn More
-                            <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
+                    <div className="mt-10 flex items-center justify-center gap-x-6">
+                        {buttons.map((button, index) => (
+                            <Link
+                                key={index}
+                                href={button.href}
+                                target={button.variant === 'primary' ? "_blank" : undefined}
+                                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                    button.variant === 'primary'
+                                        ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                        : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                                }`}
+                            >
+                                {button.title}
+                                {button.variant === 'secondary' && (
+                                    <ChevronRight className="h-4 w-4" />
+                                )}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>

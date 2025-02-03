@@ -1,8 +1,7 @@
 import React from "react";
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { ChevronRight, Search, Shield, Clock, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Link } from '@inertiajs/react';
 
 export default function TrademarkFeatures({ className = "", ...props }) {
     const content = {
@@ -32,7 +31,7 @@ export default function TrademarkFeatures({ className = "", ...props }) {
             { 
                 title: "Schedule Consultation",
                 variant: "primary",
-                className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray hover:border-pippin rounded-full",
+                className: "",
                 href: "/contact"
             },
             {
@@ -40,7 +39,7 @@ export default function TrademarkFeatures({ className = "", ...props }) {
                 variant: "link",
                 size: "link",
                 iconRight: <ChevronRight className="size-4" />,
-                className: "text-cod-gray hover:text-cod-gray/80 inline-flex items-center p-3",
+                className: "",
                 href: "/trademark-services/registration"
             },
         ],
@@ -106,21 +105,24 @@ export default function TrademarkFeatures({ className = "", ...props }) {
                             ))}
                         </ul>
                         <motion.div 
-                            className="mt-8 flex flex-wrap gap-4"
+                            className="mt-6 flex flex-wrap items-center gap-4 md:mt-8"
                             initial="hidden"
                             animate="visible"
                             variants={itemVariants}
                         >
-                            {content.buttons.map((button, index) => {
-                                const { href, ...buttonProps } = button;
-                                return (
-                                    <Link key={index} href={href}>
-                                        <Button {...buttonProps}>
-                                            {button.title}
-                                        </Button>
-                                    </Link>
-                                );
-                            })}
+                            {content.buttons.map((button, index) => (
+                                <Link 
+                                    key={index} 
+                                    href={button.href}
+                                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                        button.variant === 'primary'
+                                            ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                            : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                                    }`}
+                                >
+                                    {button.title}
+                                </Link>
+                            ))}
                         </motion.div>
                     </motion.div>
                     <motion.div 

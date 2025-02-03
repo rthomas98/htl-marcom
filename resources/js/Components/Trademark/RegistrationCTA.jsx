@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 export default function RegistrationCTA({ className = "", ...props }) {
   const content = {
@@ -11,12 +12,12 @@ export default function RegistrationCTA({ className = "", ...props }) {
       { 
         title: "Start Registration",
         variant: "primary",
-        className: "bg-white text-cod-gray hover:bg-pippin transition-colors duration-300 rounded-full"
+        href: "/trademark-registration"
       },
       { 
         title: "Learn More About Me",
         variant: "secondary",
-        className: "border border-white bg-transparent text-white hover:bg-white hover:text-cod-gray transition-all duration-300 rounded-full"
+        href: "/about"
       }
     ],
     image: {
@@ -43,13 +44,17 @@ export default function RegistrationCTA({ className = "", ...props }) {
           </p>
           <div className="mt-8 flex flex-wrap gap-4 md:mt-10">
             {content.buttons.map((button, index) => (
-              <Button 
+              <Link
                 key={index} 
-                {...button}
-                className={button.className}
+                href={button.href}
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                    button.variant === 'primary'
+                        ? "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                        : "border border-white text-white hover:bg-white hover:text-cod-gray"
+                }`}
               >
                 {button.title}
-              </Button>
+              </Link>
             ))}
           </div>
         </div>

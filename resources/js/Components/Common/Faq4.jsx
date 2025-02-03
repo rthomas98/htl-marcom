@@ -100,7 +100,7 @@ export const Faq4 = ({ className, ...props }) => {
           <div className="mt-6 md:mt-8">
             <Link
               href={button.href}
-              className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-gray-100"
+              className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-pippin text-cod-gray hover:bg-white hover:text-cod-gray transition-colors duration-300"
             >
               {button.title}
             </Link>

@@ -20,16 +20,17 @@ const Layout25Defaults = {
   buttons: [
     { 
       title: "Get Started",
-      href: "/contact"
+      href: route('contact'),
+      className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-cod-gray-dark"
     },
     {
       title: "Learn More",
-      href: "#services",
-      iconRight: <RxChevronRight />
+      href: route('legal-services.overview'),
+      className: "inline-flex items-center justify-center rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin-light"
     },
   ],
   image: {
-    src: "/images/placeholder.svg",
+    src: "/images/other/privacy-data-protection/shutterstock_2164682885.jpg",
     alt: "Data Protection Services",
   },
 };
@@ -65,13 +66,9 @@ export const Layout25 = ({ className, ...props }) => {
                 <Link
                   key={index}
                   href={button.href}
-                  className={index === 0 
-                    ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-                    : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light flex items-center"
-                  }
+                  className={button.className}
                 >
                   {button.title}
-                  {button.iconRight && <span className="ml-2">{button.iconRight}</span>}
                 </Link>
               ))}
             </div>

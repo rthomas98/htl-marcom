@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { Calendar, ArrowRight } from 'lucide-react';
 
@@ -10,13 +10,15 @@ const Header5Defaults = {
   buttons: [
     { 
       title: "Schedule Consultation",
-      variant: "secondary-alt",
-      icon: Calendar
+      variant: "primary",
+      icon: Calendar,
+      href: "#"
     }, 
     { 
       title: "Learn More",
-      variant: "secondary-alt",
-      icon: ArrowRight
+      variant: "secondary",
+      icon: ArrowRight,
+      href: "#"
     }
   ],
   image: {
@@ -50,20 +52,20 @@ function Header5(props) {
               {heading}
             </h1>
             <p className="font-sans text-white/90 md:text-lg">{description}</p>
-            <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
+            <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
               {buttons.map((button, index) => (
-                <Button 
+                <Link 
                   key={index} 
-                  {...button}
-                  className={`${
-                    button.variant === 'secondary-alt' 
-                      ? 'border-white bg-transparent text-white hover:bg-white hover:text-cod-gray' 
-                      : 'bg-white text-cod-gray hover:bg-pippin'
-                  } transition-colors duration-300 inline-flex items-center gap-2`}
+                  href={button.href}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                    button.variant === 'primary'
+                      ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                      : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                  }`}
                 >
                   {button.icon && <button.icon className="size-4" />}
                   {button.title}
-                </Button>
+                </Link>
               ))}
             </div>
           </motion.div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 
 const placeholderImage = '/images/placeholder.svg';
@@ -39,10 +39,13 @@ const Card = (card) => {
           <p className="text-cod-gray-light">{card.description}</p>
         </div>
         <div className="mt-5 md:mt-6">
-          <Button {...card.button}>
+          <Link
+            href={card.button.href}
+            className="inline-flex items-center justify-center rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
+          >
             {card.button.title}
             {card.button.iconRight && <ChevronRight className="ml-2 size-5" />}
-          </Button>
+          </Link>
         </div>
       </div>
       <div className="flex size-full flex-col items-center justify-center self-start">
@@ -60,7 +63,7 @@ export const Layout384Defaults = {
     {
       tagline: "Brand Growth",
       image: {
-        src: placeholderImage,
+        src: "/images/tm/licensing/pexels-fauxels-3182833.jpg",
         alt: "Brand Growth through Licensing",
       },
       heading: "Strategic Brand Expansion",
@@ -70,13 +73,13 @@ export const Layout384Defaults = {
         variant: "link",
         size: "link",
         iconRight: true,
-        className: "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
+        href: route('trademark-services.overview')
       },
     },
     {
       tagline: "Legal Protection",
       image: {
-        src: placeholderImage,
+        src: "/images/tm/licensing/pexels-silverkblack-23496639.jpg",
         alt: "Legal Protection in Licensing",
       },
       heading: "Secure Your Brand's Future",
@@ -86,7 +89,7 @@ export const Layout384Defaults = {
         variant: "link",
         size: "link",
         iconRight: true,
-        className: "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
+        href: route('trademark-services.overview')
       },
     },
   ],

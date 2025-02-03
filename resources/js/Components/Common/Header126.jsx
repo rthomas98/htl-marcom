@@ -1,4 +1,7 @@
 import React from 'react';
+import { ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 import { Button } from "@relume_io/relume-ui";
 
 const placeholderImage = '/images/placeholder.svg';
@@ -21,16 +24,17 @@ export const Header126 = (props) => {
             </p>
             <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
               {buttons.map((button, index) => (
-                <Button 
-                  key={index} 
-                  {...button}
-                  className={index === 0 ? 
-                    "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light" :
-                    "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
-                  }
+                <Link
+                  key={index}
+                  href={button.href}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                    button.variant === 'primary'
+                      ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                      : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                  }`}
                 >
                   {button.title}
-                </Button>
+                </Link>
               ))}
             </div>
           </div>
@@ -65,10 +69,12 @@ export const Header126Defaults = {
     { 
       title: "Schedule Consultation",
       variant: "primary",
+      href: "#"
     },
     { 
       title: "Learn More",
       variant: "secondary",
+      href: "#"
     }
   ],
   firstImage: {

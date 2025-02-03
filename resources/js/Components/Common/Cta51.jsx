@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
-import { Calendar, Phone } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 
 export const Cta51 = (props) => {
   const { heading, description, buttons, className = '' } = {
@@ -19,18 +18,19 @@ export const Cta51 = (props) => {
               {description}
             </p>
           </div>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:mt-8">
+          <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
             {buttons.map((button, index) => (
-              <Button 
+              <Link 
                 key={index} 
-                {...button}
-                className={button.variant === 'primary' 
-                  ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light inline-flex items-center gap-2"
-                  : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light inline-flex items-center gap-2"}
+                href={button.href}
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                  button.variant === 'primary'
+                    ? 'bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray'
+                    : 'bg-pippin text-cod-gray hover:bg-cod-gray hover:text-white'
+                }`}
               >
-                {button.icon && <button.icon className="size-4" />}
                 {button.title}
-              </Button>
+              </Link>
             ))}
           </div>
         </div>
@@ -46,12 +46,12 @@ export const Cta51Defaults = {
     { 
       title: "Schedule Consultation",
       variant: "primary",
-      icon: Calendar
+      href: '#'
     },
     { 
       title: "Call Us Today",
       variant: "secondary",
-      icon: Phone
+      href: '#'
     }
   ],
 };

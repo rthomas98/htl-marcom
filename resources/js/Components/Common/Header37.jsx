@@ -8,15 +8,15 @@ export const Header37Defaults = {
   buttons: [
     { 
       title: "Schedule Consultation",
-      href: "/contact"
+      href: route('contact'),
     },
     { 
       title: "Learn More",
-      href: "#services"
+      href: route('about-me'),
     }
   ],
   image: {
-    src: "/images/placeholder.svg",
+    src: "/images/other/general-counsel/shutterstock_2024994188.jpg",
     alt: "General Counsel Services",
   },
 };
@@ -47,8 +47,8 @@ export const Header37 = ({ className, ...props }) => {
               key={index}
               href={button.href}
               className={index === 0 
-                ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-                : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
+                ? "inline-flex items-center justify-center rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-cod-gray-dark"
+                : "inline-flex items-center justify-center rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin-light"
               }
             >
               {button.title}

@@ -19,10 +19,10 @@ const Cta45 = ({ heading, description, buttons, className = "" }) => {
               <Link 
                 key={index}
                 href={button.href}
-                className={`inline-flex items-center justify-center transition-colors duration-200 ${
-                  button.variant === 'secondary' 
-                    ? 'border border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white rounded-full px-6 py-2' 
-                    : 'bg-cod-gray text-white hover:bg-cod-gray-light rounded-full px-6 py-2'
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                  button.variant === 'primary'
+                    ? "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                    : "border border-white text-white hover:bg-white hover:text-cod-gray"
                 }`}
               >
                 {button.title}

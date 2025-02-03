@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogTrigger,
@@ -10,7 +9,8 @@ import {
   TabsTrigger,
   VideoIframe,
 } from "@relume_io/relume-ui";
-import { ChevronRight, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 
 const placeholderImage = '/images/placeholder.svg';
 
@@ -35,9 +35,9 @@ export const Layout500 = (props) => {
           </p>
           <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
             {buttons.map((button, index) => (
-              <Button 
-                key={index} 
-                {...button}
+              <Link
+                key={index}
+                href={button.href}
                 className={button.variant === 'primary' 
                   ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light inline-flex items-center gap-2"
                   : button.variant === 'link'
@@ -45,8 +45,7 @@ export const Layout500 = (props) => {
                   : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light inline-flex items-center gap-2"}
               >
                 {button.title}
-                {button.iconRight && <ChevronRight className="size-4" />}
-              </Button>
+              </Link>
             ))}
           </div>
         </div>
@@ -148,13 +147,13 @@ export const Layout500Defaults = {
   buttons: [
     { 
       title: "Schedule Consultation",
-      variant: "primary"
+      variant: "primary",
+      href: "#",
     },
     {
       title: "Learn More",
       variant: "link",
-      size: "link",
-      iconRight: true,
+      href: "#",
     },
   ],
 };

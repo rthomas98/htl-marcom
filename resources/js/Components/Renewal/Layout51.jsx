@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@relume_io/relume-ui";
 import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from '@inertiajs/react';
 
 export default function Layout51({
   heading = "Protect Your Brand's Future",
@@ -57,14 +57,18 @@ export default function Layout51({
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               {buttons.map((button, index) => (
-                <Button 
-                  key={index} 
-                  {...button}
-                  className="hover:bg-white hover:text-cod-gray"
+                <Link
+                  key={index}
+                  href={button.href}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                    button.variant === 'primary'
+                      ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                      : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                  }`}
                 >
                   {button.title}
                   {button.variant === 'link-alt' && <ChevronRight className="ml-2 h-4 w-4" />}
-                </Button>
+                </Link>
               ))}
             </motion.div>
           </motion.div>

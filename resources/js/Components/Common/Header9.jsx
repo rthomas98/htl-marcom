@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 
 const placeholderImage = '/images/placeholder.svg';
 
@@ -34,10 +35,18 @@ export const Header9 = (props) => {
                 {buttons.map((button, index) => {
                   const { title, icon: Icon, ...buttonProps } = button;
                   return (
-                    <Button key={index} {...buttonProps}>
+                    <Link
+                      key={index}
+                      href={button.href}
+                      className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                        button.variant === 'primary'
+                          ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                          : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                      }`}
+                    >
                       {Icon && <Icon className="mr-2 size-5" />}
                       {title}
-                    </Button>
+                    </Link>
                   );
                 })}
               </div>
@@ -53,7 +62,7 @@ export const Header9Defaults = {
   heading: "Medium length hero heading goes here",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
-  buttons: [{ title: "Button" }, { title: "Button", variant: "secondary" }],
+  buttons: [{ title: "Button", href: '#' }, { title: "Button", variant: "secondary", href: '#' }],
   image: {
     src: placeholderImage,
     alt: "Placeholder image",

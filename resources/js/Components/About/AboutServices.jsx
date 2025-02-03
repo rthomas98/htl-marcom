@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
-import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const cardVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -104,10 +104,12 @@ export default function AboutServices({
                                 {card.heading}
                             </h3>
                             <p className="mb-6 text-cod-gray">{card.description}</p>
-                            <Button {...card.button}>
+                            <Link
+                                href={card.button.href}
+                                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                            >
                                 {card.button.title}
-                                {card.button.iconRight}
-                            </Button>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>
@@ -132,9 +134,12 @@ export default function AboutServices({
                                 {content.cardBig.heading}
                             </h3>
                             <p className="mb-6 text-white/90">{content.cardBig.description}</p>
-                            <Button {...content.cardBig.button}>
+                            <Link
+                                href={content.cardBig.button.href}
+                                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                            >
                                 {content.cardBig.button.title}
-                            </Button>
+                            </Link>
                         </div>
                     </div>
                 </motion.div>

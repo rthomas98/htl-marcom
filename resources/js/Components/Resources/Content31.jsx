@@ -1,5 +1,6 @@
 import { Button, Input } from "@relume_io/relume-ui";
 import React, { useState } from "react";
+import { Link } from '@inertiajs/react';
 
 const Content31 = ({ subscribe, children, className = "" }) => {
   const [emailInput, setEmailInput] = useState("");
@@ -33,12 +34,16 @@ const Content31 = ({ subscribe, children, className = "" }) => {
                   onChange={(e) => setEmailInput(e.target.value)}
                   className="border-gallery focus:border-cod-gray text-cod-gray placeholder:text-cod-gray-light"
                 />
-                <Button 
-                  {...subscribe.button}
-                  className="bg-cod-gray text-white hover:bg-cod-gray-light transition-colors duration-200"
+                <Link
+                  href={subscribe.button.href}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                    subscribe.button.variant === 'primary'
+                      ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                      : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                  }`}
                 >
                   {subscribe.button.title}
-                </Button>
+                </Link>
               </form>
               <div 
                 dangerouslySetInnerHTML={{ __html: subscribe.termsAndConditions }} 
@@ -57,7 +62,11 @@ export const Content31Defaults = {
     title: "Subscribe to Our Newsletter",
     description: "Stay updated with our latest insights and legal updates delivered directly to your inbox.",
     inputPlaceholder: "Enter your email",
-    button: { title: "Subscribe", size: "sm" },
+    button: { 
+      title: "Subscribe", 
+      variant: 'primary', 
+      href: '#' 
+    },
     termsAndConditions: `
       <p class='text-xs'>
         By subscribing you agree to our 

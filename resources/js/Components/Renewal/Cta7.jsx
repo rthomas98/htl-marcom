@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 
 export default function Cta7({ className, ...props }) {
   const { heading, description, buttons } = {
@@ -8,7 +8,7 @@ export default function Cta7({ className, ...props }) {
   };
   
   return (
-    <section className={`px-[5%] py-16 md:py-24 lg:py-28 ${className || ''}`}>
+    <section className={`bg-cod-gray text-white px-[5%] py-16 md:py-24 lg:py-28 ${className || ''}`}>
       <div className="container grid w-full grid-cols-1 items-start justify-between gap-6 md:grid-cols-[1fr_max-content] md:gap-x-12 md:gap-y-8 lg:gap-x-20">
         <div className="md:mr-12 lg:mr-0">
           <div className="w-full max-w-lg">
@@ -20,9 +20,17 @@ export default function Cta7({ className, ...props }) {
         </div>
         <div className="flex items-start justify-start gap-4">
           {buttons.map((button, index) => (
-            <Button key={index} {...button}>
+            <Link
+              key={index}
+              href={button.href}
+              className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                button.variant === 'primary'
+                  ? "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                  : "border border-white text-white hover:bg-white hover:text-cod-gray"
+              }`}
+            >
               {button.title}
-            </Button>
+            </Link>
           ))}
         </div>
       </div>
@@ -36,11 +44,13 @@ export const Cta7Defaults = {
   buttons: [
     { 
       title: "Schedule Consultation",
-      variant: "primary"
+      variant: "primary",
+      href: "contact"
     },
     { 
       title: "Learn More",
-      variant: "secondary"
+      variant: "secondary",
+      href: "trademark-services/renewal"
     }
   ],
 };

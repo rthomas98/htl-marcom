@@ -9,12 +9,16 @@ const defaultContent = {
     "Take the first step in securing your trademark rights. Our comprehensive clearance search service helps you make informed decisions and avoid potential conflicts.",
   buttons: [
     { 
-      title: "Start Your Search",
-      variant: "primary",
-      className: "bg-white text-cod-gray hover:bg-pippin rounded-full",
-      href: "/contact"
+      title: "Schedule a Call",
+      variant: "secondary",
+      href: "/contact",
     },
-    
+    { 
+      title: "Learn More",
+      variant: "link",
+      href: "#benefits",
+      iconRight: true
+    }
   ],
   image: {
     src: "/images/tm/search/shutterstock_503699314.jpg",
@@ -48,13 +52,16 @@ export default function ClearanceSearchCTA({ className = "", ...props }) {
               {content.buttons.map((button, index) => {
                 const { href, ...buttonProps } = button;
                 return (
-                  <Link key={index} href={href}>
-                    <Button 
-                      {...buttonProps}
-                      className={`${buttonProps.className} transition-colors duration-300`}
-                    >
-                      {button.title}
-                    </Button>
+                  <Link
+                    key={index}
+                    href={button.href}
+                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                        button.variant === 'primary'
+                            ? "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                            : "border border-white text-white hover:bg-white hover:text-cod-gray"
+                    }`}
+                  >
+                    {button.title}
                   </Link>
                 );
               })}

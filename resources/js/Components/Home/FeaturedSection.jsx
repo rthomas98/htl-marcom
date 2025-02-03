@@ -19,11 +19,11 @@ const BigCard = ({ tagline, image, heading, description, buttons }) => {
                         <Link
                             key={index}
                             href={button.href}
-                            className={
-                                button.variant === 'secondary'
-                                    ? 'rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light'
-                                    : 'group inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light'
-                            }
+                            className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                button.variant === 'primary'
+                                    ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                    : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                            }`}
                         >
                             {button.title}
                             {button.iconRight && (
@@ -57,7 +57,11 @@ const SmallCard = ({ tagline, image, heading, description, button }) => {
                 <div className="mt-5 md:mt-6">
                     <Link
                         href={button.href}
-                        className="group inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light"
+                        className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                            button.variant === 'primary'
+                                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                        }`}
                     >
                         {button.title}
                         {button.iconRight && (
@@ -85,7 +89,11 @@ const FeatureSection = ({ icon, heading, description, button }) => {
             <div className="mt-5 md:mt-6">
                 <Link
                     href={button.href}
-                    className="group inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light"
+                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                        button.variant === 'primary'
+                            ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                            : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                    }`}
                 >
                     {button.title}
                     {button.iconRight && (
@@ -132,7 +140,7 @@ export default function FeaturedSection() {
                 { 
                     href: "/trademark-services",
                     title: "Our TRademark Services",
-                    variant: "secondary"
+                    variant: "primary"
                 },
                 {
                     href: "/contact",
@@ -155,7 +163,7 @@ export default function FeaturedSection() {
                 { 
                     href: "/contact",
                     title: "Rweady to Get Started?",
-                    variant: "secondary"
+                    variant: "primary"
                 },
                 {
                     href: "/legal-services",

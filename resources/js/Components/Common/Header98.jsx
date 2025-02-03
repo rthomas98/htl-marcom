@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { Calendar, ChevronRight } from 'lucide-react';
 
 const placeholderImage = '/images/placeholder.svg';
@@ -23,16 +23,19 @@ export const Header98 = (props) => {
           </div>
           <div className="relative z-10 mt-6 flex flex-wrap items-center justify-center gap-4 md:mt-8">
             {buttons.map((button, index) => (
-              <Button 
+              <Link
                 key={index} 
-                {...button}
-                className={button.variant === 'primary' 
-                  ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray rounded-full"
-                  : "border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white rounded-full"}
+                href={button.href}
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                  button.variant === 'primary'
+                    ? "bg-white text-cod-gray hover:bg-pippin"
+                    : button.variant === 'secondary-alt'
+                      ? "bg-pippin text-cod-gray hover:bg-white"
+                      : "bg-pippin text-cod-gray hover:bg-white"
+                }`}
               >
-                {button.icon && <button.icon className="size-4" />}
                 {button.title}
-              </Button>
+              </Link>
             ))}
           </div>
           <div className="absolute inset-0 -z-10">
@@ -57,12 +60,12 @@ export const Header98Defaults = {
     { 
       title: "Schedule Consultation",
       variant: "primary",
-      icon: Calendar
+      href: route('contact')
     },
     { 
       title: "Explore Services",
       variant: "secondary-alt",
-      icon: ChevronRight
+      href: route('trademark-services.overview')
     }
   ],
   image: {

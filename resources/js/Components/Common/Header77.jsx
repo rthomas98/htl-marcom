@@ -1,6 +1,9 @@
 import React from 'react';
 import { Button } from "@relume_io/relume-ui";
-import { motion } from "framer-motion";
+import { ChevronRight } from 'lucide-react';
+import { motion, useAnimation } from "framer-motion";
+import { Link } from '@inertiajs/react';
+import { useEffect } from 'react';
 
 const placeholderImage = '/images/placeholder.svg';
 
@@ -9,6 +12,22 @@ export const Header77 = (props) => {
     ...Header77Defaults,
     ...props,
   };
+
+  const controls = useAnimation();
+
+  useEffect(() => {
+    controls.start({
+      x: ["0%", "-50%"],
+      transition: {
+        x: {
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear",
+          repeatType: "loop"
+        }
+      }
+    });
+  }, []);
   
   return (
     <section
@@ -23,70 +42,44 @@ export const Header77 = (props) => {
         </p>
         <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
           {buttons.map((button, index) => (
-            <Button 
+            <Link
               key={index} 
-              {...button}
-              className={button.variant === 'primary' 
-                ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light inline-flex items-center gap-2"
-                : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light inline-flex items-center gap-2"}
+              href={button.href}
+              className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                  button.variant === 'primary'
+                      ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                      : "bg-pippin text-cod-gray hover:bg-pippin-light"
+              }`}
             >
-              {button.icon && <button.icon className="size-4" />}
               {button.title}
-            </Button>
+            </Link>
           ))}
         </div>
       </div>
       <div className="flex items-center gap-4 overflow-hidden bg-gallery py-8 md:py-16 lg:h-screen">
         <motion.div 
-          className="grid shrink-0 grid-cols-1 gap-y-4"
-          initial={{ x: 0 }}
-          animate={{ 
-            x: [0, -100, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
+          className="flex gap-4"
+          animate={controls}
+          style={{ width: "200%" }}
         >
-          <div className="ml-[-8.5%] grid w-full auto-cols-fr grid-cols-2 gap-4 self-center">
-            {[...new Array(2)].map((e, index) => (
-              <div key={index} className="grid w-full grid-flow-col gap-4">
-                {images.map((image, imageIndex) => (
-                  <div
-                    key={imageIndex}
-                    className="relative w-[60vw] pt-[75%] sm:w-[18rem] md:w-[26rem]"
-                  >
-                    <img
-                      className="absolute inset-0 size-full object-cover rounded-lg"
-                      src={image.src}
-                      alt={image.alt}
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-          <div className="grid w-full grid-cols-2 gap-4 self-center">
-            {[...new Array(2)].map((e, index) => (
-              <div key={index} className="grid w-full grid-flow-col gap-4">
-                {images.map((image, imageIndex) => (
-                  <div
-                    key={imageIndex}
-                    className="relative w-[60vw] pt-[75%] sm:w-[18rem] md:w-[26rem]"
-                  >
-                    <img
-                      className="absolute inset-0 size-full object-cover rounded-lg"
-                      src={image.src}
-                      alt={image.alt}
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+          {[...Array(2)].map((_, setIndex) => (
+            <div key={setIndex} className="flex gap-4 min-w-[50%]">
+              {images.map((image, imageIndex) => (
+                <div
+                  key={imageIndex}
+                  className="relative w-[60vw] pt-[75%] sm:w-[18rem] md:w-[26rem] shrink-0"
+                >
+                  <img
+                    className="absolute inset-0 size-full object-cover rounded-lg"
+                    src={image.src}
+                    alt={image.alt}
+                    loading={setIndex === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
@@ -97,13 +90,15 @@ export const Header77Defaults = {
   heading: "Expert Business Law Services for Your Success",
   description: "Comprehensive legal solutions to protect and grow your business. From entity formation to contract management, we provide the guidance you need to thrive in today's business environment.",
   buttons: [
-    { 
+    {
       title: "Schedule Consultation",
-      variant: "primary"
+      variant: "primary",
+      href: "#"
     },
-    { 
+    {
       title: "View Services",
-      variant: "secondary"
+      variant: "secondary",
+      href: "#"
     }
   ],
   images: [

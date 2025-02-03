@@ -6,6 +6,7 @@ import Layout367 from '@/Components/Common/Layout367'
 import Cta39 from '@/Components/Common/Cta39'
 import { RxChevronRight } from "react-icons/rx";
 import { ShieldCheck, Globe2 } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 
 export default function Monitoring() {
     const monitoringContent = {
@@ -15,7 +16,7 @@ export default function Monitoring() {
         sections: [
             {
                 image: {
-                    src: "https://images.pexels.com/photos/7681098/pexels-photo-7681098.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                    src: "/images/tm/monitoring/pexels-artempodrez-8519097.jpg",
                     alt: "Market Analysis Dashboard",
                 },
                 heading: "Market Analysis",
@@ -23,7 +24,7 @@ export default function Monitoring() {
             },
             {
                 image: {
-                    src: "https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                    src: "/images/tm/monitoring/pexels-charlotte-may-5965688.jpg",
                     alt: "Digital Brand Protection",
                 },
                 heading: "Digital Protection",
@@ -31,7 +32,7 @@ export default function Monitoring() {
             },
             {
                 image: {
-                    src: "https://images.pexels.com/photos/5668869/pexels-photo-5668869.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                    src: "/images/tm/monitoring/pexels-fauxels-3182778.jpg",
                     alt: "Legal Documentation",
                 },
                 heading: "Legal Support",
@@ -42,12 +43,16 @@ export default function Monitoring() {
             { 
                 title: "Start Monitoring", 
                 variant: "secondary",
+                href: route('contact'),
+                className: "border-cod-gray text-cod-gray hover:bg-pippin rounded-full"
             },
             {
                 title: "Learn More",
                 variant: "link",
                 size: "link",
                 iconRight: true,
+                href: route('about-me'),
+                className: "border-cod-gray text-cod-gray hover:bg-pippin rounded-full"
             },
         ],
     };
@@ -59,18 +64,25 @@ export default function Monitoring() {
         card: {
             tagline: "Premium Protection",
             image: {
-                src: "https://images.pexels.com/photos/6476589/pexels-photo-6476589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                src: "/images/tm/monitoring/pexels-olly-3796810.jpg",
                 alt: "Premium trademark monitoring services",
             },
             heading: "Full-Spectrum Monitoring",
             description: "Get complete protection with our comprehensive monitoring package, including global trademark watching, domain monitoring, and marketplace surveillance.",
             buttons: [
-                { title: "Get Started", variant: "secondary" },
+                { 
+                    title: "Get Started", 
+                    variant: "primary",
+                    href: route('contact'),
+                    className: "rounded-full bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                },
                 {
                     title: "View Details",
                     variant: "link",
                     size: "link",
                     iconRight: <RxChevronRight />,
+                    href: route('about-me'),
+                    className: "rounded-full border-cod-gray text-cod-gray hover:bg-pippin"
                 },
             ],
         },
@@ -83,12 +95,19 @@ export default function Monitoring() {
                 heading: "Trademark Watch",
                 description: "Monitor new trademark applications and registrations worldwide to identify potential conflicts early.",
                 buttons: [
-                    { title: "Learn More", variant: "secondary" },
+                    { 
+                        title: "Learn More", 
+                        variant: "secondary",
+                        href: route('about-me'),
+                        className: "rounded-full border-cod-gray text-cod-gray hover:bg-pippin"
+                    },
                     {
                         title: "Contact Us",
                         variant: "link",
                         size: "link",
                         iconRight: <RxChevronRight />,
+                        href: route('contact'),
+                        className: "rounded-full border-cod-gray text-cod-gray hover:bg-pippin"
                     },
                 ],
             },
@@ -100,12 +119,19 @@ export default function Monitoring() {
                 heading: "Domain Monitor",
                 description: "Track domain registrations and cybersquatting attempts that could infringe on your trademark rights.",
                 buttons: [
-                    { title: "Learn More", variant: "secondary" },
+                    { 
+                        title: "Learn More", 
+                        variant: "secondary",
+                        href: route('about-me'),
+                        className: "rounded-full border-cod-gray text-cod-gray hover:bg-pippin"
+                    },
                     {
                         title: "Contact Us",
                         variant: "link",
                         size: "link",
                         iconRight: <RxChevronRight />,
+                        href: route('contact'),
+                        className: "rounded-full border-cod-gray text-cod-gray hover:bg-pippin"
                     },
                 ],
             },
@@ -118,15 +144,17 @@ export default function Monitoring() {
         buttons: [
             { 
                 title: "Schedule Consultation", 
-                variant: "primary"
+                variant: "primary",
+                href: route('contact')
             },
             { 
-                title: "View Pricing", 
-                variant: "secondary"
-            },
+                title: "Have More Questions?", 
+                variant: "secondary",
+                href: route('contact')
+            }
         ],
         image: {
-            src: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            src: "/images/tm/monitoring/pexels-yankrukov-7793639.jpg",
             alt: "Team discussing trademark protection strategy",
         },
     };

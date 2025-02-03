@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { RxChevronRight } from "react-icons/rx";
 import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
 export const Layout367Defaults = {
   tagline: "Tagline",
@@ -17,12 +18,17 @@ export const Layout367Defaults = {
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
     buttons: [
-      { title: "Button", variant: "secondary" },
+      { 
+        title: "Start Monitoring", 
+        variant: "primary",
+        href: route('contact')
+      },
       {
-        title: "Button",
+        title: "View Monitoring Plans",
         variant: "link",
         size: "link",
         iconRight: <RxChevronRight />,
+        href: route('trademark-services.overview')
       },
     ],
   },
@@ -36,12 +42,17 @@ export const Layout367Defaults = {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
       buttons: [
-        { title: "Button", variant: "secondary" },
+        { 
+          title: "Request Monitoring", 
+          variant: "primary",
+          href: route('contact')
+        },
         {
-          title: "Button",
+          title: "Monitoring Coverage",
           variant: "link",
           size: "link",
           iconRight: <RxChevronRight />,
+          href: route('trademark-services.overview')
         },
       ],
     },
@@ -54,12 +65,17 @@ export const Layout367Defaults = {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
       buttons: [
-        { title: "Button", variant: "secondary" },
+        { 
+          title: "Get Protected Now", 
+          variant: "primary",
+          href: route('contact')
+        },
         {
-          title: "Button",
+          title: "Protection Details",
           variant: "link",
           size: "link",
           iconRight: <RxChevronRight />,
+          href: route('trademark-services.overview')
         },
       ],
     },
@@ -112,15 +128,18 @@ export default function Layout367(props) {
                   </div>
                   <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                     {section.buttons.map((button, index) => (
-                      <Button 
+                      <Link
                         key={index} 
-                        {...button}
-                        className={`${button.variant === 'secondary' ? 'border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white' : 
-                          button.variant === 'link' ? 'text-cod-gray hover:text-pippin' : 
-                          'bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray'} transition-colors duration-300`}
+                        href={button.href}
+                        className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                            button.variant === 'primary'
+                                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                        }`}
                       >
                         {button.title}
-                      </Button>
+                        {button.iconRight && <span className="ml-1">{button.iconRight}</span>}
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -142,15 +161,18 @@ export default function Layout367(props) {
                 </div>
                 <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                   {card.buttons.map((button, index) => (
-                    <Button 
+                    <Link
                       key={index} 
-                      {...button}
-                      className={`${button.variant === 'secondary' ? 'border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white' : 
-                        button.variant === 'link' ? 'text-cod-gray hover:text-pippin' : 
-                        'bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray'} transition-colors duration-300`}
+                      href={button.href}
+                      className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                          button.variant === 'primary'
+                              ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                              : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                      }`}
                     >
                       {button.title}
-                    </Button>
+                      {button.iconRight && <span className="ml-1">{button.iconRight}</span>}
+                    </Link>
                   ))}
                 </div>
               </div>

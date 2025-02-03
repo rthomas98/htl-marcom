@@ -7,9 +7,7 @@ import { Layout90 } from '@/Components/Common/Layout90'
 import { Layout245 } from '@/Components/Common/Layout245'
 import { Faq5 } from '@/Components/Common/Faq5'
 import { Cta13 } from '@/Components/Common/Cta13'
-import { Calendar, Scale, MessageSquare, Gavel } from 'lucide-react'
-
-const placeholderImage = '/images/placeholder.svg';
+import { Link } from '@inertiajs/react'
 
 export default function BusinessLaw() {
     return (
@@ -25,26 +23,20 @@ export default function BusinessLaw() {
                     {
                         title: "Schedule Consultation",
                         variant: "primary",
-                        icon: Calendar,
-                        onClick: () => window.location.href = route('contact')
-                    },
-                    {
-                        title: "View Services",
-                        variant: "secondary",
-                        onClick: () => document.getElementById('services').scrollIntoView({ behavior: 'smooth' })
+                        href: route('contact')
                     }
                 ]}
                 images={[
                     {
-                        src: placeholderImage,
+                        src: '/images/other/business-law/shutterstock_2136488967.jpg',
                         alt: "Business Law Services - Contract Review",
                     },
                     {
-                        src: placeholderImage,
+                        src: '/images/other/business-law/shutterstock_2192921481.jpg',
                         alt: "Business Law Services - Entity Formation",
                     },
                     {
-                        src: placeholderImage,
+                        src: '/images/other/business-law/shutterstock_2303744865.jpg',
                         alt: "Business Law Services - Legal Compliance",
                     },
                 ]}
@@ -63,7 +55,7 @@ export default function BusinessLaw() {
                         heading: "Limited Liability Company",
                         description: "Protect your personal assets while maintaining operational flexibility. Our LLC formation services include operating agreements, member agreements, and all necessary state filings.",
                         image: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_2312975429.jpg',
                             alt: "LLC Formation Services",
                         },
                     },
@@ -74,7 +66,7 @@ export default function BusinessLaw() {
                         heading: "C-Corps & S-Corps",
                         description: "Strategic incorporation services to establish your business as a corporation. We handle shareholder agreements, bylaws, and compliance requirements to ensure proper corporate governance.",
                         image: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_2322560073.jpg',
                             alt: "Corporation Formation Services",
                         },
                     },
@@ -85,7 +77,7 @@ export default function BusinessLaw() {
                         heading: "Partnership Structures",
                         description: "Comprehensive partnership formation services including partnership agreements, profit sharing structures, and liability protection strategies for all partners involved.",
                         image: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_2380776367.jpg',
                             alt: "Partnership Formation Services",
                         },
                     },
@@ -96,7 +88,7 @@ export default function BusinessLaw() {
                         heading: "Non-Profit Organizations",
                         description: "Specialized services for establishing non-profit organizations, including 501(c)(3) applications, board governance structures, and compliance with state and federal regulations.",
                         image: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_2470549275.jpg',
                             alt: "Non-Profit Formation Services",
                         },
                     },
@@ -114,7 +106,7 @@ export default function BusinessLaw() {
                         heading: "Contract Drafting",
                         description: "Custom contract creation tailored to your specific business needs, ensuring comprehensive coverage and protection of your interests.",
                         image: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_1477336853.jpg',
                             alt: "Contract Drafting Services",
                         },
                     },
@@ -123,7 +115,7 @@ export default function BusinessLaw() {
                         heading: "Contract Review",
                         description: "Thorough analysis of contracts to identify potential risks, ensure compliance, and protect your business interests.",
                         image: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_1792964791.jpg',
                             alt: "Contract Review Services",
                         },
                     },
@@ -132,7 +124,7 @@ export default function BusinessLaw() {
                         heading: "Contract Negotiation",
                         description: "Strategic negotiation services to secure favorable terms while maintaining positive business relationships.",
                         image: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_1903262713.jpg',
                             alt: "Contract Negotiation Services",
                         },
                     },
@@ -141,16 +133,8 @@ export default function BusinessLaw() {
                     {
                         title: "Schedule Consultation",
                         variant: "primary",
-                        icon: Calendar,
-                        onClick: () => window.location.href = route('contact')
-                    },
-                    {
-                        title: "Learn More",
-                        variant: "link",
-                        size: "link",
-                        iconRight: true,
-                        onClick: () => document.getElementById('compliance').scrollIntoView({ behavior: 'smooth' })
-                    },
+                        href: route('contact')
+                    }
                 ]}
             />
             <Layout90 
@@ -159,7 +143,7 @@ export default function BusinessLaw() {
                 heading="Ensuring Regulatory Compliance for Your Business"
                 description="Stay compliant with state and federal regulations while focusing on your business growth. Our comprehensive compliance services help you navigate complex regulatory requirements, implement proper procedures, and maintain ongoing compliance to protect your business from potential legal issues."
                 image={{
-                    src: placeholderImage,
+                    src: '/images/other/business-law/shutterstock_1918278398.jpg',
                     alt: "Regulatory Compliance Services",
                 }}
             />
@@ -171,7 +155,7 @@ export default function BusinessLaw() {
                 sections={[
                     {
                         icon: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_765674290.jpg',
                             alt: "Mediation Services",
                         },
                         heading: "Mediation",
@@ -179,7 +163,7 @@ export default function BusinessLaw() {
                     },
                     {
                         icon: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_1477336853.jpg',
                             alt: "Arbitration Services",
                         },
                         heading: "Arbitration",
@@ -187,7 +171,7 @@ export default function BusinessLaw() {
                     },
                     {
                         icon: {
-                            src: placeholderImage,
+                            src: '/images/other/business-law/shutterstock_1792964791.jpg',
                             alt: "Litigation Support",
                         },
                         heading: "Litigation Support",
@@ -198,16 +182,8 @@ export default function BusinessLaw() {
                     {
                         title: "Schedule Consultation",
                         variant: "primary",
-                        icon: Calendar,
-                        onClick: () => window.location.href = route('contact')
-                    },
-                    {
-                        title: "Learn More",
-                        variant: "link",
-                        size: "link",
-                        iconRight: true,
-                        onClick: () => document.getElementById('faq').scrollIntoView({ behavior: 'smooth' })
-                    },
+                        href: route('contact')
+                    }
                 ]}
             />
             <Faq5
@@ -242,7 +218,7 @@ export default function BusinessLaw() {
                 button={{
                     title: "Schedule Consultation",
                     variant: "primary",
-                    onClick: () => window.location.href = route('contact')
+                    href: route('contact')
                 }}
             />
             <Cta13 />

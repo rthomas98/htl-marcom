@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
@@ -11,23 +11,26 @@ export default function AboutCTA({
     className = "",
     ...props 
 }) {
+    const defaultButtons = [
+        { 
+            title: "Schedule Consultation",
+            variant: "secondary",
+            href: route('contact'),
+            className: "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+        },
+        { 
+            title: "Learn More",
+            variant: "link",
+            href: route('trademark-services.overview'),
+            className: "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold border border-white text-white hover:bg-white hover:text-cod-gray transition-colors duration-300",
+            iconRight: true
+        }
+    ];
+
     const content = {
         heading: heading || "Protect Your Intellectual Property",
         description: description || "Schedule a consultation today to discuss your intellectual property needs and discover how we can help protect and grow your business assets.",
-        buttons: buttons || [
-            { 
-                title: "Schedule Consultation",
-                variant: "secondary",
-                href: "/contact"
-            },
-            { 
-                title: "Learn More",
-                variant: "link",
-                size: "link",
-                iconRight: <ChevronRight className="h-4 w-4" />,
-                href: "/services"
-            }
-        ],
+        buttons: buttons || defaultButtons,
         image: image || {
             src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2000",
             alt: "Modern law office interior",
@@ -57,18 +60,18 @@ export default function AboutCTA({
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         {content.buttons.map((button, index) => (
-                            <Button 
+                            <Link 
                                 key={index} 
-                                {...button}
-                                className={
-                                    button.variant === 'secondary' 
-                                        ? 'bg-white text-cod-gray hover:bg-cod-gray-lightest hover:text-cod-gray transition-colors duration-200'
-                                        : 'text-white hover:text-pippin transition-colors duration-200'
-                                }
+                                href={button.href}
+                                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                    index === 0
+                                        ? "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                                        : "border border-white text-white hover:bg-white hover:text-cod-gray"
+                                }`}
                             >
                                 {button.title}
-                                {button.iconRight}
-                            </Button>
+                                {button.iconRight && <ChevronRight className="h-4 w-4" />}
+                            </Link>
                         ))}
                     </motion.div>
                 </motion.div>

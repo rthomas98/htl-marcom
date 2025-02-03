@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "@relume_io/relume-ui";
 import { motion } from "framer-motion";
+import { Link } from '@inertiajs/react';
 
 export default function Header119({
   heading = "Medium length hero heading goes here",
@@ -31,13 +31,17 @@ export default function Header119({
             <p className="font-sans text-cod-gray/80 md:text-lg">{description}</p>
             <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
               {buttons.map((button, index) => (
-                <Button 
+                <Link
                   key={index} 
-                  {...button}
-                  className={button.variant === 'secondary' ? 'hover:bg-pippin' : ''}
+                  href={button.href || '#'}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                      button.variant === 'primary'
+                          ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                          : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                  }`}
                 >
                   {button.title}
-                </Button>
+                </Link>
               ))}
             </div>
           </motion.div>

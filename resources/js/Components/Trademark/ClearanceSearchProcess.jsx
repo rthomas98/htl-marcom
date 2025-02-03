@@ -12,7 +12,6 @@ const defaultContent = {
     {
       title: "Start Your Search",
       variant: "primary",
-      className: "bg-white text-cod-gray hover:bg-pippin rounded-full",
       href: "/contact"
     },
   ],
@@ -65,15 +64,17 @@ export default function ClearanceSearchProcess({ className = "", ...props }) {
           className="mt-8 flex flex-wrap items-center justify-center gap-4 md:mt-10"
         >
           {content.buttons.map((button, index) => {
-            const { href, ...buttonProps } = button;
             return (
-              <Link key={index} href={href}>
-                <Button 
-                  {...buttonProps}
-                  className={`${buttonProps.className} transition-colors duration-300`}
-                >
-                  {button.title}
-                </Button>
+              <Link
+                key={index}
+                href={button.href}
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                  button.variant === 'primary'
+                    ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                    : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                }`}
+              >
+                {button.title}
               </Link>
             );
           })}

@@ -11,7 +11,6 @@ import {
     Label,
     Checkbox,
     Textarea,
-    Button,
 } from "@relume_io/relume-ui";
 import { useForm } from '@inertiajs/react';
 import { motion } from 'framer-motion';
@@ -282,12 +281,13 @@ export default function ContactForm({ className = "", ...props }) {
                     </div>
 
                     <div className="text-center">
-                        <Button 
+                        <button
                             type="submit"
-                            className="bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                            disabled={processing}
+                            className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
                         >
-                            Schedule Consultation
-                        </Button>
+                            {processing ? 'Sending...' : 'Send Message'}
+                        </button>
                     </div>
                 </motion.form>
             </div>

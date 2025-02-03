@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { ChevronRight, Building2, FileText, Scale, Shield } from 'lucide-react';
 
 const placeholderImage = '/images/placeholder.svg';
@@ -27,7 +27,7 @@ export const Layout10 = (props) => {
               {subHeadings.map((subHeading, index) => (
                 <div key={index} className="group">
                   <div className="mb-3 text-pippin-darker transition-colors duration-300 group-hover:text-pippin-darkest md:mb-4">
-                    <subHeading.icon className="size-12" />
+                    <subHeading.icon className="size-8" />
                   </div>
                   <h6 className="mb-3 font-heading text-lg font-bold text-cod-gray leading-snug md:mb-4 md:text-xl">
                     {subHeading.title}
@@ -38,18 +38,20 @@ export const Layout10 = (props) => {
                 </div>
               ))}
             </div>
-            <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
+            <div className="mt-8 flex flex-wrap gap-4">
               {buttons.map((button, index) => (
-                <Button 
-                  key={index} 
-                  {...button}
-                  className={button.variant === 'primary' 
-                    ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light inline-flex items-center gap-2"
-                    : "text-pippin-darker hover:text-pippin-darkest font-semibold inline-flex items-center gap-1"}
+                <Link
+                  key={index}
+                  href={button.href}
+                  className={`inline-flex items-center justify-center rounded-full ${
+                    button.variant === 'primary'
+                      ? 'bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-dark'
+                      : 'bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light'
+                  }`}
                 >
                   {button.title}
-                  {button.iconRight && <ChevronRight className="size-4" />}
-                </Button>
+                  {button.icon && <button.icon className="ml-2 size-5" />}
+                </Link>
               ))}
             </div>
           </div>
@@ -96,17 +98,18 @@ export const Layout10Defaults = {
   buttons: [
     { 
       title: "Schedule Consultation",
-      variant: "primary"
+      variant: "primary",
+      href: route('contact'),
     },
     {
       title: "Learn More",
       variant: "link",
-      size: "link",
-      iconRight: true
+      href: route('trademark-services.overview'),
+      icon: ChevronRight,
     }
   ],
   image: {
-    src: placeholderImage,
+    src: "/images/tm/licensing/pexels-yankrukov-8837376.jpg",
     alt: "Business Law Services - Hebert-Thomas Law",
   },
 };

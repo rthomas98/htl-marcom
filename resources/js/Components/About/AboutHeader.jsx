@@ -1,26 +1,26 @@
 import React from 'react';
-import { Button } from '@relume_io/relume-ui';
+import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 
 export default function AboutHeader({ className = '', ...props }) {
+    const defaultButtons = [
+        { 
+            title: "Schedule a Call",
+            variant: "secondary",
+            href: route('contact'),
+        },
+        { 
+            title: "Learn More",
+            variant: "link",
+            href: route('trademark-services.overview'),
+            iconRight: true
+        }
+    ];
+
     const content = {
         heading: "Experienced Trademark Attorney",
         description: "With over a decade of experience in intellectual property law, I specialize in helping businesses protect their brands through comprehensive trademark services. My approach combines legal expertise with a deep understanding of business needs.",
-        buttons: [
-            { 
-                title: "Schedule a Call",
-                variant: "secondary",
-                href: "/contact",
-                className: "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-lightest hover:text-cod-gray flex items-center"
-            },
-            { 
-                title: "Learn More",
-                variant: "link",
-                href: "/services",
-                className: "rounded-full px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:text-cod-gray flex items-center gap-2",
-                iconRight: <ChevronRight className="h-4 w-4" />
-            }
-        ],
+        buttons: defaultButtons,
         firstImage: {
             src: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop",
             alt: "Law office desk with documents and laptop"
@@ -47,15 +47,20 @@ export default function AboutHeader({ className = '', ...props }) {
                         <p className="text-base text-cod-gray md:text-lg">
                             {content.description}
                         </p>
-                        <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
+                        <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                             {content.buttons.map((button, index) => (
-                                <Button 
+                                <Link 
                                     key={index} 
-                                    {...button}
+                                    href={button.href}
+                                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                        index === 0
+                                            ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                            : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                                    }`}
                                 >
                                     {button.title}
-                                    {button.iconRight}
-                                </Button>
+                                    {button.iconRight && <ChevronRight className="h-4 w-4" />}
+                                </Link>
                             ))}
                         </div>
                     </div>

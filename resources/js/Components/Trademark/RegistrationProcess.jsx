@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@relume_io/relume-ui";
 import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const processSteps = [
   {
@@ -37,6 +38,7 @@ const processSteps = [
         variant: "link",
         size: "link",
         iconRight: <ChevronRight className="h-4 w-4" />,
+        href: "/",
         className: "text-cod-gray hover:text-pippin transition-colors duration-300"
       },
     ],
@@ -86,7 +88,20 @@ export default function RegistrationProcess({ className = "", ...props }) {
               <p className="font-sans text-cod-gray/80">
                 {section.description}
               </p>
-              
+              {section.buttons && section.buttons.map((button, index) => (
+                <Link
+                  key={index}
+                  href={button.href}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                      button.variant === 'primary'
+                          ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                          : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                  }`}
+                >
+                  {button.title}
+                  {button.iconRight}
+                </Link>
+              ))}
             </motion.div>
           ))}
         </div>

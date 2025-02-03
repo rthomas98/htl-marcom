@@ -76,7 +76,11 @@ export default function ContactInfo({ className = "", ...props }) {
                                 </h3>
                                 <p className="mb-5 text-cod-gray/80 md:mb-6">{contact.description}</p>
                                 <a 
-                                    className="inline-block text-cod-gray underline decoration-cod-gray/30 transition-colors hover:text-cod-gray/80 hover:decoration-cod-gray/60" 
+                                    className={`inline-block items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                        contact.link?.url.startsWith('mailto') 
+                                            ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                            : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                                    }`}
                                     href={contact.link?.url}
                                     target={contact.link?.url.startsWith('http') ? '_blank' : undefined}
                                     rel={contact.link?.url.startsWith('http') ? 'noopener noreferrer' : undefined}

@@ -16,7 +16,7 @@ const Layout406Defaults = {
       },
       content: [
         {
-          src: "/images/placeholder.svg",
+          src: "/images/other/privacy-data-protection/shutterstock_2184502325.jpg",
           alt: "Regulatory Compliance Services",
         },
       ],
@@ -30,7 +30,7 @@ const Layout406Defaults = {
       },
       content: [
         {
-          src: "/images/placeholder.svg",
+          src: "/images/other/privacy-data-protection/shutterstock_2463472225.jpg",
           alt: "Data Breach Response Planning",
         },
       ],
@@ -44,7 +44,7 @@ const Layout406Defaults = {
       },
       content: [
         {
-          src: "/images/placeholder.svg",
+          src: "/images/other/privacy-data-protection/shutterstock_2475381077.jpg",
           alt: "Employee Privacy Training",
         },
       ],

@@ -129,24 +129,17 @@ export const Blog1 = (props) => {
           </motion.div>
           <div className="no-scrollbar mb-12 ml-[-5vw] flex w-screen items-center justify-start overflow-scroll pl-[5vw] md:mb-16 md:ml-0 md:w-full md:justify-center md:overflow-hidden md:pl-0">
             {buttons.map((button, index) => (
-              <Button
+              <Link
                 key={index}
-                {...button}
-                asChild
-                className={clsx("border px-4 py-2 font-sans", {
-                  "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white": 
-                    (index === 0 && !currentCategory) || button.title === currentCategory,
-                  "border-transparent text-cod-gray-light hover:text-cod-gray": 
-                    !((index === 0 && !currentCategory) || button.title === currentCategory),
-                })}
+                href={index === 0 ? route('insights') : route('insights', { category: button.title })}
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                  (index === 0 && !currentCategory) || button.title === currentCategory
+                    ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                    : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                }`}
               >
-                <Link 
-                  href={index === 0 ? route('insights') : route('insights', { category: button.title })}
-                  preserveScroll
-                >
-                  {button.title}
-                </Link>
-              </Button>
+                {button.title}
+              </Link>
             ))}
           </div>
           <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">

@@ -1,12 +1,12 @@
 import React from "react";
 import {
-  Button,
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@relume_io/relume-ui";
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 export default function Faq1({
   heading = "FAQs",
@@ -69,9 +69,12 @@ export default function Faq1({
           </h4>
           <p className="font-sans text-cod-gray/80 md:text-lg">{footerDescription}</p>
           <div className="mt-6 md:mt-8">
-            <Button {...button} className="hover:bg-pippin">
+            <Link
+              href={button.href || '#'}
+              className={`inline-flex items-center justify-center gap-2 rounded-full bg-cod-gray px-6 py-3 font-sans text-base font-medium text-white transition-colors duration-200 hover:bg-pippin hover:text-cod-gray md:text-lg ${button.className || ''}`}
+            >
               {button.title}
-            </Button>
+            </Link>
           </div>
         </motion.div>
       </div>

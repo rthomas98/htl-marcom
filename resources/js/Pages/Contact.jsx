@@ -19,6 +19,7 @@ export default function Contact() {
                 button={{
                     title: "Schedule Consultation",
                     variant: "primary",
+                    href: route('contact'),
                     className: "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
                 }}
                 image={{

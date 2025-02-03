@@ -5,6 +5,7 @@ import { Layout432 } from '@/Components/Common/Layout432';
 import { Layout241 } from '@/Components/Common/Layout241';
 import { Faq4 } from '@/Components/Common/Faq4';
 import { Cta19 } from '@/Components/Common/Cta19';
+import { Link } from '@inertiajs/react';
 
 const GeneralCounsel = () => {
   const ctaProps = {
@@ -13,13 +14,13 @@ const GeneralCounsel = () => {
     buttons: [
       { 
         title: "Schedule Consultation",
-        href: "/contact",
-        primary: true
+        href: route('contact'),
+        className: "inline-flex items-center justify-center rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-cod-gray-dark"
       },
       { 
         title: "Learn More",
-        href: "/services",
-        primary: false
+        href: route('legal-services.overview'),
+        className: "inline-flex items-center justify-center rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm hover:bg-pippin-light"
       }
     ],
   };

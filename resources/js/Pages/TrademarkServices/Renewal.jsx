@@ -6,6 +6,7 @@ import Layout51 from '@/Components/Renewal/Layout51'
 import Layout500 from '@/Components/Renewal/Layout500'
 import Faq2 from '@/Components/Renewal/Faq2'
 import Cta7 from '@/Components/Renewal/Cta7'
+import { Link } from '@inertiajs/react'
 
 export default function Renewal() {
     const headerContent = {
@@ -22,11 +23,11 @@ export default function Renewal() {
             }
         ],
         firstImage: {
-            src: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg",
+            src: "/images/tm/renewal/shutterstock_2141946577.jpg",
             alt: "Legal professionals reviewing trademark documents",
         },
         secondImage: {
-            src: "https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg",
+            src: "/images/tm/renewal/shutterstock_2157348673.jpg",
             alt: "Trademark renewal process documentation",
         }
     };
@@ -35,13 +36,13 @@ export default function Renewal() {
         heading: "Comprehensive Trademark Services",
         description: "Our experienced team provides complete trademark renewal and maintenance services to protect your intellectual property portfolio.",
         image: {
-            src: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg",
+            src: "/images/tm/renewal/shutterstock_2282908015.jpg",
             alt: "Trademark portfolio management",
         },
         subHeadings: [
             {
                 icon: { 
-                    src: "https://images.pexels.com/photos/5669626/pexels-photo-5669626.jpeg", 
+                    src: "/images/tm/renewal/shutterstock_2258486971.jpg", 
                     alt: "Section 8 & 15 icon" 
                 },
                 title: "Declaration of Use",
@@ -49,7 +50,7 @@ export default function Renewal() {
             },
             {
                 icon: { 
-                    src: "https://images.pexels.com/photos/5669638/pexels-photo-5669638.jpeg", 
+                    src: "/images/tm/renewal/shutterstock_2472683775.jpg", 
                     alt: "Section 9 icon" 
                 },
                 title: "Renewal Applications",
@@ -83,8 +84,10 @@ export default function Renewal() {
                 size: "link",
             },
         ],
-        video: "https://player.vimeo.com/external/517090081.hd.mp4?s=c0494d33bfb02cbb3ee41da64c6170cc23aa9e06&profile_id=175&oauth2_token_id=57447761",
-        videoType: "video/mp4",
+        image: {
+            src: "/images/tm/renewal/pexels-kindelmedia-7688174.jpg",
+            alt: "Trademark renewal and protection",
+        }
     };
 
     const processContent = {
@@ -98,7 +101,7 @@ export default function Renewal() {
                 heading: "Declaration of Use",
                 description: "File Section 8 & 15 declarations between the 5th and 6th year after registration to maintain and strengthen your trademark rights.",
                 image: {
-                    src: "https://images.pexels.com/photos/5669626/pexels-photo-5669626.jpeg",
+                    src: "/images/tm/renewal/shutterstock_1829462777.jpg",
                     alt: "Declaration of Use process",
                 },
             },
@@ -106,20 +109,17 @@ export default function Renewal() {
                 value: "renewal",
                 heading: "Renewal Application",
                 description: "Submit Section 9 renewal applications between the 9th and 10th year, and every 10 years thereafter to maintain protection.",
-                video: {
-                    image: {
-                        src: "https://images.pexels.com/photos/5669638/pexels-photo-5669638.jpeg",
-                        alt: "Renewal Application process",
-                    },
-                    url: "https://www.youtube.com/embed/8DKLYsikxTs",
+                image: {
+                    src: "/images/tm/renewal/shutterstock_375557014.jpg",
+                    alt: "Renewal Application process",
                 },
             },
             {
                 value: "maintenance",
                 heading: "Ongoing Maintenance",
-                description: "Regular monitoring and maintenance ensure your trademark rights remain strong and enforceable throughout its lifecycle.",
+                description: "Regular monitoring and maintenance ensures your trademark rights remain strong and enforceable throughout its lifecycle.",
                 image: {
-                    src: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg",
+                    src: "/images/tm/renewal/pexels-alexander-suhorucov-6457555.jpg",
                     alt: "Trademark maintenance process",
                 },
             },

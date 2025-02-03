@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, router } from '@inertiajs/react';
 import {
   Button,
   Carousel,
@@ -10,17 +11,32 @@ import {
 import { motion } from 'framer-motion';
 import clsx from "clsx";
 
+const carouselContent = [
+  {
+    heading: "Continuous Brand Protection",
+    description: "Stay ahead of potential trademark conflicts with our proactive monitoring services."
+  },
+  {
+    heading: "Digital Brand Surveillance",
+    description: "Monitor online marketplaces and social media for unauthorized use of your trademark."
+  },
+  {
+    heading: "Market Analysis & Insights",
+    description: "Comprehensive analysis of market trends and potential trademark conflicts."
+  }
+];
+
 const carouselImages = [
   {
-    src: "https://images.unsplash.com/photo-1664575602276-acd073f104c1?q=80&w=2940&auto=format&fit=crop",
+    src: "/images/tm/monitoring/pexels-silverkblack-23496627.jpg",
     alt: "Brand protection and monitoring",
   },
   {
-    src: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2940&auto=format&fit=crop",
+    src: "/images/tm/monitoring/pexels-tatiana-castrillon-191861460-11805157.jpg",
     alt: "Digital trademark monitoring",
   },
   {
-    src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2940&auto=format&fit=crop",
+    src: "/images/tm/monitoring/pexels-fauxels-3184649.jpg",
     alt: "Market analysis and monitoring",
   },
 ];
@@ -41,11 +57,13 @@ export default function MonitoringHeader({ className = "", ...props }) {
       { 
         title: "Start Monitoring",
         variant: "primary",
+        href: route('contact'),
         className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
       },
       { 
         title: "Learn More",
         variant: "secondary",
+        href: route('about-me'),
         className: "border border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white transition-all duration-300"
       }
     ],
@@ -79,13 +97,17 @@ export default function MonitoringHeader({ className = "", ...props }) {
         </p>
         <div className="mt-8 flex flex-wrap gap-4 md:mt-10">
           {content.buttons.map((button, index) => (
-            <Button 
-              key={index} 
-              {...button}
-              className={button.className}
+            <Link
+              key={index}
+              href={button.href}
+              className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                  button.variant === 'primary'
+                      ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                      : "bg-pippin text-cod-gray hover:bg-pippin-light"
+              }`}
             >
               {button.title}
-            </Button>
+            </Link>
           ))}
         </div>
       </motion.div>
@@ -111,10 +133,10 @@ export default function MonitoringHeader({ className = "", ...props }) {
                     <div className="relative bg-white px-6 pb-32 pt-6 sm:px-8 sm:pt-8">
                       <div className="w-full max-w-lg">
                         <h6 className="font-heading mb-1 text-lg font-bold leading-[1.4] text-cod-gray md:text-xl">
-                          {content.carouselHeading}
+                          {carouselContent[index].heading}
                         </h6>
                         <p className="font-sans text-cod-gray/80">
-                          {content.carouselDescription}
+                          {carouselContent[index].description}
                         </p>
                       </div>
                     </div>

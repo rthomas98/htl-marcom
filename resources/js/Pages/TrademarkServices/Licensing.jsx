@@ -7,7 +7,6 @@ import { Layout194 } from '@/Components/Common/Layout194'
 import { Layout12 } from '@/Components/Common/Layout12'
 import { Faq3 } from '@/Components/Common/Faq3'
 import { Cta53 } from '@/Components/Common/Cta53'
-import { Calendar } from 'lucide-react'
 
 export default function Licensing() {
     return (
@@ -23,15 +22,14 @@ export default function Licensing() {
                         title: "Schedule Consultation",
                         variant: "primary",
                         className: "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light",
-                        icon: Calendar,
                         onClick: () => window.location.href = route('contact')
                     }
                 ]}
                 image={{
-                    src: "/images/trademark-licensing-hero.webp",
+                    src: "/images/tm/licensing/pexels-divinetechygirl-1181684.jpg",
                     alt: "Trademark Licensing Services - Hebert Thomas Law"
                 }}
-                className="bg-gallery"
+                className="bg-gallery bg-[url('/images/tm/enforcement/shutterstock_2308066191.jpg')] bg-cover bg-center bg-no-repeat [&_h1]:relative [&_h1]:z-10 [&_h1]:text-white [&_p]:relative [&_p]:z-10 [&_p]:text-white [&_div.container]:relative [&_div.container]:z-10"
             />
             <Layout384 className="bg-white" />
             <Layout10 className="bg-gallery" />
@@ -41,7 +39,7 @@ export default function Licensing() {
             <Cta53 
                 className="bg-gallery" 
                 image={{
-                    src: "/images/trademark-licensing-hero.webp",
+                    src: "/images/tm/licensing/pexels-thirdman-5257766.jpg",
                     alt: "Schedule Trademark Licensing Consultation"
                 }}
             />

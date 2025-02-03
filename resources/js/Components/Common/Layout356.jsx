@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@relume_io/relume-ui";
 import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 const FeatureCard = ({ anchor, tagline, heading, description, buttons, image }) => {
   return (
@@ -30,20 +30,24 @@ const FeatureCard = ({ anchor, tagline, heading, description, buttons, image }) 
               <p className="font-sans text-cod-gray/80 md:text-lg">{description}</p>
               <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                 {buttons.map((button, index) => (
-                  <Button 
-                    key={index} 
-                    {...button}
-                    className={
-                      button.variant === 'link' 
-                        ? 'text-cod-gray hover:text-pippin transition-colors duration-300' 
-                        : ''
-                    }
+                  <Link
+                    key={index}
+                    href={button.href || '#'}
+                    className={`inline-flex items-center justify-center gap-2 ${
+                      button.variant === 'link'
+                        ? 'text-cod-gray hover:text-pippin transition-colors duration-300'
+                        : `rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                            button.variant === 'primary'
+                              ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                              : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                          }`
+                    }`}
                   >
                     {button.title}
                     {button.variant === 'link' && (
                       <ChevronRight className="ml-1 h-5 w-5" />
                     )}
-                  </Button>
+                  </Link>
                 ))}
               </div>
             </motion.div>

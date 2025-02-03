@@ -55,6 +55,19 @@ export default function HomeHero() {
         },
     ];
 
+    const buttons = [
+        {
+            title: 'Schedule a Call',
+            href: '/contact',
+            variant: 'primary',
+        },
+        {
+            title: 'Learn More',
+            href: '/about',
+            variant: 'secondary',
+        },
+    ];
+
     return (
         <section className="relative h-[250vh]">
             <div className="px-[5%] pt-16 md:pt-24 lg:pt-28">
@@ -67,18 +80,19 @@ export default function HomeHero() {
                         At Hebert-Thomas Law, PLLC, we are dedicated to providing exceptional legal services tailored to the unique needs of Texas businesses and individuals. Our mission is to empower our clients with the knowledge and support they need to navigate the complexities of the law.
                         </p>
                         <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
-                            <Link
-                                href="/contact"
-                                className="rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-                            >
-                                Schedule Consultation
-                            </Link>
-                            <Link
-                                href="/about"
-                                className="rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"
-                            >
-                                Learn More
-                            </Link>
+                            {buttons.map((button, index) => (
+                                <Link
+                                    key={index}
+                                    href={button.href}
+                                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                        button.variant === 'primary'
+                                            ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                            : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                                    }`}
+                                >
+                                    {button.title}
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </div>

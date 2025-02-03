@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@relume_io/relume-ui";
-import { ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 
 export default function Layout369({
   tagline = "Trademark Maintenance",
@@ -42,14 +42,18 @@ export default function Layout369({
                 </div>
                 <div className="mt-4 flex flex-wrap items-center gap-4 sm:mt-6">
                   {cardBig.buttons?.map((button, index) => (
-                    <Button 
-                      key={index} 
-                      {...button}
-                      className="text-sm hover:text-pippin sm:text-base"
+                    <Link
+                      key={index}
+                      href={button.href}
+                      className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                        button.variant === 'primary'
+                          ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                          : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                      }`}
                     >
                       {button.title}
                       <ChevronRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -76,13 +80,17 @@ export default function Layout369({
                     <p className="text-sm text-cod-gray/80 sm:text-base">{card.description}</p>
                   </div>
                   <div className="mt-4 flex flex-wrap items-center gap-4 sm:mt-6">
-                    <Button 
-                      {...card.button}
-                      className="text-sm hover:text-pippin sm:text-base"
+                    <Link
+                      href={card.button.href}
+                      className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                        card.button.variant === 'primary'
+                          ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                          : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                      }`}
                     >
                       {card.button.title}
                       <ChevronRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    </Link>
                   </div>
                 </div>
                 <div className="h-48 sm:aspect-square sm:h-auto">

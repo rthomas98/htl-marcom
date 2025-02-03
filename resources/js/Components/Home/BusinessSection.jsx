@@ -31,6 +31,19 @@ export default function BusinessSection() {
         },
     ];
 
+    const buttons = [
+        {
+            title: "Schedule a Consultation",
+            href: "https://hebertthomaslaw.cliogrow.com/intake/3z_4V3EUIFtGZXWTXHbIkg",
+            variant: "primary",
+        },
+        {
+            title: "Explore All Services",
+            href: "/trademark-services",
+            variant: "secondary",
+        },
+    ];
+
     return (
         <section className="relative px-[5%] py-16 md:py-24 lg:py-28">
             <div className="container relative z-10">
@@ -65,20 +78,22 @@ export default function BusinessSection() {
                     ))}
                 </div>
                 <div className="mt-12 flex flex-wrap justify-start gap-4 md:mt-18 lg:mt-20">
-                    <Link
-                        href="https://hebertthomaslaw.cliogrow.com/intake/3z_4V3EUIFtGZXWTXHbIkg"
-                        target="_blank"
-                        className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin hover:text-cod-gray"
-                    >
-                        Schedule a Consultation
-                    </Link>
-                    <Link
-                        href="/trademark-services"
-                        className="group inline-flex items-center gap-2 rounded-full text-white transition hover:text-pippin"
-                    >
-                        Explore All Services
-                        <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                    {buttons.map((button, index) => (
+                        <Link
+                            key={index}
+                            href={button.href}
+                            className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                button.variant === 'primary'
+                                    ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                    : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                            }`}
+                        >
+                            {button.title}
+                            {button.variant === 'secondary' && (
+                                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            )}
+                        </Link>
+                    ))}
                 </div>
             </div>
             <div className="absolute inset-0">

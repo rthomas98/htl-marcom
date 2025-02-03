@@ -33,15 +33,16 @@ export const Cta19 = ({ className, ...props }) => {
             {heading}
           </h2>
           <p className="text-lg text-gray-600 md:text-xl">{description}</p>
-          <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
+          <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
             {buttons.map((button, index) => (
-              <Link
-                key={index}
+              <Link 
+                key={index} 
                 href={button.href}
-                className={button.primary
-                  ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-                  : "rounded-full bg-white px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-gray-50"
-                }
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold ${
+                  button.primary 
+                    ? "bg-cod-gray text-white hover:bg-cod-gray hover:text-white"
+                    : "bg-white text-cod-gray hover:bg-cod-gray hover:text-white"
+                } transition-colors duration-300`}
               >
                 {button.title}
               </Link>

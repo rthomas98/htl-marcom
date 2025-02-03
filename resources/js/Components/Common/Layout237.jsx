@@ -68,9 +68,7 @@ export const Layout237 = ({ className, ...props }) => {
           <div className="grid grid-cols-1 items-start justify-center gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16 lg:gap-x-12">
             {sections.map((section, index) => (
               <div key={index} className="flex w-full flex-col items-center text-center">
-                <div className="mb-5 md:mb-6">
-                  <img src={section.icon.src} className="size-12" alt={section.icon.alt} />
-                </div>
+                
                 <h3 className="mb-5 text-2xl font-bold whitespace-pre-line md:mb-6 md:text-3xl md:leading-[1.3] lg:text-4xl">
                   {section.heading}
                 </h3>

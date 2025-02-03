@@ -38,13 +38,11 @@ export default function RegistrationHeader({ className = "", ...props }) {
       { 
         title: "Start Registration",
         variant: "primary",
-        className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300 rounded-full",
         href: "/contact"
       },
       { 
         title: "Learn More",
         variant: "secondary",
-        className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white transition-colors duration-300 rounded-full",
         href: "/trademark-services"
       }
     ],
@@ -70,13 +68,16 @@ export default function RegistrationHeader({ className = "", ...props }) {
           {content.buttons.map((button, index) => {
             const { href, ...buttonProps } = button;
             return (
-              <Link key={index} href={href}>
-                <Button 
-                  {...buttonProps}
-                  className={buttonProps.className}
-                >
-                  {button.title}
-                </Button>
+              <Link
+                key={index}
+                href={button.href}
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                  button.variant === 'primary'
+                    ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                    : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                }`}
+              >
+                {button.title}
               </Link>
             );
           })}

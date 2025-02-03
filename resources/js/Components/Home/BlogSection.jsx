@@ -59,7 +59,11 @@ const BlogSection = ({ tagline, heading, description, button, blogPosts }) => {
         <div className="flex items-center justify-end">
           <Link
             href={button.href}
-            className="mt-10 rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light md:mt-14 lg:mt-16"
+            className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+              button.variant === 'primary'
+                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                : "bg-pippin text-cod-gray hover:bg-pippin-light"
+            }`}
           >
             {button.title}
           </Link>

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogTrigger,
@@ -12,6 +11,7 @@ import {
 } from "@relume_io/relume-ui";
 import { ChevronRight, Play } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from '@inertiajs/react';
 
 export default function Layout500({
   tagline = "Renewal Process",
@@ -36,14 +36,18 @@ export default function Layout500({
           <p className="font-sans text-cod-gray/80 md:text-lg">{description}</p>
           <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
             {buttons.map((button, index) => (
-              <Button 
-                key={index} 
-                {...button}
-                className="hover:bg-pippin"
+              <Link
+                key={index}
+                href={button.href || '#'}
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                    button.variant === 'primary'
+                        ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                        : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                }`}
               >
                 {button.title}
                 {button.variant === 'link' && <ChevronRight className="ml-2 h-4 w-4" />}
-              </Button>
+              </Link>
             ))}
           </div>
         </motion.div>

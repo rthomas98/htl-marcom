@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from '@inertiajs/react';
 import {
-  Button,
   Accordion,
   AccordionTrigger,
   AccordionContent,
@@ -52,12 +52,12 @@ export const Faq5 = (props) => {
           <p className="mb-6 font-sans text-cod-gray-light md:mb-8">
             {footerDescription}
           </p>
-          <Button 
-            {...button}
-            className="rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
+          <Link 
+            href={button.href}
+            className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
           >
             {button.title}
-          </Button>
+          </Link>
         </div>
       </div>
     </section>
@@ -102,5 +102,6 @@ export const Faq5Defaults = {
   button: {
     title: "Schedule Consultation",
     variant: "primary",
+    href: "#",
   },
 };

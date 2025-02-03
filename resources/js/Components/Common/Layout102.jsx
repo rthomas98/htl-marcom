@@ -25,7 +25,7 @@ export const Layout102 = (props) => {
               {subHeadings.map((subHeading, index) => (
                 <div key={index} className="group">
                   <div className="mb-3 text-pippin-darker transition-colors duration-300 group-hover:text-pippin-darkest md:mb-4">
-                    <subHeading.icon className="size-12" />
+                    <subHeading.icon className="size-8" />
                   </div>
                   <h6 className="mb-3 font-heading text-lg font-bold text-cod-gray leading-snug md:mb-4 md:text-xl">
                     {subHeading.title}
@@ -55,7 +55,7 @@ export const Layout102Defaults = {
   heading: "Dedicated Legal Support for Your Business",
   description: "Our General Counsel services provide ongoing legal support to help your business navigate complex legal landscapes, manage risks, and make informed decisions. We serve as your trusted legal partner, offering proactive guidance and strategic solutions.",
   image: {
-    src: placeholderImage,
+    src: '/images/other/overview/shutterstock_1613072758.jpg',
     alt: "General Counsel Services - Hebert-Thomas Law",
   },
   subHeadings: [

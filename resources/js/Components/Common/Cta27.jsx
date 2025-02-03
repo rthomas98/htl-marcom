@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 
 export const Cta27Defaults = {
   heading: "Secure Your Legacy\nToday",
@@ -9,12 +9,12 @@ export const Cta27Defaults = {
     { 
       title: "Schedule Consultation",
       variant: "primary",
-      className: "bg-cod-gray text-white hover:bg-cod-gray/90"
+      href: route('contact')
     }, 
     { 
       title: "Learn More",
       variant: "secondary",
-      className: "border-cod-gray text-cod-gray hover:bg-cod-gray hover:text-white"
+      href: route('about-me')
     }
   ],
   image: {
@@ -38,9 +38,17 @@ export const Cta27 = ({ className, ...props }) => {
         <p className="text-cod-gray md:text-md">{description}</p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:mt-8">
           {buttons.map((button, index) => (
-            <Button key={index} {...button}>
+            <Link 
+              key={index} 
+              href={button.href}
+              className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold shadow-sm transition-colors duration-300"
+              style={{
+                backgroundColor: button.variant === 'primary' ? '#141414' : '#FFFFFF',
+                color: button.variant === 'primary' ? '#FFFFFF' : '#141414',
+              }}
+            >
               {button.title}
-            </Button>
+            </Link>
           ))}
         </div>
       </div>

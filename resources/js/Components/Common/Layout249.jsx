@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { RxChevronRight } from "react-icons/rx";
+import clsx from 'clsx';
 
 export const Layout249Defaults = {
   tagline: "Tagline",
@@ -37,12 +38,17 @@ export const Layout249Defaults = {
     },
   ],
   buttons: [
-    { title: "Button", variant: "secondary" },
+    { 
+      title: "Start Monitoring", 
+      variant: "secondary",
+      href: route('contact')
+    },
     {
-      title: "Button",
+      title: "Learn More",
       variant: "link",
       size: "link",
       iconRight: <RxChevronRight />,
+      href: route('about-me')
     },
   ],
 };
@@ -82,15 +88,21 @@ export default function Layout249(props) {
         </div>
         <div className="mt-12 flex items-center gap-4 md:mt-18 lg:mt-20">
           {buttons.map((button, index) => (
-            <Button 
+            <Link 
               key={index} 
-              {...button}
-              className={`${button.variant === 'secondary' ? 'border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white' : 
-                button.variant === 'link' ? 'text-cod-gray hover:text-pippin' : 
-                'bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray'} transition-colors duration-300`}
+              href={button.href}
+              className={clsx(
+                "inline-flex items-center justify-center gap-2 px-6 py-3 transition-colors duration-300 rounded-full",
+                button.variant === 'secondary' 
+                  ? 'border border-cod-gray text-cod-gray hover:bg-pippin' 
+                  : button.variant === 'link' 
+                    ? 'text-cod-gray hover:text-pippin flex items-center gap-2' 
+                    : 'bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray'
+              )}
             >
               {button.title}
-            </Button>
+              {button.iconRight && <span className="ml-1">{button.iconRight}</span>}
+            </Link>
           ))}
         </div>
       </div>

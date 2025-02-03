@@ -65,10 +65,14 @@ const Blog39 = ({ tagline, heading, description, button, blogPosts, className = 
         </div>
         <div className="flex items-center justify-end">
           <Link
-            href={route('insights')}
-            className="mt-10 bg-cod-gray text-white hover:bg-cod-gray-light transition-colors rounded-full duration-200 md:mt-14 lg:mt-16 px-6 py-2"
+            href={button.href}
+            className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                button.variant === 'primary'
+                    ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                    : "bg-pippin text-cod-gray hover:bg-pippin-light"
+            }`}
           >
-            View All Articles
+            {button.title}
           </Link>
         </div>
       </div>

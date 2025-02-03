@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 import { ChevronRight, Shield, Bell, FileText } from 'lucide-react';
 import clsx from "clsx";
@@ -37,16 +37,19 @@ const FeatureSectionContent = ({ isEven, ...featureSection }) => (
       </p>
       <div className="mt-6 flex items-center gap-x-4 md:mt-8">
         {featureSection.buttons.map((button, index) => (
-          <Button 
-            key={index} 
-            {...button}
-            className={button.variant === 'primary' 
-              ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray rounded-full"
-              : "border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white rounded-full"}
+          <Link
+            key={index}
+            href={button.href}
+            className={clsx(
+              "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition",
+              button.variant === 'primary'
+                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                : "bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white"
+            )}
           >
             {button.title}
             {button.iconRight && <ChevronRight className="size-4" />}
-          </Button>
+          </Link>
         ))}
       </div>
     </div>
@@ -130,12 +133,13 @@ export const Layout408Defaults = {
       buttons: [
         { 
           title: "Schedule Consultation",
-          variant: "primary"
+          variant: "primary",
+          href: "#"
         },
         {
           title: "Learn More",
           variant: "link",
-          size: "link",
+          href: "#",
           iconRight: true,
         },
       ],
@@ -151,12 +155,13 @@ export const Layout408Defaults = {
       buttons: [
         { 
           title: "Schedule Consultation",
-          variant: "primary"
+          variant: "primary",
+          href: "#"
         },
         {
           title: "Learn More",
           variant: "link",
-          size: "link",
+          href: "#",
           iconRight: true,
         },
       ],
@@ -172,12 +177,13 @@ export const Layout408Defaults = {
       buttons: [
         { 
           title: "Schedule Consultation",
-          variant: "primary"
+          variant: "primary",
+          href: "#"
         },
         {
           title: "Learn More",
           variant: "link",
-          size: "link",
+          href: "#",
           iconRight: true,
         },
       ],

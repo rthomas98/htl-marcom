@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
-import { Calendar, Phone } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 
 const placeholderImage = '/images/placeholder.svg';
 
@@ -11,16 +10,13 @@ const Cta39Defaults = {
     { 
       title: "Schedule Consultation",
       variant: "primary",
-      icon: Calendar
+      href: route('contact'),
+      className: "inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
     },
-    { 
-      title: "Call Us Today",
-      variant: "secondary",
-      icon: Phone
-    }
+  
   ],
   image: {
-    src: placeholderImage,
+    src: '/images/tm/international/pexels-rdne-7490880.jpg',
     alt: "International Trademark Consultation",
   },
 };
@@ -29,6 +25,11 @@ function Cta39(props) {
   const { heading, description, buttons, image, className = '' } = {
     ...Cta39Defaults,
     ...props,
+    buttons: props.buttons?.map((button, index) => ({
+      ...Cta39Defaults.buttons[index],
+      ...button,
+      className: Cta39Defaults.buttons[index]?.className
+    })) || Cta39Defaults.buttons
   };
   return (
     <section id="relume" className={`px-5 sm:px-[5%] py-12 sm:py-16 md:py-24 lg:py-28 ${className}`}>
@@ -43,16 +44,13 @@ function Cta39(props) {
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
               {buttons.map((button, index) => (
-                <Button 
+                <Link 
                   key={index} 
-                  {...button}
-                  className={button.variant === 'primary' 
-                    ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray rounded-full"
-                    : "border-cod-gray bg-transparent text-cod-gray hover:bg-cod-gray hover:text-white rounded-full"}
+                  href={button.href}
+                  className={button.className}
                 >
-                  {button.icon && <button.icon className="size-4" />}
                   {button.title}
-                </Button>
+                </Link>
               ))}
             </div>
           </div>

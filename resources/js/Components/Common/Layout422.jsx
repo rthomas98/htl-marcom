@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from "@relume_io/relume-ui";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 
 const placeholderImage = '/images/placeholder.svg';
 
@@ -72,13 +72,17 @@ export const Layout422 = (props) => {
                       {feature.description}
                     </p>
                     <div className="mt-6 md:mt-8">
-                      <Button 
-                        {...feature.button}
-                        className="text-white hover:text-white/90 font-semibold inline-flex items-center gap-1"
+                      <Link
+                        href={feature.button.href}
+                        className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                            feature.button.variant === 'primary'
+                                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                        }`}
                       >
                         {feature.button.title}
                         <ChevronRight className="size-4" />
-                      </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -96,13 +100,17 @@ export const Layout422 = (props) => {
                         {feature.description}
                       </p>
                       <div className="mt-6 md:mt-8">
-                        <Button 
-                          {...feature.button}
-                          className="text-white hover:text-white/90 font-semibold inline-flex items-center gap-1"
+                        <Link
+                          href={feature.button.href}
+                          className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                              feature.button.variant === 'primary'
+                                  ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                  : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                          }`}
                         >
                           {feature.button.title}
                           <ChevronRight className="size-4" />
-                        </Button>
+                        </Link>
                       </div>
                     </motion.div>
                   )}
@@ -134,6 +142,7 @@ export const Layout422Defaults = {
         title: "Learn More",
         variant: "link",
         size: "link",
+        href: "#",
         iconRight: true,
       },
     },
@@ -150,6 +159,7 @@ export const Layout422Defaults = {
         title: "Learn More",
         variant: "link",
         size: "link",
+        href: "#",
         iconRight: true,
       },
     },

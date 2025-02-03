@@ -12,15 +12,17 @@ export default function Enforcement() {
         buttons: [
             { 
                 title: "Schedule Consultation",
-                variant: "primary"
+                variant: "primary",
+                href: "/contact"
             }, 
             { 
                 title: "Learn More",
-                variant: "secondary-alt"
+                variant: "secondary",
+                href: "#enforcement-services"
             }
         ],
         image: {
-            src: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg",
+            src: "/images/tm/enforcement/shutterstock_2308066191.jpg",
             alt: "Legal professionals discussing trademark enforcement strategy",
         },
     };
@@ -36,11 +38,13 @@ export default function Enforcement() {
                 heading: "Proactive Brand Protection",
                 description: "Our advanced monitoring systems continuously scan for potential trademark infringements, helping you identify and address threats to your brand early.",
                 image: {
-                    src: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg",
+                    src: "/images/tm/enforcement/shutterstock_2397628143.jpg",
                     alt: "Digital monitoring and brand protection",
                 },
                 button: {
                     text: "Learn About Monitoring",
+                    variant: "primary",
+                    href: "/trademark-services/monitoring"
                 }
             },
             {
@@ -49,11 +53,13 @@ export default function Enforcement() {
                 heading: "Strategic Enforcement",
                 description: "When infringement occurs, we take decisive legal action through cease and desist letters, litigation, and other enforcement strategies to protect your rights.",
                 image: {
-                    src: "https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg",
+                    src: "/images/tm/enforcement/shutterstock_2403025547.jpg",
                     alt: "Legal documents and trademark enforcement",
                 },
                 button: {
                     text: "Explore Legal Options",
+                    variant: "primary",
+                    href: "/trademark-services/litigation"
                 }
             },
             {
@@ -62,11 +68,13 @@ export default function Enforcement() {
                 heading: "Expert Mediation",
                 description: "Our experienced attorneys handle trademark disputes through negotiation, mediation, and when necessary, litigation to achieve the best possible outcomes.",
                 image: {
-                    src: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg",
+                    src: "/images/tm/enforcement/shutterstock_2408160659.jpg",
                     alt: "Legal mediation and dispute resolution",
                 },
                 button: {
                     text: "View Resolution Services",
+                    variant: "primary",
+                    href: "/trademark-services/resolution"
                 }
             }
         ]
@@ -84,11 +92,11 @@ export default function Enforcement() {
                 heading: "Thorough Investigation of Potential Infringement",
                 description: "Our team conducts detailed investigations to identify potential trademark infringement, analyzing market presence, consumer confusion risk, and the strength of your legal position.",
                 buttons: [
-                    { title: "Start Investigation", variant: "secondary" },
-                    { title: "Learn More", variant: "link", size: "link" }
+                    { title: "Start Investigation", variant: "primary", href: "/contact" },
+                    { title: "Learn More", variant: "secondary", href: "#investigation-details" }
                 ],
                 image: {
-                    src: "https://images.pexels.com/photos/4098232/pexels-photo-4098232.jpeg",
+                    src: "/images/tm/enforcement/brooke-cagle-JBwcenOuRCg-unsplash.jpg",
                     alt: "Legal team investigating trademark infringement",
                 }
             },
@@ -102,11 +110,11 @@ export default function Enforcement() {
                 heading: "Strategic Enforcement Measures",
                 description: "We implement targeted enforcement strategies, from cease and desist letters to litigation, designed to protect your trademark rights while managing costs and business relationships.",
                 buttons: [
-                    { title: "Discuss Strategy", variant: "secondary" },
-                    { title: "View Options", variant: "link", size: "link" }
+                    { title: "Discuss Strategy", variant: "primary", href: "/contact" },
+                    { title: "View Options", variant: "secondary", href: "#enforcement-options" }
                 ],
                 image: {
-                    src: "https://images.pexels.com/photos/5668288/pexels-photo-5668288.jpeg",
+                    src: "/images/tm/enforcement/bruce-mars-FWVMhUa_wbY-unsplash.jpg",
                     alt: "Trademark enforcement strategy session",
                 }
             },
@@ -120,11 +128,11 @@ export default function Enforcement() {
                 heading: "Long-term Brand Protection",
                 description: "After resolving immediate concerns, we establish ongoing monitoring and protection strategies to prevent future infringement and maintain the strength of your trademark rights.",
                 buttons: [
-                    { title: "Protect Your Brand", variant: "secondary" },
-                    { title: "View Services", variant: "link", size: "link" }
+                    { title: "Protect Your Brand", variant: "primary", href: "/contact" },
+                    { title: "View Services", variant: "secondary", href: "#protection-services" }
                 ],
                 image: {
-                    src: "https://images.pexels.com/photos/5669626/pexels-photo-5669626.jpeg",
+                    src: "/images/tm/enforcement/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg",
                     alt: "Long-term trademark protection planning",
                 }
             }
@@ -160,7 +168,8 @@ export default function Enforcement() {
         footerDescription: "Contact our experienced trademark attorneys for personalized advice on protecting your intellectual property.",
         button: {
             title: "Schedule Consultation",
-            variant: "secondary"
+            variant: "primary",
+            href: "/contact"
         }
     };
 

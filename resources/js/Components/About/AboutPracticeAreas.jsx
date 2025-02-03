@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
-import { motion } from 'framer-motion';
+import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const sectionVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -120,10 +120,12 @@ export default function AboutPracticeAreas({
                                 {section.heading}
                             </h3>
                             <p className="text-white/80">{section.description}</p>
-                            <Button {...section.button}>
+                            <Link
+                                href={section.button.href}
+                                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                            >
                                 {section.button.title}
-                                {section.button.iconRight}
-                            </Button>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>
@@ -134,9 +136,13 @@ export default function AboutPracticeAreas({
                     transition={{ duration: 0.6, delay: 0.6 }}
                 >
                     {content.buttons.map((button, index) => (
-                        <Button key={index} {...button} variant={index === 0 ? "primary" : "secondary-alt"}>
+                        <Link
+                            key={index} 
+                            href={button.href}
+                            className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                        >
                             {button.title}
-                        </Button>
+                        </Link>
                     ))}
                 </motion.div>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { PhoneCall, Calendar } from 'lucide-react';
 
 export const Cta13 = (props) => {
@@ -20,16 +20,13 @@ export const Cta13 = (props) => {
           </p>
           <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
             {buttons.map((button, index) => (
-              <Button 
+              <Link 
                 key={index} 
-                {...button}
-                className={button.variant === 'primary' 
-                  ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light inline-flex items-center gap-2"
-                  : "rounded-full bg-white px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-gallery inline-flex items-center gap-2"}
+                href={button.href}
+                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
               >
-                {button.variant === 'primary' ? <PhoneCall className="size-4" /> : <Calendar className="size-4" />}
                 {button.title}
-              </Button>
+              </Link>
             ))}
           </div>
         </div>
@@ -43,13 +40,11 @@ export const Cta13Defaults = {
   description:
     "Our experienced team of business law attorneys is here to help protect and grow your business. Contact us today to schedule a consultation and learn how we can assist with your legal matters.",
   buttons: [
-    { 
-      title: "Call Now", 
-      variant: "primary"
-    }, 
+
     { 
       title: "Schedule Consultation", 
-      variant: "secondary"
+      variant: "secondary",
+      href: route('contact')
     }
   ],
 };

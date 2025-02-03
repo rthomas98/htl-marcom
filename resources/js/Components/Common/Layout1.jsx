@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 
 const placeholderImage = '/images/placeholder.svg';
@@ -25,16 +25,16 @@ export const Layout1 = (props) => {
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
               {buttons.map((button, index) => (
-                <Button 
+                <Link 
                   key={index} 
-                  {...button}
+                  href={button.href}
                   className={button.variant === 'primary' 
-                    ? "rounded-full bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-light"
-                    : "rounded-full bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light"}
+                    ? "inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray transition-colors duration-300"
+                    : "inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold bg-pippin text-cod-gray hover:bg-pippin-light transition-colors duration-300"}
                 >
                   {button.title}
                   {button.iconRight && <ChevronRight className="size-4" />}
-                </Button>
+                </Link>
               ))}
             </div>
           </div>
@@ -59,12 +59,14 @@ export const Layout1Defaults = {
   buttons: [
     { 
       title: "Schedule Consultation", 
-      variant: "primary"
+      variant: "primary",
+      href: route('contact')
     },
     {
       title: "Learn More",
       variant: "secondary",
-      iconRight: true
+      iconRight: true,
+      href: route('trademark-services.overview')
     }
   ],
   image: {

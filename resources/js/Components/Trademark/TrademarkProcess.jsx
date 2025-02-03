@@ -33,16 +33,14 @@ export default function TrademarkProcess({ className = "", ...props }) {
         buttons: [
             { 
                 title: "Schedule Consultation",
-                variant: "secondary-alt",
-                className: "bg-white text-cod-gray hover:bg-pippin rounded-full",
+                variant: "primary",
                 href: "/contact"
             },
             {
                 title: "Learn More",
-                variant: "link-alt",
+                variant: "secondary",
                 size: "link",
                 iconRight: <ChevronRight className="size-4" />,
-                className: "text-white hover:text-pippin inline-flex items-center p-3",
                 href: "/about-me"
             },
         ],
@@ -128,12 +126,17 @@ export default function TrademarkProcess({ className = "", ...props }) {
                         variants={itemVariants}
                     >
                         {content.buttons.map((button, index) => {
-                            const { href, ...buttonProps } = button;
                             return (
-                                <Link key={index} href={href}>
-                                    <Button {...buttonProps}>
-                                        {button.title}
-                                    </Button>
+                                <Link
+                                    key={index}
+                                    href={button.href}
+                                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                        button.variant === 'primary'
+                                            ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                            : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                                    }`}
+                                >
+                                    {button.title}
                                 </Link>
                             );
                         })}

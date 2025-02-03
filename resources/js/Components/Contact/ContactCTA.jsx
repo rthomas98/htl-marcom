@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -25,14 +25,12 @@ export default function ContactCTA({ className = "", ...props }) {
             { 
                 title: "Schedule Consultation",
                 variant: "primary",
-                className: "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                href: route('contact'),
             },
             {
                 title: "Learn More",
                 variant: "link",
-                size: "link",
-                iconRight: <ChevronRight className="size-4" />,
-                className: "text-cod-gray hover:text-cod-gray/80"
+                href: "#",
             },
         ],
         image: {
@@ -96,9 +94,17 @@ export default function ContactCTA({ className = "", ...props }) {
                             variants={itemVariants}
                         >
                             {content.buttons.map((button, index) => (
-                                <Button key={index} {...button}>
+                                <Link
+                                    key={index}
+                                    href={button.href}
+                                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                        button.variant === 'primary'
+                                            ? "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
+                                            : "border border-white text-white hover:bg-white hover:text-cod-gray"
+                                    }`}
+                                >
                                     {button.title}
-                                </Button>
+                                </Link>
                             ))}
                         </motion.div>
                     </motion.div>

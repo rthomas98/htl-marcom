@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Input, Button } from "@relume_io/relume-ui";
+import { Input } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 
 export default function ContactHeader({ 
@@ -12,15 +13,18 @@ export default function ContactHeader({
     className = "",
     ...props 
 }) {
+    const defaultButton = {
+        title: "Schedule Consultation",
+        variant: "primary",
+        href: route('contact'),
+        className: ""
+    };
+
     const content = {
         heading: heading || "Let's Discuss Your Legal Needs",
         description: description || "Schedule a consultation to discuss your intellectual property and business law needs. We're here to help protect and grow your business assets.",
         inputPlaceholder: inputPlaceholder || "Enter your email",
-        button: button || { 
-            title: "Schedule Consultation",
-            variant: "primary",
-            className: "bg-white text-cod-gray hover:bg-pippin hover:text-cod-gray"
-        },
+        button: { ...defaultButton, ...button },
         termsAndConditions: termsAndConditions || `
             <p class='text-xs text-white/80'>
                 By scheduling a consultation you're confirming that you agree with our
@@ -76,7 +80,16 @@ export default function ContactHeader({
                                         onChange={(e) => setEmailInput(e.target.value)}
                                         className="bg-white/10 text-white placeholder:text-white/60 focus:border-pippin"
                                     />
-                                    <Button {...content.button}>{content.button.title}</Button>
+                                    <Link
+                                        href={content.button.href}
+                                        className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                                            content.button.variant === 'primary'
+                                                ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                                                : "bg-pippin text-cod-gray hover:bg-pippin-light"
+                                        }`}
+                                    >
+                                        {content.button.title}
+                                    </Link>
                                 </form>
                                 <div dangerouslySetInnerHTML={{ __html: content.termsAndConditions }} />
                             </motion.div>

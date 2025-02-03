@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  Button,
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@relume_io/relume-ui";
+import { Link } from '@inertiajs/react';
 
 export const Faq3 = ({ className, ...props }) => {
   const { heading, description, button, questions } = {
@@ -20,8 +20,17 @@ export const Faq3 = ({ className, ...props }) => {
             {heading}
           </h2>
           <p className="text-cod-gray/90 md:text-md">{description}</p>
-          <div className="mt-6 md:mt-8">
-            <Button {...button} className="hover:bg-pippin">{button.title}</Button>
+          <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
+            <Link 
+              href={button.href}
+              className={`inline-flex items-center justify-center rounded-full ${
+                button.variant === 'primary' 
+                  ? 'bg-cod-gray px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-cod-gray-dark'
+                  : 'bg-pippin px-6 py-3 text-sm font-semibold text-cod-gray shadow-sm transition hover:bg-pippin-light'
+              }`}
+            >
+              {button.title}
+            </Link>
           </div>
         </div>
         <Accordion type="multiple" className="text-cod-gray">
@@ -48,6 +57,7 @@ export const Faq3Defaults = {
   button: {
     title: "Schedule Consultation",
     variant: "secondary",
+    href: "",
   },
   questions: [
     {

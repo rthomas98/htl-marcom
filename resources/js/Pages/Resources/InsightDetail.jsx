@@ -8,6 +8,18 @@ import Cta45, { Cta45Defaults } from '@/Components/Resources/Cta45';
 import { Link as LinkIcon, Linkedin, Facebook, Twitter } from 'lucide-react';
 
 export default function InsightDetail({ post, relatedPosts }) {
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      // You could add a toast notification here
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
+  };
+
+  const shareText = `${post.title}\n\n${post.excerpt}\n\nRead more at:`;
+  const shareUrl = window.location.href;
+
   const headerData = {
     breadcrumbs: [
       { url: route('insights'), title: 'Insights' },
@@ -33,19 +45,20 @@ export default function InsightDetail({ post, relatedPosts }) {
     },
     socialMediaLinks: [
       { 
-        url: `${window.location.href}`,
-        icon: <LinkIcon className="size-5" />
+        url: '#',
+        icon: <LinkIcon className="size-5" />,
+        onClick: handleCopyLink
       },
       { 
-        url: `https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}&title=${encodeURIComponent(post.title)}`,
+        url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(post.title)}&summary=${encodeURIComponent(post.excerpt)}&source=Hebert-Thomas Law`,
         icon: <Linkedin className="size-5" />
       },
       { 
-        url: `https://twitter.com/intent/tweet?url=${window.location.href}&text=${encodeURIComponent(post.title)}`,
+        url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
         icon: <Twitter className="size-5" />
       },
       { 
-        url: `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
+        url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
         icon: <Facebook className="size-5" />
       },
     ],
@@ -55,10 +68,15 @@ export default function InsightDetail({ post, relatedPosts }) {
     <>
       <Head>
         <title>{`${post.title} - Hebert-Thomas Law`}</title>
-        <meta 
-          name="description" 
-          content={post.excerpt}
-        />
+        <meta name="description" content={post.excerpt} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:image" content={post.featured_image} />
+        <meta property="og:url" content={window.location.href} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.excerpt} />
+        <meta name="twitter:image" content={post.featured_image} />
       </Head>
 
       <BlogPostHeader1 {...headerData} />

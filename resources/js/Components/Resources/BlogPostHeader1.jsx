@@ -62,6 +62,12 @@ const BlogPostHeader1 = ({ breadcrumbs, heading, author, image, socialMediaLinks
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => {
+                    if (link.onClick) {
+                      e.preventDefault();
+                      link.onClick();
+                    }
+                  }}
                   className="rounded-full bg-gallery p-2 text-cod-gray hover:bg-cod-gray hover:text-white transition-colors duration-200"
                 >
                   {link.icon}

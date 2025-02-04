@@ -4,12 +4,15 @@ import { useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function Create() {
-    const { data, setData, post, processing, errors } = useForm({
+    const initialFormData = {
+        // Basic Information
         title: '',
         slug: '',
         description: '',
         learning_outcomes: '',
         level: '',
+        
+        // Session Details
         type: 'live',
         duration_minutes: 60,
         price: '',
@@ -18,18 +21,26 @@ export default function Create() {
         scheduled_end: '',
         meeting_url: '',
         recording_url: '',
+        
+        // Status and Settings
         is_featured: false,
         is_published: false,
         published_at: '',
         completion_threshold: 85,
         instructor_id: '',
         is_live: false,
+        
+        // Media and Resources
         resources: [],
         featured_image: null,
         additional_images: [],
-        series_id: '',
-        session_number: '',
-    });
+        
+        // Series Information
+        series_id: null,
+        session_number: null,
+    };
+
+    const { data, setData, post, processing, errors } = useForm(initialFormData);
 
     const handleSubmit = (e) => {
         e.preventDefault();

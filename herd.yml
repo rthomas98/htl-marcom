@@ -1,11 +1,5 @@
 integrations:
   forge:
     default:
-      server-id: 874274
-      site-id: 2580137
-    herd.hebertthomaslaw.com:
-      server-id: 874274
-      site-id: 2581051
-    htl.com:
-      server-id: 874274
-      site-id: 2581002
+      server-id: 883487
+      site-id: 2608293

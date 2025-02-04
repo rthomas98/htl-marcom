@@ -11,8 +11,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Support\Facades\Hash;
 use Filament\Notifications\Notification;
 
@@ -28,6 +30,12 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                FileUpload::make('profile_image')
+                    ->image()
+                    ->imageEditor()
+                    ->directory('profile-images')
+                    ->visibility('public')
+                    ->columnSpanFull(),
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -48,6 +56,8 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('profile_image')
+                    ->circular(),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('email')

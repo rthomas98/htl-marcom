@@ -223,7 +223,15 @@ export default function MarcomNav() {
                             <NavDropdown type="user" items={userMenu}>
                                 <div className="flex items-center space-x-4">
                                     <div className="flex cursor-pointer items-center space-x-2 font-medium text-cod-gray">
-                                        <User className="size-4" />
+                                        {auth.user.profile_image ? (
+                                            <img 
+                                                src={`/storage/${auth.user.profile_image}`}
+                                                alt={auth.user.name}
+                                                className="size-8 rounded-full object-cover"
+                                            />
+                                        ) : (
+                                            <User className="size-4" />
+                                        )}
                                         <span>{auth.user.name}</span>
                                         <ChevronDown className="size-4" />
                                     </div>
@@ -255,7 +263,15 @@ export default function MarcomNav() {
                     <div className="flex items-center space-x-4 lg:hidden">
                         {auth.user && (
                             <div className="flex items-center space-x-2 text-sm text-cod-gray">
-                                <User className="size-4" />
+                                {auth.user.profile_image ? (
+                                    <img 
+                                        src={`/storage/${auth.user.profile_image}`}
+                                        alt={auth.user.name}
+                                        className="size-8 rounded-full object-cover"
+                                    />
+                                ) : (
+                                    <User className="size-4" />
+                                )}
                                 <span>{auth.user.name}</span>
                             </div>
                         )}

@@ -42,6 +42,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                                 type="button"
                                                 className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                                             >
+                                                {user.profile_image ? (
+                                                    <img
+                                                        src={`/storage/${user.profile_image}`}
+                                                        alt={user.name}
+                                                        className="size-8 rounded-full object-cover mr-2"
+                                                    />
+                                                ) : null}
                                                 {user.name}
 
                                                 <svg
@@ -127,7 +134,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         ' sm:hidden'
                     }
                 >
-                    <div className="space-y-1 pb-3 pt-2">
+                    <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
@@ -136,12 +143,19 @@ export default function AuthenticatedLayout({ header, children }) {
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="border-t border-gray-200 pb-1 pt-4">
+                    <div className="border-t border-gray-200 pt-4 pb-1">
                         <div className="px-4">
-                            <div className="text-base font-medium text-gray-800">
+                            <div className="font-medium text-base text-gray-800 flex items-center">
+                                {user.profile_image ? (
+                                    <img
+                                        src={`/storage/${user.profile_image}`}
+                                        alt={user.name}
+                                        className="size-8 rounded-full object-cover mr-2"
+                                    />
+                                ) : null}
                                 {user.name}
                             </div>
-                            <div className="text-sm font-medium text-gray-500">
+                            <div className="font-medium text-sm text-gray-500">
                                 {user.email}
                             </div>
                         </div>

@@ -21,11 +21,12 @@ const BlogSection = ({ tagline, heading, description, button, blogPosts }) => {
               key={index}
               className="flex size-full flex-col items-center justify-start border border-cod-gray/10 bg-white transition-all duration-300 hover:shadow-md"
             >
-              <Link href={post.url} className="w-full">
+              <Link href={post.slug} className="w-full">
                 <img
                   src={post.image.src}
                   alt={post.image.alt}
                   className="aspect-[3/2] size-full object-cover"
+                  loading="lazy"
                 />
               </Link>
               <div className="px-5 py-6 md:p-6">
@@ -38,14 +39,14 @@ const BlogSection = ({ tagline, heading, description, button, blogPosts }) => {
                   </p>
                 </div>
                 <div className="flex w-full flex-col items-start justify-start">
-                  <Link className="mb-2 hover:text-cod-gray-light" href={post.url}>
+                  <Link className="mb-2 hover:text-cod-gray-light" href={post.slug}>
                     <h2 className="font-heading text-xl font-bold text-cod-gray md:text-2xl">
                       {post.title}
                     </h2>
                   </Link>
                   <p className="font-sans text-cod-gray-light">{post.description}</p>
                   <Link
-                    href={post.url}
+                    href={post.slug}
                     className="group mt-4 inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light"
                   >
                     {post.button.title}
@@ -58,8 +59,8 @@ const BlogSection = ({ tagline, heading, description, button, blogPosts }) => {
         </div>
         <div className="flex items-center justify-end">
           <Link
-            href={button.href}
-            className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+            href={route('insights')}
+            className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
               button.variant === 'primary'
                 ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
                 : "bg-pippin text-cod-gray hover:bg-pippin-light"

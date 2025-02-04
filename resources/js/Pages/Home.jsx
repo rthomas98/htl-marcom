@@ -10,7 +10,7 @@ import TestimonialSection from '@/Components/Home/TestimonialSection';
 import BlogSection from '@/Components/Home/BlogSection';
 import CTASection from '@/Components/Home/CTASection';
 
-export default function Home() {
+export default function Home({ blogData }) {
     const layout245Data = {
         tagline: "Our Services",
         heading: "Protecting Your Intellectual Property",
@@ -105,64 +105,6 @@ export default function Home() {
         ],
     };
 
-    const blogData = {
-        tagline: "Latest Insights",
-        heading: "Legal Knowledge Hub",
-        description: "Stay informed with our latest articles on intellectual property law, trademark protection, and business strategies.",
-        button: { 
-            title: "View All Articles",
-            variant: "secondary",
-            href: "/blog"
-        },
-        blogPosts: [
-            {
-                url: "/blog/trademark-registration-guide",
-                image: {
-                    src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Trademark Registration Process",
-                },
-                category: "Trademark Law",
-                readTime: "5 min read",
-                title: "Complete Guide to Trademark Registration",
-                description: "Learn the essential steps and requirements for protecting your brand through trademark registration.",
-                button: {
-                    title: "Read More",
-                    variant: "link",
-                },
-            },
-            {
-                url: "/blog/ip-protection-strategies",
-                image: {
-                    src: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "IP Protection Strategies",
-                },
-                category: "IP Strategy",
-                readTime: "4 min read",
-                title: "Effective IP Protection Strategies for Businesses",
-                description: "Discover key strategies to protect and leverage your intellectual property assets in today's market.",
-                button: {
-                    title: "Read More",
-                    variant: "link",
-                },
-            },
-            {
-                url: "/blog/trademark-monitoring",
-                image: {
-                    src: "https://images.unsplash.com/photo-1664575602554-2087b04935a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Trademark Monitoring",
-                },
-                category: "Brand Protection",
-                readTime: "3 min read",
-                title: "Why Trademark Monitoring is Essential",
-                description: "Understanding the importance of ongoing trademark monitoring and enforcement for your brand.",
-                button: {
-                    title: "Read More",
-                    variant: "link",
-                },
-            },
-        ],
-    };
-
     const ctaData = {
         heading: "Protect Your Intellectual Property Today",
         description: "Take the first step in securing your brand's future. Our experienced team is ready to guide you through the trademark registration process and help protect your valuable intellectual property assets.",
@@ -197,4 +139,4 @@ export default function Home() {
             <CTASection {...ctaData} />
         </MarcomLayout>
     );
-} 
+}

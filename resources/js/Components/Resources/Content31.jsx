@@ -25,25 +25,50 @@ const Content31 = ({ subscribe, children, className = "" }) => {
                 {subscribe.title}
               </h6>
               <p className="mb-3 font-sans text-cod-gray-light md:mb-4">{subscribe.description}</p>
-              <form className="mb-4 flex flex-col gap-3 sm:gap-4" onSubmit={handleSubmit}>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder={subscribe.inputPlaceholder}
-                  value={emailInput}
-                  onChange={(e) => setEmailInput(e.target.value)}
-                  className="border-gallery focus:border-cod-gray text-cod-gray placeholder:text-cod-gray-light"
-                />
-                <Link
-                  href={subscribe.button.href}
-                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
-                    subscribe.button.variant === 'primary'
-                      ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
-                      : "bg-pippin text-cod-gray hover:bg-pippin-light"
-                  }`}
+              <form 
+                action="https://hebertthomaslaw.us19.list-manage.com/subscribe/post?u=e4b0a3faf160e76a19bcdc3c4&amp;id=b2ede287ff&amp;f_id=005cb8e7f0" 
+                method="post" 
+                id="mc-embedded-subscribe-form" 
+                name="mc-embedded-subscribe-form" 
+                className="validate mb-4 flex flex-col gap-3 sm:gap-4" 
+                target="_self" 
+                noValidate
+              >
+                <div className="flex flex-col gap-2">
+                  <Input
+                    type="email"
+                    name="EMAIL"
+                    id="mce-EMAIL"
+                    placeholder="Email Address *"
+                    required
+                    className="border-gallery focus:border-cod-gray text-cod-gray placeholder:text-cod-gray-light"
+                  />
+                  <Input
+                    type="text"
+                    name="MMERGE26"
+                    id="mce-MMERGE26"
+                    placeholder="Contact Name"
+                    className="border-gallery focus:border-cod-gray text-cod-gray placeholder:text-cod-gray-light"
+                  />
+                </div>
+                
+                <div id="mce-responses" className="clear foot">
+                  <div className="response hidden" id="mce-error-response"></div>
+                  <div className="response hidden" id="mce-success-response"></div>
+                </div>
+
+                <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
+                  <input type="text" name="b_e4b0a3faf160e76a19bcdc3c4_b2ede287ff" tabIndex="-1" />
+                </div>
+
+                <button
+                  type="submit"
+                  name="subscribe"
+                  id="mc-embedded-subscribe"
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray`}
                 >
-                  {subscribe.button.title}
-                </Link>
+                  Subscribe
+                </button>
               </form>
               <div 
                 dangerouslySetInnerHTML={{ __html: subscribe.termsAndConditions }} 

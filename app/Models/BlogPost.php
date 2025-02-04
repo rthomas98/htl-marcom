@@ -43,7 +43,7 @@ class BlogPost extends Model
 
     public function getAuthorProfileImageAttribute()
     {
-        return $this->author?->profile_photo_url ?? '/images/web-logo-black (2).svg';
+        return $this->author?->profile_photo_path ?? '/images/web-logo-black (2).svg';
     }
 
     public static function boot()

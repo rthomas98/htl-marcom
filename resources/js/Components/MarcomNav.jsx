@@ -238,13 +238,13 @@ export default function MarcomNav() {
                         ) : (
                             <>
                                 
-                                <Link href={route('register')}>
+                                <Link href={route('contact')}>
                                     <Button
                                         variant="solid"
                                         size="sm"
                                         className="bg-cod-gray text-white hover:bg-cod-gray-light rounded-full"
                                     >
-                                        Get Started
+                                        Request a Call
                                     </Button>
                                 </Link>
                             </>

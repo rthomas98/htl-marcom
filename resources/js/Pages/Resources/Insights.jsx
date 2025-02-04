@@ -82,7 +82,7 @@ const NewsletterDefaults = {
 };
 
 export default function Insights() {
-  const { blogPosts, categories } = usePage().props;
+  const { blogPosts, categories, filters } = usePage().props;
   const [emailInput, setEmailInput] = useState("");
 
   const handleSubmit = (event) => {
@@ -92,42 +92,46 @@ export default function Insights() {
     });
   };
 
-  const blogData = {
+  const blog1Data = {
     tagline: "Legal Insights",
     heading: "Knowledge Hub",
     description: "Stay informed with our latest articles on intellectual property law, trademark protection, and business strategies.",
     buttons: [
-      { title: "View all", variant: "secondary" },
+      { 
+        title: "View all", 
+        variant: "secondary",
+        href: route('insights'),
+        active: !filters.category
+      },
       ...(categories?.map(category => ({
         title: category.name,
-        variant: "link"
+        variant: "link",
+        href: route('insights', { category: category.slug }),
+        active: filters.category === category.slug
       })) || [])
     ],
-    categoryLink: route('insights'),
-    blogPosts: {
-      ...blogPosts,
-      data: blogPosts.data?.map(post => ({
-        url: `/blog/${post.slug}`,
-        image: {
-          src: post.featured_image || 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3',
-          alt: post.title,
-        },
-        category: post.category?.name || 'Legal Insights',
-        title: post.title,
-        description: post.excerpt,
-        avatar: {
-          src: post.author?.profile_photo_url || 'https://images.unsplash.com/photo-1560250097-0b93528c311a',
-          alt: post.author?.name || 'Author',
-        },
-        fullName: post.author?.name || 'Hebert-Thomas Law',
-        date: new Date(post.published_at).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        }),
-        readTime: `${Math.ceil(post.content?.split(' ').length / 200) || 5} min read`,
-      })) || []
-    }
+    blogPosts: blogPosts.data?.map(post => ({
+      url: route('insight.detail', { slug: post.slug }),
+      image: {
+        src: post.featured_image || 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3',
+        alt: post.title,
+      },
+      category: post.category?.name || 'Legal Insights',
+      title: post.title,
+      description: post.excerpt,
+      avatar: {
+        src: post.author_profile_image || '/images/web-logo-black (2).svg',
+        alt: post.author?.name || 'Author',
+      },
+      fullName: post.author?.name || 'Hebert-Thomas Law',
+      date: new Date(post.published_at).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }),
+      readTime: `${Math.ceil(post.content?.split(' ').length / 200) || 5} min read`,
+    })) || [],
+    links: blogPosts.links
   };
 
   return (
@@ -140,7 +144,7 @@ export default function Insights() {
         />
       </Head>
 
-      <Blog1 {...blogData} />
+      <Blog1 {...blog1Data} />
       <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28 bg-gallery">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">

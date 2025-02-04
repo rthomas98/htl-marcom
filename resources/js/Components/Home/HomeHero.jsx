@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useMediaQuery } from '@relume_io/relume-ui';
@@ -6,6 +6,15 @@ import { useMediaQuery } from '@relume_io/relume-ui';
 export default function HomeHero() {
     const isMobile = useMediaQuery('(max-width: 767px)');
     const { scrollYProgress } = useScroll();
+
+    useEffect(() => {
+        // Preload critical images
+        const preloadImages = ['/images/home/hero/home-1.jpg'];
+        preloadImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    }, []);
 
     const createTransform = (mobileValues, desktopValues) =>
         useTransform(scrollYProgress, [0, 1], isMobile ? mobileValues : desktopValues);
@@ -28,30 +37,37 @@ export default function HomeHero() {
         {
             src: '/images/home/hero/home-1.jpg',
             alt: 'Professional business meeting',
+            priority: true
         },
         {
             src: '/images/home/hero/h-hero-3.jpg',
             alt: 'Startup team collaboration',
+            loading: 'lazy'
         },
         {
             src: '/images/home/hero/h-hero-4.jpg',
             alt: 'Modern office environment',
+            loading: 'lazy'
         },
         {
             src: '/images/home/hero/h-hero-5.jpg',
             alt: 'Business strategy session',
+            loading: 'lazy'
         },
         {
             src: '/images/home/hero/h-hero-6.jpg',
             alt: 'Tech entrepreneur working',
+            loading: 'lazy'
         },
         {
             src: '/images/home/hero/h-hreo-7.jpg',
             alt: 'Creative business discussion',
+            loading: 'lazy'
         },
         {
             src: '/images/home/hero/h-hreo-8.jpg',
             alt: 'Business leadership meeting',
+            loading: 'lazy'
         },
     ];
 
@@ -105,21 +121,45 @@ export default function HomeHero() {
                         style={leftImageGroup}
                     >
                         <div className="relative hidden md:block md:w-[25vw] lg:w-[20vw]">
-                            <img className="aspect-[2/3] w-full rounded-lg object-cover" {...images[0]} />
+                            <motion.img
+                                src={images[0].src}
+                                alt={images[0].alt}
+                                className="aspect-[2/3] w-full rounded-lg object-cover"
+                                loading={images[0].loading}
+                                fetchPriority={images[0].priority ? "high" : "auto"}
+                            />
                         </div>
 
                         <div className="relative grid w-[40vw] grid-cols-1 grid-rows-[auto_auto] gap-4 self-center md:w-[18vw]">
                             <div className="relative">
-                                <img className="aspect-square w-full rounded-lg object-cover" {...images[1]} />
+                                <motion.img
+                                    src={images[1].src}
+                                    alt={images[1].alt}
+                                    className="aspect-square w-full rounded-lg object-cover"
+                                    loading={images[1].loading}
+                                    fetchPriority={images[1].priority ? "high" : "auto"}
+                                />
                             </div>
                             <div className="relative">
-                                <img className="aspect-[3/4] w-full rounded-lg object-cover" {...images[2]} />
+                                <motion.img
+                                    src={images[2].src}
+                                    alt={images[2].alt}
+                                    className="aspect-[3/4] w-full rounded-lg object-cover"
+                                    loading={images[2].loading}
+                                    fetchPriority={images[2].priority ? "high" : "auto"}
+                                />
                             </div>
                         </div>
                     </motion.div>
 
                     <motion.div className="relative" style={centerImageContainer}>
-                        <img className="size-full rounded-lg object-cover" {...images[3]} />
+                        <motion.img
+                            src={images[3].src}
+                            alt={images[3].alt}
+                            className="size-full rounded-lg object-cover"
+                            loading={images[3].loading}
+                            fetchPriority={images[3].priority ? "high" : "auto"}
+                        />
                     </motion.div>
 
                     <motion.div
@@ -128,15 +168,33 @@ export default function HomeHero() {
                     >
                         <div className="relative grid w-[40vw] grid-cols-1 grid-rows-[auto_auto] gap-4 self-center md:w-[18vw]">
                             <div className="relative w-[40vw] sm:w-auto">
-                                <img className="aspect-[3/4] w-full rounded-lg object-cover" {...images[4]} />
+                                <motion.img
+                                    src={images[4].src}
+                                    alt={images[4].alt}
+                                    className="aspect-[3/4] w-full rounded-lg object-cover"
+                                    loading={images[4].loading}
+                                    fetchPriority={images[4].priority ? "high" : "auto"}
+                                />
                             </div>
                             <div className="relative w-[40vw] sm:w-auto">
-                                <img className="aspect-square w-full rounded-lg object-cover" {...images[5]} />
+                                <motion.img
+                                    src={images[5].src}
+                                    alt={images[5].alt}
+                                    className="aspect-square w-full rounded-lg object-cover"
+                                    loading={images[5].loading}
+                                    fetchPriority={images[5].priority ? "high" : "auto"}
+                                />
                             </div>
                         </div>
 
                         <div className="relative hidden md:block md:w-[25vw] lg:w-[20vw]">
-                            <img className="aspect-[2/3] w-full rounded-lg object-cover" {...images[6]} />
+                            <motion.img
+                                src={images[6].src}
+                                alt={images[6].alt}
+                                className="aspect-[2/3] w-full rounded-lg object-cover"
+                                loading={images[6].loading}
+                                fetchPriority={images[6].priority ? "high" : "auto"}
+                            />
                         </div>
                     </motion.div>
                 </div>

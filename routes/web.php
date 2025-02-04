@@ -11,6 +11,7 @@ use App\Http\Controllers\LegalnarRegistrationController;
 use App\Http\Controllers\LegalnarPaymentController;
 use App\Models\BlogPost;
 use App\Models\Category;
+use App\Models\User;
 
 Route::get('/', function () {
     $blogPosts = BlogPost::where('status', 'published')
@@ -19,7 +20,7 @@ Route::get('/', function () {
         ->get()
         ->map(function ($post) {
             return [
-                'url' => "/blog/{$post->slug}",
+                'slug' => '/insights/' . $post->slug,
                 'image' => [
                     'src' => $post->featured_image,
                     'alt' => $post->title,
@@ -43,7 +44,6 @@ Route::get('/', function () {
             'button' => [
                 'title' => 'View All Articles',
                 'variant' => 'secondary',
-                'href' => '/blog'
             ],
             'blogPosts' => $blogPosts
         ]
@@ -63,10 +63,21 @@ Route::get('/about-me', function() {
     ]);
 })->name('about-me');
 Route::get('/webinars', fn() => Inertia::render('Webinars'))->name('webinars');
+Route::get('/newsletter', function () {
+    $posts = BlogPost::with('author')
+        ->where('status', 'published')
+        ->orderBy('published_at', 'desc')
+        ->take(3)
+        ->get();
+
+    return Inertia::render('Newsletter', [
+        'posts' => $posts
+    ]);
+})->name('newsletter');
 Route::get('/contact', fn() => Inertia::render('Contact'))->name('contact');
 Route::get('/insights', function (Request $request) {
-    $search = $request->get('search');
-    $category = $request->get('category');
+    $search = $request->input('search');
+    $category = $request->input('category');
     
     $query = BlogPost::query()
         ->with(['category', 'author'])
@@ -85,14 +96,18 @@ Route::get('/insights', function (Request $request) {
                 $query->where('slug', $category);
             });
         })
-        ->orderBy('published_at', 'desc')
-        ->paginate(6);
+        ->orderBy('published_at', 'desc');
+
+    $blogPosts = $query->paginate(15);
+    $categories = Category::orderBy('name')->get();
 
     return Inertia::render('Resources/Insights', [
-        'blogPosts' => $query,
-        'categories' => Category::all(),
-        'currentCategory' => $category,
-        'search' => $search,
+        'blogPosts' => $blogPosts,
+        'categories' => $categories,
+        'filters' => [
+            'search' => $search,
+            'category' => $category,
+        ],
     ]);
 })->name('insights');
 
@@ -124,10 +139,10 @@ Route::get('/insights/{slug}', function (string $slug) {
                 'title' => $post->title,
                 'description' => $post->excerpt,
                 'avatar' => [
-                    'src' => $post->author_profile_image,
-                    'alt' => $post->author?->name ?? 'Author'
+                    'src' => $post->author->profile_photo_path,
+                    'alt' => $post->author->name ?? 'Author'
                 ],
-                'fullName' => $post->author?->name ?? 'Hebert-Thomas Law',
+                'fullName' => $post->author->name ?? 'Hebert-Thomas Law',
                 'date' => \Carbon\Carbon::parse($post->published_at)->format('d M Y')
             ];
         });

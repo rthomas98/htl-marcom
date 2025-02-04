@@ -4,10 +4,19 @@ import { Facebook, Instagram, Linkedin, Youtube, Twitter } from 'lucide-react';
 
 export default function MarcomFooter() {
     const [emailInput, setEmailInput] = useState('');
+    const [contactNameInput, setContactNameInput] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle newsletter subscription
+    };
+
+    const handleEmailChange = (e) => {
+        setEmailInput(e.target.value);
+    };
+
+    const handleContactNameChange = (e) => {
+        setContactNameInput(e.target.value);
     };
 
     const columnLinks = [
@@ -96,6 +105,7 @@ export default function MarcomFooter() {
                             className="validate mt-4" 
                             target="_self" 
                             noValidate
+                            onSubmit={handleSubmit}
                         >
                             <div className="flex max-w-sm flex-col gap-2">
                                 <input
@@ -103,6 +113,8 @@ export default function MarcomFooter() {
                                     name="EMAIL"
                                     id="mce-EMAIL"
                                     required
+                                    value={emailInput}
+                                    onChange={handleEmailChange}
                                     className="min-w-0 flex-auto rounded-full border-0 bg-gray-100 px-4 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cod-gray"
                                     placeholder="Email Address *"
                                 />
@@ -110,6 +122,8 @@ export default function MarcomFooter() {
                                     type="text"
                                     name="MMERGE26"
                                     id="mce-MMERGE26"
+                                    value={contactNameInput}
+                                    onChange={handleContactNameChange}
                                     className="min-w-0 flex-auto rounded-full border-0 bg-gray-100 px-4 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cod-gray"
                                     placeholder="Contact Name"
                                 />

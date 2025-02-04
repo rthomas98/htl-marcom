@@ -1,13 +1,35 @@
 import { Button } from "@relume_io/relume-ui";
 import clsx from "clsx";
 import { Link } from '@inertiajs/react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
+import { useForm } from '@inertiajs/react';
 
 export const Blog1 = (props) => {
   const { tagline, heading, description, buttons, blogPosts, links } = {
     ...Blog1Defaults,
     ...props,
   };
+
+  const { data, setData, get } = useForm({
+    search: '',
+  });
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    get(route('insights', { search: data.search }), {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  const clearSearch = () => {
+    setData('search', '');
+    get(route('insights', { category: null, search: null }), {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
   return (
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
@@ -22,6 +44,32 @@ export const Blog1 = (props) => {
             >
               Subscribe to Newsletter
             </Link>
+          </div>
+          <div className="mx-auto mt-8 max-w-md">
+            <form onSubmit={handleSearch} className="relative">
+              <input
+                type="text"
+                value={data.search}
+                onChange={e => setData('search', e.target.value)}
+                placeholder="Search articles..."
+                className="w-full rounded-full border border-cod-gray/20 px-6 py-2.5 pr-24 text-sm font-sans text-cod-gray placeholder:text-cod-gray-light focus:border-cod-gray focus:outline-none focus:ring-1 focus:ring-cod-gray"
+              />
+              {data.search && (
+                <button
+                  type="button"
+                  onClick={clearSearch}
+                  className="absolute right-12 top-1/2 -translate-y-1/2 rounded-full p-2 text-cod-gray-light transition-colors duration-200 hover:text-cod-gray"
+                >
+                  <X className="size-5" />
+                </button>
+              )}
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2 text-cod-gray-light transition-colors duration-200 hover:text-cod-gray"
+              >
+                <Search className="size-5" />
+              </button>
+            </form>
           </div>
         </div>
         <div className="flex flex-col justify-start">
@@ -44,46 +92,59 @@ export const Blog1 = (props) => {
             ))}
           </div>
           <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
-            {blogPosts.map((post, index) => (
-              <div key={index}>
-                <Link href={post.url} className="mb-6 inline-block w-full max-w-full">
-                  <div className="w-full overflow-hidden">
-                    <img
-                      src={post.image.src}
-                      alt={post.image.alt}
-                      className="aspect-[3/2] size-full object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                  </div>
-                </Link>
-                <Link
-                  href={post.url}
-                  className="mb-2 mr-4 inline-block max-w-full text-sm font-semibold text-cod-gray-light hover:text-cod-gray transition-colors duration-200"
-                >
-                  {post.category}
-                </Link>
-                <Link href={post.url} className="mb-2 block max-w-full group">
-                  <h5 className="font-heading text-xl font-bold text-cod-gray transition-colors duration-200 group-hover:text-pippin md:text-2xl">{post.title}</h5>
-                </Link>
-                <p className="font-sans text-cod-gray-light">{post.description}</p>
-                <div className="mt-6 flex items-center">
-                  <div className="mr-4 shrink-0">
-                    <img
-                      src={post.avatar.src}
-                      alt={post.avatar.alt}
-                      className="size-12 min-h-12 min-w-12 rounded-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h6 className="text-sm font-sans font-semibold text-cod-gray">{post.fullName}</h6>
-                    <div className="flex items-center">
-                      <p className="text-sm font-sans text-cod-gray-light">{post.date}</p>
-                      <span className="mx-2 text-cod-gray-light">•</span>
-                      <p className="text-sm font-sans text-cod-gray-light">{post.readTime}</p>
+            {blogPosts.length > 0 ? (
+              blogPosts.map((post, index) => (
+                <div key={index}>
+                  <Link href={post.url} className="mb-6 inline-block w-full max-w-full">
+                    <div className="w-full overflow-hidden">
+                      <img
+                        src={post.image.src}
+                        alt={post.image.alt}
+                        className="aspect-[3/2] size-full object-cover transition-transform duration-500 hover:scale-105"
+                      />
+                    </div>
+                  </Link>
+                  <Link
+                    href={post.url}
+                    className="mb-2 mr-4 inline-block max-w-full text-sm font-semibold text-cod-gray-light hover:text-cod-gray transition-colors duration-200"
+                  >
+                    {post.category}
+                  </Link>
+                  <Link href={post.url} className="mb-2 block max-w-full group">
+                    <h5 className="font-heading text-xl font-bold text-cod-gray transition-colors duration-200 group-hover:text-cod-gray-light md:text-2xl">{post.title}</h5>
+                  </Link>
+                  <p className="font-sans text-cod-gray-light">{post.description}</p>
+                  <div className="mt-6 flex items-center">
+                    <div className="mr-4 shrink-0">
+                      <img
+                        src={post.avatar.src}
+                        alt={post.avatar.alt}
+                        className="size-12 min-h-12 min-w-12 rounded-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h6 className="text-sm font-sans font-semibold text-cod-gray">{post.fullName}</h6>
+                      <div className="flex items-center">
+                        <p className="text-sm font-sans text-cod-gray-light">{post.date}</p>
+                        <span className="mx-2 text-cod-gray-light">•</span>
+                        <p className="text-sm font-sans text-cod-gray-light">{post.readTime}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="font-sans text-xl text-cod-gray-light mb-4">No articles found</p>
+                <p className="font-sans text-cod-gray-light">Try adjusting your search terms or browse all articles</p>
+                <Link
+                  href={route('insights')}
+                  className="mt-6 inline-flex items-center justify-center rounded-full border border-cod-gray px-6 py-2.5 text-sm font-semibold text-cod-gray transition-all duration-200 hover:bg-cod-gray hover:text-white"
+                >
+                  View All Articles
+                </Link>
               </div>
-            ))}
+            )}
           </div>
           {links && links.length > 3 && (
             <div className="mt-12 flex items-center justify-center gap-2">

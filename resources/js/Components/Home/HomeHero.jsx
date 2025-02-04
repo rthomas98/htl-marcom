@@ -126,7 +126,7 @@ export default function HomeHero() {
                                 alt={images[0].alt}
                                 className="aspect-[2/3] w-full rounded-lg object-cover"
                                 loading={images[0].loading}
-                                fetchPriority={images[0].priority ? "high" : "auto"}
+                                fetchpriority={images[0].priority ? "high" : "auto"}
                             />
                         </div>
 
@@ -137,7 +137,7 @@ export default function HomeHero() {
                                     alt={images[1].alt}
                                     className="aspect-square w-full rounded-lg object-cover"
                                     loading={images[1].loading}
-                                    fetchPriority={images[1].priority ? "high" : "auto"}
+                                    fetchpriority={images[1].priority ? "high" : "auto"}
                                 />
                             </div>
                             <div className="relative">
@@ -146,7 +146,7 @@ export default function HomeHero() {
                                     alt={images[2].alt}
                                     className="aspect-[3/4] w-full rounded-lg object-cover"
                                     loading={images[2].loading}
-                                    fetchPriority={images[2].priority ? "high" : "auto"}
+                                    fetchpriority={images[2].priority ? "high" : "auto"}
                                 />
                             </div>
                         </div>
@@ -158,7 +158,7 @@ export default function HomeHero() {
                             alt={images[3].alt}
                             className="size-full rounded-lg object-cover"
                             loading={images[3].loading}
-                            fetchPriority={images[3].priority ? "high" : "auto"}
+                            fetchpriority={images[3].priority ? "high" : "auto"}
                         />
                     </motion.div>
 
@@ -173,7 +173,7 @@ export default function HomeHero() {
                                     alt={images[4].alt}
                                     className="aspect-[3/4] w-full rounded-lg object-cover"
                                     loading={images[4].loading}
-                                    fetchPriority={images[4].priority ? "high" : "auto"}
+                                    fetchpriority={images[4].priority ? "high" : "auto"}
                                 />
                             </div>
                             <div className="relative w-[40vw] sm:w-auto">
@@ -182,7 +182,7 @@ export default function HomeHero() {
                                     alt={images[5].alt}
                                     className="aspect-square w-full rounded-lg object-cover"
                                     loading={images[5].loading}
-                                    fetchPriority={images[5].priority ? "high" : "auto"}
+                                    fetchpriority={images[5].priority ? "high" : "auto"}
                                 />
                             </div>
                         </div>
@@ -193,7 +193,7 @@ export default function HomeHero() {
                                 alt={images[6].alt}
                                 className="aspect-[2/3] w-full rounded-lg object-cover"
                                 loading={images[6].loading}
-                                fetchPriority={images[6].priority ? "high" : "auto"}
+                                fetchpriority={images[6].priority ? "high" : "auto"}
                             />
                         </div>
                     </motion.div>

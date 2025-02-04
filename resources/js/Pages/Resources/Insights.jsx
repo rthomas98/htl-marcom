@@ -101,7 +101,7 @@ export default function Insights() {
         title: "View all", 
         variant: "secondary",
         href: route('insights'),
-        active: !filters.category
+        active: !filters.category && !filters.search
       },
       ...(categories?.map(category => ({
         title: category.name,

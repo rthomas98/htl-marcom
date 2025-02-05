@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -177,7 +178,7 @@ class SeoMetadata extends Model implements HasMedia
     {
         if (!$this->description && $this->seoable) {
             $content = $this->seoable->content ?? '';
-            $this->description = str_limit(strip_tags($content), 160);
+            $this->description = Str::limit(strip_tags($content), 160);
         }
         if (!$this->og_description) {
             $this->og_description = $this->description;

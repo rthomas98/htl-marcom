@@ -111,9 +111,9 @@ export const Blog1 = (props) => {
                     {post.category}
                   </Link>
                   <Link href={post.url} className="mb-2 block max-w-full group">
-                    <h5 className="font-heading text-xl font-bold text-cod-gray transition-colors duration-200 group-hover:text-cod-gray-light md:text-2xl">{post.title}</h5>
+                    <h5 className="font-heading text-xl font-bold text-cod-gray transition-colors duration-200 group-hover:text-cod-gray-light md:text-2xl line-clamp-2">{post.title}</h5>
                   </Link>
-                  <p className="font-sans text-cod-gray-light">{post.description}</p>
+                  <p className="font-sans text-cod-gray-light line-clamp-3">{post.description}</p>
                   <div className="mt-6 flex items-center">
                     <div className="mr-4 shrink-0">
                       <img

@@ -32,16 +32,6 @@ const processSteps = [
     heading: "Monitoring & Protection",
     description:
       "We actively monitor your application's progress, respond to office actions, and protect your trademark rights throughout the registration process.",
-    buttons: [
-      {
-        title: "Learn More",
-        variant: "link",
-        size: "link",
-        iconRight: <ChevronRight className="h-4 w-4" />,
-        href: "/",
-        className: "text-cod-gray hover:text-pippin transition-colors duration-300"
-      },
-    ],
   },
 ];
 

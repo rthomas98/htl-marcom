@@ -41,11 +41,7 @@ export default function Layout102({
                   transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                 >
                   <div className="mb-3 md:mb-4">
-                    <img 
-                      src={subHeading.icon.src} 
-                      className="size-12 rounded-lg object-cover" 
-                      alt={subHeading.icon.alt} 
-                    />
+                    
                   </div>
                   <h6 className="mb-3 font-heading text-lg font-bold leading-snug text-cod-gray md:mb-4 md:text-xl">
                     {subHeading.title}

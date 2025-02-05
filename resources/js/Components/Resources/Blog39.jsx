@@ -41,11 +41,11 @@ export const Blog39 = (props) => {
                   href={post.url} 
                   className="mb-2 block max-w-full group/title"
                 >
-                  <h5 className="font-heading text-xl font-bold text-cod-gray transition-colors duration-200 group-hover/title:text-cod-gray-light md:text-2xl">
+                  <h5 className="font-heading text-xl font-bold text-cod-gray transition-colors duration-200 group-hover/title:text-cod-gray-light md:text-2xl line-clamp-2">
                     {post.title}
                   </h5>
                 </Link>
-                <p className="font-sans text-cod-gray-light">{post.description}</p>
+                <p className="font-sans text-cod-gray-light line-clamp-3">{post.description}</p>
                 <div className="mt-4 flex items-center">
                   <div className="mr-4 shrink-0">
                     <img

@@ -73,10 +73,10 @@ export default function AboutBlog({
                                     </p>
                                 </div>
                             </div>
-                            <h3 className="font-heading mb-4 text-xl font-bold text-cod-gray md:text-2xl">
+                            <h3 className="font-heading mb-4 text-xl font-bold text-cod-gray md:text-2xl line-clamp-2">
                                 {post.title}
                             </h3>
-                            <p className="mb-6 text-cod-gray/80">{post.excerpt}</p>
+                            <p className="mb-6 text-cod-gray/80 line-clamp-3">{post.excerpt}</p>
                             <Link
                                 href={route('insights') + '/' + post.slug}
                                 className="mt-auto inline-flex items-center justify-center rounded-full bg-cod-gray px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-pippin hover:text-cod-gray"

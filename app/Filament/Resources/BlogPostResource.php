@@ -75,19 +75,22 @@ class BlogPostResource extends Resource
                                     ->maxLength(255)
                                     ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
                                         if ($operation === 'create') {
-                                            $set('slug', Str::slug($state));
+                                            // Generate slug and limit to 160 characters
+                                            $slug = Str::slug($state);
+                                            $set('slug', Str::limit($slug, 160, ''));
                                         }
                                     }),
                                 TextInput::make('slug')
                                     ->required()
-                                    ->maxLength(60)
+                                    ->maxLength(160)
                                     ->unique(ignorable: fn ($record) => $record)
                                     ->prefix('insight/')
-                                    ->helperText('This will be the URL of your insight post. Max 60 characters.')
+                                    ->helperText('This will be the URL of your insight post. Max 160 characters.')
                                     ->dehydrated()
                                     ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
                                         if ($operation === 'create') {
-                                            $set('slug', Str::slug($state));
+                                            // Ensure slug is limited to 160 characters
+                                            $set('slug', Str::limit(Str::slug($state), 160, ''));
                                         }
                                     }),
                                 FileUpload::make('featured_image')
@@ -190,16 +193,17 @@ class BlogPostResource extends Resource
                                 Select::make('status')
                                     ->options([
                                         'draft' => 'Draft',
-                                        'scheduled' => 'Scheduled',
                                         'published' => 'Published',
+                                        'scheduled' => 'Scheduled',
                                     ])
+                                    ->default('draft')
                                     ->required(),
                                 DateTimePicker::make('published_at')
-                                    ->label('Publish Date')
-                                    ->required()
-                                    ->visible(fn (Forms\Get $get) => 
-                                        in_array($get('status'), ['scheduled', 'published'])
-                                    ),
+                                    ->visible(fn (Forms\Get $get): bool => $get('status') === 'published')
+                                    ->required(fn (Forms\Get $get): bool => $get('status') === 'published')
+                                    ->native(false)
+                                    ->displayFormat('M d, Y H:i A')
+                                    ->default(now()),
                                 Toggle::make('is_featured')
                                     ->label('Featured Post'),
                             ]),

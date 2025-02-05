@@ -25,11 +25,17 @@ class BlogPost extends Model
         'is_published',
         'published_at',
         'featured_image',
+        'status',
+        'is_featured',
+        'category_id',
+        'view_count',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
+        'is_featured' => 'boolean',
         'published_at' => 'datetime',
+        'view_count' => 'integer',
     ];
 
     protected $appends = ['author_profile_image'];
@@ -82,8 +88,10 @@ class BlogPost extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('status', 'published')
-            ->where('published_at', '<=', now());
+        return $query
+            ->where('status', 'published')
+            ->where('published_at', '<=', now())
+            ->orderBy('published_at', 'desc');
     }
 
     public function scopeDraft($query)
@@ -93,7 +101,8 @@ class BlogPost extends Model
 
     public function scopeScheduled($query)
     {
-        return $query->where('status', 'scheduled')
+        return $query
+            ->where('status', 'scheduled')
             ->where('published_at', '>', now());
     }
 

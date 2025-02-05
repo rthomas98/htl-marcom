@@ -1,107 +1,90 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from '@inertiajs/react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useMediaQuery } from '@relume_io/relume-ui';
+import { useMediaQuery } from "@relume_io/relume-ui";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-export default function HomeHero() {
-    const isMobile = useMediaQuery('(max-width: 767px)');
+const HomeHeroDefaults = {
+    heading: "Your Partner for Comprehensive Trademark Protection",
+    description: "At Hebert-Thomas Law, PLLC, we are dedicated to providing exceptional legal services tailored to the unique needs of Texas businesses and individuals. Our mission is to empower our clients with the knowledge and support they need to navigate the complexities of the law.",
+    buttons: [
+        { 
+            title: "Schedule a Call",
+            href: "/contact",
+            variant: "primary"
+        },
+        { 
+            title: "Learn More",
+            href: "/about",
+            variant: "secondary"
+        }
+    ],
+    imageLeft: {
+        src: "/images/home/hero/home-1.jpg",
+        alt: "Professional business meeting"
+    },
+    imageCenter: {
+        src: "/images/home/hero/h-hero-3.jpg",
+        alt: "Startup team collaboration"
+    },
+    imageRight: {
+        src: "/images/home/hero/h-hero-4.jpg",
+        alt: "Modern office environment"
+    }
+};
+
+export default function HomeHero(props) {
+    const { heading, description, buttons, imageLeft, imageCenter, imageRight } = {
+        ...HomeHeroDefaults,
+        ...props
+    };
+
     const { scrollYProgress } = useScroll();
 
-    useEffect(() => {
-        // Preload critical images
-        const preloadImages = ['/images/home/hero/home-1.jpg'];
-        preloadImages.forEach(src => {
-            const img = new Image();
-            img.src = src;
-        });
-    }, []);
+    const isMobile = useMediaQuery("(max-width: 767px)");
+    const isTablet = useMediaQuery("(max-width: 991px)");
 
-    const createTransform = (mobileValues, desktopValues) =>
-        useTransform(scrollYProgress, [0, 1], isMobile ? mobileValues : desktopValues);
-
-    const leftImageGroup = {
-        x: createTransform(['0vw', '-25vw'], ['0vw', '-32vw']),
+    const leftImageTranslate = {
+        y: useTransform(
+            scrollYProgress,
+            [0, 1],
+            isMobile ? ["-20.5%", "0%"] : isTablet ? ["-14%", "0%"] : ["-16%", "0%"]
+        )
     };
 
-    const centerImageContainer = {
-        x: createTransform(['0vw', '-25vw'], ['0vw', '-32vw']),
-        width: createTransform(['50vw', '100vw'], ['36vw', '100vw']),
-        height: createTransform(['60vh', '100vh'], ['80vh', '100vh']),
+    const centerImageTranslate = {
+        y: useTransform(
+            scrollYProgress,
+            [0, 1],
+            isMobile ? ["19%", "0%"] : isTablet ? ["14%", "0%"] : ["15.5%", "0%"]
+        )
     };
 
-    const rightImageGroup = {
-        x: createTransform(['0vw', '25vw'], ['0vw', '32vw']),
+    const rightImageTranslate = {
+        y: useTransform(
+            scrollYProgress,
+            [0, 0.5],
+            isMobile ? ["26%", "-20%"] : isTablet ? ["8%", "-20%"] : ["12%", "-20%"]
+        )
     };
-
-    const images = [
-        {
-            src: '/images/home/hero/home-1.jpg',
-            alt: 'Professional business meeting',
-            priority: true
-        },
-        {
-            src: '/images/home/hero/h-hero-3.jpg',
-            alt: 'Startup team collaboration',
-            loading: 'lazy'
-        },
-        {
-            src: '/images/home/hero/h-hero-4.jpg',
-            alt: 'Modern office environment',
-            loading: 'lazy'
-        },
-        {
-            src: '/images/home/hero/h-hero-5.jpg',
-            alt: 'Business strategy session',
-            loading: 'lazy'
-        },
-        {
-            src: '/images/home/hero/h-hero-6.jpg',
-            alt: 'Tech entrepreneur working',
-            loading: 'lazy'
-        },
-        {
-            src: '/images/home/hero/h-hreo-7.jpg',
-            alt: 'Creative business discussion',
-            loading: 'lazy'
-        },
-        {
-            src: '/images/home/hero/h-hreo-8.jpg',
-            alt: 'Business leadership meeting',
-            loading: 'lazy'
-        },
-    ];
-
-    const buttons = [
-        {
-            title: 'Schedule a Call',
-            href: '/contact',
-            variant: 'primary',
-        },
-        {
-            title: 'Learn More',
-            href: '/about',
-            variant: 'secondary',
-        },
-    ];
 
     return (
-        <section className="relative h-[250vh]">
-            <div className="px-[5%] pt-16 md:pt-24 lg:pt-28">
-                <div className="mx-auto max-w-7xl">
-                    <div className="mx-auto w-full max-w-2xl text-center">
-                        <h1 className="mb-5 font-heading text-5xl font-bold text-cod-gray md:mb-6 md:text-7xl lg:text-8xl">
-                        Your Partner for Comprehensive Trademark Protection
+        <section className="px-[5%] py-16 md:py-24 lg:py-28">
+            <div className="container">
+                <div className="rb-12 mb-12 text-center md:mb-18 lg:mb-20">
+                    <div className="mx-auto w-full max-w-lg">
+                        <h1 className="mb-5 font-heading text-6xl font-bold text-cod-gray md:mb-6 md:text-9xl lg:text-10xl">
+                            {heading}
                         </h1>
-                        <p className="text-lg text-gray-600 md:text-xl">
-                        At Hebert-Thomas Law, PLLC, we are dedicated to providing exceptional legal services tailored to the unique needs of Texas businesses and individuals. Our mission is to empower our clients with the knowledge and support they need to navigate the complexities of the law.
+                        <p className="md:text-md font-sans text-cod-gray-light">
+                            {description}
                         </p>
-                        <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
+                        <div className="mt-6 flex items-center justify-center gap-4 md:mt-8">
                             {buttons.map((button, index) => (
                                 <Link
                                     key={index}
                                     href={button.href}
                                     className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
-                                        button.variant === 'primary'
+                                        button.variant === "primary"
                                             ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
                                             : "bg-pippin text-cod-gray hover:bg-pippin-light"
                                     }`}
@@ -112,94 +95,39 @@ export default function HomeHero() {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
-                <div className="z-10 grid h-[60vh] w-full grid-flow-col grid-cols-[25%_50%_25%] content-center items-center justify-center md:h-[70vh] md:grid-cols-[32%_36%_32%] lg:h-[80vh]">
-                    <motion.div
-                        className="grid grid-flow-col grid-cols-1 items-center justify-items-end gap-4 justify-self-end px-4"
-                        style={leftImageGroup}
+                <div className="relative flex justify-center gap-6 sm:gap-8 md:gap-0">
+                    <motion.div 
+                        className="absolute bottom-0 left-0 z-10 w-2/5" 
+                        style={leftImageTranslate}
                     >
-                        <div className="relative hidden md:block md:w-[25vw] lg:w-[20vw]">
-                            <motion.img
-                                src={images[0].src}
-                                alt={images[0].alt}
-                                className="aspect-[2/3] w-full rounded-lg object-cover"
-                                loading={images[0].loading}
-                                fetchpriority={images[0].priority ? "high" : "auto"}
-                            />
-                        </div>
-
-                        <div className="relative grid w-[40vw] grid-cols-1 grid-rows-[auto_auto] gap-4 self-center md:w-[18vw]">
-                            <div className="relative">
-                                <motion.img
-                                    src={images[1].src}
-                                    alt={images[1].alt}
-                                    className="aspect-square w-full rounded-lg object-cover"
-                                    loading={images[1].loading}
-                                    fetchpriority={images[1].priority ? "high" : "auto"}
-                                />
-                            </div>
-                            <div className="relative">
-                                <motion.img
-                                    src={images[2].src}
-                                    alt={images[2].alt}
-                                    className="aspect-[3/4] w-full rounded-lg object-cover"
-                                    loading={images[2].loading}
-                                    fetchpriority={images[2].priority ? "high" : "auto"}
-                                />
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    <motion.div className="relative" style={centerImageContainer}>
-                        <motion.img
-                            src={images[3].src}
-                            alt={images[3].alt}
-                            className="size-full rounded-lg object-cover"
-                            loading={images[3].loading}
-                            fetchpriority={images[3].priority ? "high" : "auto"}
+                        <img
+                            src={imageLeft.src}
+                            alt={imageLeft.alt}
+                            className="aspect-square size-full rounded-lg object-cover"
                         />
                     </motion.div>
-
-                    <motion.div
-                        className="grid grid-flow-col items-center justify-items-start gap-4 justify-self-start px-4"
-                        style={rightImageGroup}
+                    <motion.div 
+                        className="mx-[10%] mb-[10%] w-1/2" 
+                        style={centerImageTranslate}
                     >
-                        <div className="relative grid w-[40vw] grid-cols-1 grid-rows-[auto_auto] gap-4 self-center md:w-[18vw]">
-                            <div className="relative w-[40vw] sm:w-auto">
-                                <motion.img
-                                    src={images[4].src}
-                                    alt={images[4].alt}
-                                    className="aspect-[3/4] w-full rounded-lg object-cover"
-                                    loading={images[4].loading}
-                                    fetchpriority={images[4].priority ? "high" : "auto"}
-                                />
-                            </div>
-                            <div className="relative w-[40vw] sm:w-auto">
-                                <motion.img
-                                    src={images[5].src}
-                                    alt={images[5].alt}
-                                    className="aspect-square w-full rounded-lg object-cover"
-                                    loading={images[5].loading}
-                                    fetchpriority={images[5].priority ? "high" : "auto"}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="relative hidden md:block md:w-[25vw] lg:w-[20vw]">
-                            <motion.img
-                                src={images[6].src}
-                                alt={images[6].alt}
-                                className="aspect-[2/3] w-full rounded-lg object-cover"
-                                loading={images[6].loading}
-                                fetchpriority={images[6].priority ? "high" : "auto"}
-                            />
-                        </div>
+                        <img
+                            src={imageCenter.src}
+                            alt={imageCenter.alt}
+                            className="aspect-square size-full rounded-lg object-cover"
+                        />
+                    </motion.div>
+                    <motion.div 
+                        className="absolute right-0 top-[10%] w-2/5" 
+                        style={rightImageTranslate}
+                    >
+                        <img
+                            src={imageRight.src}
+                            alt={imageRight.alt}
+                            className="aspect-[4/3] size-full rounded-lg object-cover"
+                        />
                     </motion.div>
                 </div>
             </div>
-            <div className="absolute inset-0 -z-10 mt-[100vh]" />
         </section>
     );
 }

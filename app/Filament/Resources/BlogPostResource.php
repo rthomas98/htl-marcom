@@ -43,12 +43,47 @@ class BlogPostResource extends Resource
                                 TextInput::make('title')
                                     ->required()
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => 
-                                        $operation === 'create' ? $set('slug', Str::slug($state)) : null
-                                    ),
+                                    ->maxLength(255)
+                                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                                        $slug = Str::slug($state);
+                                        if (strlen($slug) > 60) {
+                                            $slug = substr($slug, 0, 60);
+                                            $lastHyphen = strrpos($slug, '-');
+                                            if ($lastHyphen !== false) {
+                                                $slug = substr($slug, 0, $lastHyphen);
+                                            }
+                                        }
+                                        $set('slug', $slug);
+                                    }),
                                 TextInput::make('slug')
                                     ->required()
-                                    ->unique(BlogPost::class, 'slug', ignoreRecord: true),
+                                    ->maxLength(60)
+                                    ->unique(ignorable: fn ($record) => $record)
+                                    ->prefix('insight/')
+                                    ->helperText('This will be the URL of your insight post. Max 60 characters.')
+                                    ->dehydrated()
+                                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                                        if ($operation === 'create') {
+                                            $slug = Str::slug($state);
+                                            if (strlen($slug) > 60) {
+                                                $slug = substr($slug, 0, 60);
+                                                $lastHyphen = strrpos($slug, '-');
+                                                if ($lastHyphen !== false) {
+                                                    $slug = substr($slug, 0, $lastHyphen);
+                                                }
+                                            }
+                                            $set('slug', $slug);
+                                        }
+                                    }),
+                                FileUpload::make('featured_image')
+                                    ->disk('public')
+                                    ->directory('blog-images')
+                                    ->image()
+                                    ->maxSize(102400) // 100MB in KB
+                                    ->preserveFilenames()
+                                    ->storeFileNamesIn('original_filename')
+                                    ->imageEditor()
+                                    ->columnSpanFull(),
                                 RichEditor::make('content')
                                     ->required()
                                     ->columnSpanFull(),
@@ -56,14 +91,6 @@ class BlogPostResource extends Resource
                                     ->columnSpanFull(),
                             ])
                             ->columns(2),
-
-                        Forms\Components\Section::make('Image')
-                            ->schema([
-                                FileUpload::make('featured_image')
-                                    ->image()
-                                    ->directory('blog-images')
-                                    ->columnSpanFull(),
-                            ]),
 
                         Forms\Components\Section::make('SEO')
                             ->schema([

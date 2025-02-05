@@ -15,6 +15,8 @@ class SchemaMarkup extends Model
         'schema_data',
         'is_active',
         'priority',
+        'schemaable_id',
+        'schemaable_type',
     ];
 
     protected $casts = [
@@ -70,23 +72,25 @@ class SchemaMarkup extends Model
                 'dateModified' => $post->updated_at->toIso8601String(),
                 'author' => [
                     '@type' => 'Person',
-                    'name' => $post->author->name,
+                    'name' => $post->author?->name ?? config('app.name'),
                 ],
                 'publisher' => [
                     '@type' => 'Organization',
                     'name' => config('app.name'),
                     'logo' => [
                         '@type' => 'ImageObject',
-                        'url' => asset('images/logo.png'),
+                        'url' => url('/images/logo.png'),
                     ],
                 ],
                 'mainEntityOfPage' => [
                     '@type' => 'WebPage',
-                    '@id' => url()->current(),
+                    '@id' => url("/insight/{$post->slug}"),
                 ],
             ],
             'is_active' => true,
             'priority' => 1,
+            'schemaable_id' => $post->id,
+            'schemaable_type' => BlogPost::class,
         ]);
     }
 

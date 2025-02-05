@@ -41,12 +41,23 @@ class CategoryResource extends Resource
                                 TextInput::make('name')
                                     ->required()
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => 
-                                        $operation === 'create' ? $set('slug', Str::slug($state)) : null
-                                    ),
+                                    ->maxLength(255)
+                                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                                        $slug = Str::slug($state);
+                                        if (strlen($slug) > 60) {
+                                            $slug = substr($slug, 0, 60);
+                                            $lastHyphen = strrpos($slug, '-');
+                                            if ($lastHyphen !== false) {
+                                                $slug = substr($slug, 0, $lastHyphen);
+                                            }
+                                        }
+                                        $set('slug', $slug);
+                                    }),
                                 TextInput::make('slug')
                                     ->required()
-                                    ->unique(Category::class, 'slug', ignoreRecord: true),
+                                    ->maxLength(60)
+                                    ->unique(ignorable: fn ($record) => $record)
+                                    ->helperText('This will be the URL of your category. Max 60 characters.'),
                                 RichEditor::make('description')
                                     ->columnSpanFull(),
                             ])

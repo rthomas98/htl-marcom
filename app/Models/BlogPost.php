@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Str;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,6 +23,7 @@ class BlogPost extends Model
         'excerpt',
         'content',
         'featured_image',
+        'original_filename',
         'meta_data',
         'author_id',
         'category_id',
@@ -33,10 +34,9 @@ class BlogPost extends Model
     ];
 
     protected $casts = [
-        'published_at' => 'datetime',
         'meta_data' => 'array',
+        'published_at' => 'datetime',
         'is_featured' => 'boolean',
-        'view_count' => 'integer',
     ];
 
     protected $appends = ['author_profile_image'];
@@ -44,17 +44,6 @@ class BlogPost extends Model
     public function getAuthorProfileImageAttribute()
     {
         return $this->author?->profile_photo_path ?? '/images/web-logo-black (2).svg';
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-        
-        static::creating(function ($post) {
-            if (empty($post->slug)) {
-                $post->slug = Str::slug($post->title);
-            }
-        });
     }
 
     public function author(): BelongsTo

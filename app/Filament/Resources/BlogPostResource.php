@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
@@ -21,6 +22,10 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
+use App\Filament\Resources\BlogPostResource\RelationManagers\AuthorRelationManager;
+use App\Filament\Resources\BlogPostResource\RelationManagers\CategoryRelationManager;
+use App\Filament\Resources\BlogPostResource\RelationManagers\TagsRelationManager;
+use App\Filament\Resources\BlogPostResource\RelationManagers\SeoMetadataRelationManager;
 
 class BlogPostResource extends Resource
 {
@@ -31,6 +36,30 @@ class BlogPostResource extends Resource
     protected static ?string $navigationGroup = 'Blog';
 
     protected static ?int $navigationSort = -2;
+
+    public static function getRelations(): array
+    {
+        return [
+            AuthorRelationManager::class,
+            CategoryRelationManager::class,
+            TagsRelationManager::class,
+            SeoMetadataRelationManager::class,
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListBlogPosts::route('/'),
+            'create' => Pages\CreateBlogPost::route('/create'),
+            'edit' => Pages\EditBlogPost::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['seoMetadata', 'author']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -45,15 +74,9 @@ class BlogPostResource extends Resource
                                     ->live(onBlur: true)
                                     ->maxLength(255)
                                     ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
-                                        $slug = Str::slug($state);
-                                        if (strlen($slug) > 60) {
-                                            $slug = substr($slug, 0, 60);
-                                            $lastHyphen = strrpos($slug, '-');
-                                            if ($lastHyphen !== false) {
-                                                $slug = substr($slug, 0, $lastHyphen);
-                                            }
+                                        if ($operation === 'create') {
+                                            $set('slug', Str::slug($state));
                                         }
-                                        $set('slug', $slug);
                                     }),
                                 TextInput::make('slug')
                                     ->required()
@@ -64,15 +87,7 @@ class BlogPostResource extends Resource
                                     ->dehydrated()
                                     ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
                                         if ($operation === 'create') {
-                                            $slug = Str::slug($state);
-                                            if (strlen($slug) > 60) {
-                                                $slug = substr($slug, 0, 60);
-                                                $lastHyphen = strrpos($slug, '-');
-                                                if ($lastHyphen !== false) {
-                                                    $slug = substr($slug, 0, $lastHyphen);
-                                                }
-                                            }
-                                            $set('slug', $slug);
+                                            $set('slug', Str::slug($state));
                                         }
                                     }),
                                 FileUpload::make('featured_image')
@@ -94,12 +109,76 @@ class BlogPostResource extends Resource
 
                         Forms\Components\Section::make('SEO')
                             ->schema([
-                                TextInput::make('meta_data.title')
-                                    ->label('Meta Title'),
-                                TextInput::make('meta_data.description')
-                                    ->label('Meta Description'),
-                                TextInput::make('meta_data.keywords')
-                                    ->label('Meta Keywords'),
+                                Forms\Components\Placeholder::make('seo_info')
+                                    ->content('SEO fields will be automatically populated when you save the post. You can also use the "Generate SEO" button to update them.'),
+                                Forms\Components\Actions::make([
+                                    Forms\Components\Actions\Action::make('generateSeo')
+                                        ->label('Generate SEO')
+                                        ->icon('heroicon-m-arrow-path')
+                                        ->action(function ($livewire, $state, Forms\Set $set) {
+                                            $blogPost = $livewire->record ?? new \App\Models\BlogPost([
+                                                'title' => $state['title'] ?? '',
+                                                'content' => $state['content'] ?? '',
+                                            ]);
+                                            
+                                            $seoGenerator = new \App\Services\SeoGeneratorService();
+                                            $seoTitle = $seoGenerator->generateSeoTitle($blogPost);
+                                            $seoDescription = $seoGenerator->generateSeoDescription($blogPost);
+                                            $seoKeywords = implode(', ', $seoGenerator->generateSeoKeywords($blogPost));
+                                            
+                                            // Set all SEO fields
+                                            $set('seoMetadata.title', $seoTitle);
+                                            $set('seoMetadata.description', $seoDescription);
+                                            $set('seoMetadata.keywords', $seoKeywords);
+                                            
+                                            // Set Open Graph fields
+                                            $set('seoMetadata.og_title', $seoTitle);
+                                            $set('seoMetadata.og_description', $seoDescription);
+                                            
+                                            // Set Twitter Card fields
+                                            $set('seoMetadata.twitter_title', $seoTitle);
+                                            $set('seoMetadata.twitter_description', $seoDescription);
+                                        })
+                                        ->visible(fn ($state) => !empty($state['title']) || !empty($state['content'])),
+                                ]),
+                                Forms\Components\TextInput::make('seoMetadata.title')
+                                    ->label('Meta Title')
+                                    ->maxLength(60)
+                                    ->helperText('Maximum 60 characters')
+                                    ->required(),
+                                Forms\Components\Textarea::make('seoMetadata.description')
+                                    ->label('Meta Description')
+                                    ->maxLength(160)
+                                    ->helperText('Maximum 160 characters')
+                                    ->required(),
+                                Forms\Components\TextInput::make('seoMetadata.keywords')
+                                    ->label('Meta Keywords')
+                                    ->helperText('Comma-separated keywords')
+                                    ->required(),
+                                Forms\Components\TextInput::make('seoMetadata.og_title')
+                                    ->label('OG Title')
+                                    ->maxLength(60)
+                                    ->helperText('Maximum 60 characters')
+                                    ->required(),
+                                Forms\Components\Textarea::make('seoMetadata.og_description')
+                                    ->label('OG Description')
+                                    ->maxLength(160)
+                                    ->helperText('Maximum 160 characters')
+                                    ->required(),
+                                Forms\Components\Hidden::make('seoMetadata.og_type')
+                                    ->default('article'),
+                                Forms\Components\TextInput::make('seoMetadata.twitter_title')
+                                    ->label('Twitter Title')
+                                    ->maxLength(60)
+                                    ->helperText('Maximum 60 characters')
+                                    ->required(),
+                                Forms\Components\Textarea::make('seoMetadata.twitter_description')
+                                    ->label('Twitter Description')
+                                    ->maxLength(160)
+                                    ->helperText('Maximum 160 characters')
+                                    ->required(),
+                                Forms\Components\Hidden::make('seoMetadata.twitter_card')
+                                    ->default('summary_large_image'),
                             ]),
                     ])
                     ->columnSpan(['lg' => 2]),
@@ -206,28 +285,11 @@ class BlogPostResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListBlogPosts::route('/'),
-            'create' => Pages\CreateBlogPost::route('/create'),
-            'edit' => Pages\EditBlogPost::route('/{record}/edit'),
-        ];
     }
 }

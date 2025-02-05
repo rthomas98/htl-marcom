@@ -38,6 +38,11 @@ class SeoMetadata extends Model implements HasMedia
         'structured_data' => 'array',
     ];
 
+    protected $attributes = [
+        'og_type' => 'article',
+        'twitter_card' => 'summary_large_image',
+    ];
+
     public function seoable(): MorphTo
     {
         return $this->morphTo();

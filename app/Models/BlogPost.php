@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Str;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,23 +20,16 @@ class BlogPost extends Model
     protected $fillable = [
         'title',
         'slug',
-        'excerpt',
         'content',
-        'featured_image',
-        'original_filename',
-        'meta_data',
         'author_id',
-        'category_id',
+        'is_published',
         'published_at',
-        'status',
-        'is_featured',
-        'view_count',
+        'featured_image',
     ];
 
     protected $casts = [
-        'meta_data' => 'array',
+        'is_published' => 'boolean',
         'published_at' => 'datetime',
-        'is_featured' => 'boolean',
     ];
 
     protected $appends = ['author_profile_image'];
@@ -44,6 +37,21 @@ class BlogPost extends Model
     public function getAuthorProfileImageAttribute()
     {
         return $this->author?->profile_photo_path ?? '/images/web-logo-black (2).svg';
+    }
+
+    public function seoMetadata(): MorphOne
+    {
+        return $this->morphOne(SeoMetadata::class, 'seoable')->withDefault([
+            'title' => '',
+            'description' => '',
+            'keywords' => '',
+            'og_title' => '',
+            'og_description' => '',
+            'og_type' => 'article',
+            'twitter_title' => '',
+            'twitter_description' => '',
+            'twitter_card' => 'summary_large_image',
+        ]);
     }
 
     public function author(): BelongsTo
@@ -142,9 +150,9 @@ class BlogPost extends Model
         return $this->hasOne(PostRevision::class)->latestOfMany('version');
     }
 
-    public function seoMetadata(): MorphOne
+    public function schemaMarkup(): MorphOne
     {
-        return $this->morphOne(SeoMetadata::class, 'seoable');
+        return $this->morphOne(SchemaMarkup::class, 'schemaable');
     }
 
     public function schemaMarkups(): MorphMany
@@ -152,37 +160,49 @@ class BlogPost extends Model
         return $this->morphMany(SchemaMarkup::class, 'schemaable');
     }
 
-    protected static function booted(): void
+    protected static function boot()
     {
-        static::created(function ($post) {
-            // Create initial analytics record
-            $post->analytics()->create();
+        parent::boot();
+        static::observe(\App\Observers\BlogPostObserver::class);
+    }
 
-            // Create initial revision
-            PostRevision::createFromPost($post, 'Initial version');
+    protected function generateSchemaMarkup(): void
+    {
+        $schemaData = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Article',
+            'headline' => $this->title,
+            'description' => Str::limit(strip_tags($this->content), 160),
+            'image' => $this->featured_image,
+            'datePublished' => $this->published_at?->toIso8601String(),
+            'dateModified' => $this->updated_at->toIso8601String(),
+            'author' => [
+                '@type' => 'Person',
+                'name' => 'Rob Thomas'
+            ],
+            'publisher' => [
+                '@type' => 'Organization',
+                'name' => config('app.name'),
+                'logo' => [
+                    '@type' => 'ImageObject',
+                    'url' => asset('images/logo.png')
+                ]
+            ],
+            'mainEntityOfPage' => [
+                '@type' => 'WebPage',
+                '@id' => url()->current()
+            ]
+        ];
 
-            // Create SEO metadata
-            $post->seoMetadata()->create();
-
-            // Generate schema markup
-            SchemaMarkup::generateArticleSchema($post);
-        });
-
-        static::updated(function ($post) {
-            // Update reading time
-            if ($post->isDirty('content')) {
-                $post->analytics->calculateReadingTime($post->content);
-            }
-
-            // Create new revision
-            PostRevision::createFromPost($post, 'Content updated');
-
-            // Update SEO metadata
-            if ($post->seoMetadata) {
-                $post->seoMetadata->generateMetaTitle();
-                $post->seoMetadata->generateMetaDescription();
-            }
-        });
+        $this->schemaMarkup()->updateOrCreate(
+            [],
+            [
+                'type' => 'Article',
+                'schema_data' => $schemaData,
+                'is_active' => true,
+                'priority' => 1
+            ]
+        );
     }
 
     public function generateSitemap(): array

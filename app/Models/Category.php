@@ -27,15 +27,29 @@ class Category extends Model
         'sort_order' => 'integer',
     ];
 
-    public static function boot()
+    protected static function booted(): void
     {
         parent::boot();
         
         static::creating(function ($category) {
             if (empty($category->slug)) {
-                $category->slug = Str::slug($category->name);
+                $category->slug = static::generateUniqueSlug($category->name);
             }
         });
+
+        static::updating(function ($category) {
+            if ($category->isDirty('name') && empty($category->slug)) {
+                $category->slug = static::generateUniqueSlug($category->name);
+            }
+        });
+    }
+
+    protected static function generateUniqueSlug(string $name): string
+    {
+        $slug = Str::slug($name);
+        $count = static::whereRaw("slug = ? OR slug SIMILAR TO ?", [$slug, $slug . '-[0-9]+'])->count();
+        
+        return $count ? "{$slug}-{$count}" : $slug;
     }
 
     public function posts(): HasMany

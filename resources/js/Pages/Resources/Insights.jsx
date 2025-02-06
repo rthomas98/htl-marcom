@@ -113,14 +113,14 @@ export default function Insights() {
     blogPosts: blogPosts.data?.map(post => ({
       url: route('insight.detail', { slug: post.slug }),
       image: {
-        src: post.featured_image || 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3',
+        src: post.featured_image ? `/storage/${post.featured_image}` : 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3',
         alt: post.title,
       },
       category: post.category?.name || 'Legal Insights',
       title: post.title,
       description: post.excerpt,
       avatar: {
-        src: post.author_profile_image || '/images/web-logo-black (2).svg',
+        src: post.author_profile_image.startsWith('/') ? post.author_profile_image : `/storage/${post.author_profile_image}`,
         alt: post.author?.name || 'Author',
       },
       fullName: post.author?.name || 'Hebert-Thomas Law',

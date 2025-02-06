@@ -145,7 +145,7 @@ export default function MarcomFooter() {
                             </div>
 
                             <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
-                                <input type="text" name="b_e4b0a3faf160e76a19bcdc3c4_b2ede287ff" tabIndex="-1" value="" />
+                                <input type="text" name="b_e4b0a3faf160e76a19bcdc3c4_b2ede287ff" tabIndex="-1" defaultValue="" readOnly />
                             </div>
 
                             <p className="mt-3 text-xs text-gray-500">

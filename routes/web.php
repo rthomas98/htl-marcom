@@ -117,6 +117,9 @@ Route::get('/insights/{slug}', function (string $slug) {
         ->where('slug', $slug)
         ->firstOrFail();
 
+    // Add author profile image to the post data
+    $post->author_profile_image = $post->author?->profile_photo_path;
+
     $relatedPosts = BlogPost::with(['category', 'author'])
         ->where('status', 'published')
         ->where('id', '!=', $post->id)
@@ -128,10 +131,18 @@ Route::get('/insights/{slug}', function (string $slug) {
         ->take(3)
         ->get()
         ->map(function($post) {
+            $profilePhotoPath = $post->author?->profile_photo_path;
+            $avatarSrc = '/images/web-logo-black (2).svg';
+            
+            if ($profilePhotoPath) {
+                $avatarSrc = str_starts_with($profilePhotoPath, '/') ? 
+                    $profilePhotoPath : "/storage/{$profilePhotoPath}";
+            }
+
             return [
                 'url' => route('insight.detail', $post->slug),
                 'image' => [
-                    'src' => $post->featured_image,
+                    'src' => $post->featured_image ? "/storage/{$post->featured_image}" : '/images/placeholder-blog.jpg',
                     'alt' => $post->title
                 ],
                 'category' => $post->category->name,
@@ -139,10 +150,10 @@ Route::get('/insights/{slug}', function (string $slug) {
                 'title' => $post->title,
                 'description' => $post->excerpt,
                 'avatar' => [
-                    'src' => $post->author->profile_photo_path,
-                    'alt' => $post->author->name ?? 'Author'
+                    'src' => $avatarSrc,
+                    'alt' => $post->author?->name ?? 'Author'
                 ],
-                'fullName' => $post->author->name ?? 'Hebert-Thomas Law',
+                'fullName' => $post->author?->name ?? 'Hebert-Thomas Law',
                 'date' => \Carbon\Carbon::parse($post->published_at)->format('d M Y')
             ];
         });

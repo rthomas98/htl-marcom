@@ -28,7 +28,9 @@ export default function InsightDetail({ post, relatedPosts }) {
     heading: post.title,
     author: {
       avatar: {
-        src: post.author_profile_image,
+        src: post.author_profile_image ? 
+          (post.author_profile_image.startsWith('/') ? post.author_profile_image : `/storage/${post.author_profile_image}`)
+          : '/images/web-logo-black (2).svg',
         alt: post.author?.name || 'Author',
       },
       fullName: post.author?.name || 'Hebert-Thomas Law',
@@ -40,7 +42,7 @@ export default function InsightDetail({ post, relatedPosts }) {
       readTime: `${Math.ceil(post.content?.split(' ').length / 200) || 5} min read`,
     },
     image: {
-      src: post.featured_image || '/images/placeholder-blog.jpg',
+      src: post.featured_image ? `/storage/${post.featured_image}` : '/images/placeholder-blog.jpg',
       alt: post.title,
     },
     socialMediaLinks: [
@@ -64,6 +66,8 @@ export default function InsightDetail({ post, relatedPosts }) {
     ],
   };
 
+  const fullImageUrl = post.featured_image ? `${window.location.origin}/storage/${post.featured_image}` : '/images/placeholder-blog.jpg';
+
   return (
     <>
       <Head>
@@ -71,12 +75,12 @@ export default function InsightDetail({ post, relatedPosts }) {
         <meta name="description" content={post.excerpt} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
-        <meta property="og:image" content={post.featured_image} />
+        <meta property="og:image" content={fullImageUrl} />
         <meta property="og:url" content={window.location.href} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.excerpt} />
-        <meta name="twitter:image" content={post.featured_image} />
+        <meta name="twitter:image" content={fullImageUrl} />
       </Head>
 
       <BlogPostHeader1 {...headerData} />
@@ -88,7 +92,19 @@ export default function InsightDetail({ post, relatedPosts }) {
       {relatedPosts.length > 0 && (
         <Blog39 
           {...Blog39Defaults}
-          blogPosts={relatedPosts}
+          blogPosts={relatedPosts.map(post => ({
+            ...post,
+            image: {
+              src: post.featured_image ? `/storage/${post.featured_image}` : '/images/placeholder-blog.jpg',
+              alt: post.title,
+            },
+            avatar: {
+              src: post.author_profile_image ? 
+                (post.author_profile_image.startsWith('/') ? post.author_profile_image : `/storage/${post.author_profile_image}`)
+                : '/images/web-logo-black (2).svg',
+              alt: post.author?.name || 'Author',
+            }
+          }))}
           className="bg-gallery"
         />
       )}

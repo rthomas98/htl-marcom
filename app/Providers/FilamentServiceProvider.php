@@ -13,7 +13,8 @@ class FilamentServiceProvider extends ServiceProvider
             $fileUpload
                 ->disk('do_spaces')
                 ->visibility('public')
-                ->directory('blog-images');
+                ->storeFileNamesIn('original_filename')
+                ->preserveFilenames();
         });
     }
 }

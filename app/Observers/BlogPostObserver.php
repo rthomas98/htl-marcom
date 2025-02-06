@@ -7,17 +7,20 @@ use App\Services\SeoGeneratorService;
 
 class BlogPostObserver
 {
-    public function __construct(private SeoGeneratorService $seoGenerator)
+    protected $seoGenerator;
+
+    public function __construct(SeoGeneratorService $seoGenerator)
     {
+        $this->seoGenerator = $seoGenerator;
     }
 
-    public function saving(BlogPost $blogPost)
+    public function saved(BlogPost $blogPost)
     {
-        // Generate SEO metadata if not provided
-        if (!request()->has('seoMetadata')) {
-            $seoData = $this->seoGenerator->generateAllSeoMetadata($blogPost);
+        // Get SEO data from request or generate it
+        if (request()->has('data.seoMetadata')) {
+            $seoData = request()->input('data.seoMetadata');
         } else {
-            $seoData = request()->input('seoMetadata');
+            $seoData = request()->input('seoMetadata', []);
         }
             
         // Create or update SEO metadata
@@ -39,11 +42,11 @@ class BlogPostObserver
 
     public function created(BlogPost $blogPost)
     {
-        // SEO metadata is already handled in saving()
+        // SEO metadata is already handled in saved()
     }
 
     public function updated(BlogPost $blogPost)
     {
-        // SEO metadata is already handled in saving()
+        // SEO metadata is already handled in saved()
     }
 }

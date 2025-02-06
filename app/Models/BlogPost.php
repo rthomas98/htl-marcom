@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Storage;
 
 class BlogPost extends Model
 {
@@ -59,8 +60,13 @@ class BlogPost extends Model
             return $this->featured_image;
         }
 
-        // Use DigitalOcean Spaces URL for stored images
-        return config('filesystems.disks.do_spaces.url') . '/' . $this->featured_image;
+        // Get the URL from DigitalOcean Spaces
+        try {
+            return Storage::disk('do_spaces')->url($this->featured_image);
+        } catch (\Exception $e) {
+            \Log::error('Failed to get image URL: ' . $e->getMessage());
+            return '/images/placeholders/blog-placeholder.svg';
+        }
     }
 
     public function seoMetadata(): MorphOne

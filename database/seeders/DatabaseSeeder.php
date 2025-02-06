@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             LegalnarSeriesSeeder::class,
             LegalnarSeeder::class,
             LegalnarAttendeeSeeder::class,
+            SampleBlogPostsSeeder::class,
         ]);
     }
 }

@@ -100,7 +100,8 @@ export const Blog1 = (props) => {
                       <img
                         src={post.image.src}
                         alt={post.image.alt}
-                        className="aspect-[3/2] size-full object-cover transition-transform duration-500 hover:scale-105"
+                        className="aspect-[3/2] w-full rounded-2xl object-cover transition-transform duration-300 hover:scale-105"
+                        loading="lazy"
                       />
                     </div>
                   </Link>

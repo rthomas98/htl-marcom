@@ -28,9 +28,7 @@ export default function InsightDetail({ post, relatedPosts }) {
     heading: post.title,
     author: {
       avatar: {
-        src: post.author_profile_image ? 
-          (post.author_profile_image.startsWith('/') ? post.author_profile_image : `/storage/${post.author_profile_image}`)
-          : '/images/web-logo-black (2).svg',
+        src: post.author_profile_image || '/images/placeholders/avatar-placeholder.svg',
         alt: post.author?.name || 'Author',
       },
       fullName: post.author?.name || 'Hebert-Thomas Law',
@@ -42,7 +40,7 @@ export default function InsightDetail({ post, relatedPosts }) {
       readTime: `${Math.ceil(post.content?.split(' ').length / 200) || 5} min read`,
     },
     image: {
-      src: post.featured_image ? `/storage/${post.featured_image}` : '/images/placeholder-blog.jpg',
+      src: post.featured_image_url || '/images/placeholders/blog-placeholder.svg',
       alt: post.title,
     },
     socialMediaLinks: [
@@ -66,7 +64,7 @@ export default function InsightDetail({ post, relatedPosts }) {
     ],
   };
 
-  const fullImageUrl = post.featured_image ? `${window.location.origin}/storage/${post.featured_image}` : '/images/placeholder-blog.jpg';
+  const fullImageUrl = post.featured_image_url || '/images/placeholders/blog-placeholder.svg';
 
   return (
     <>
@@ -95,13 +93,11 @@ export default function InsightDetail({ post, relatedPosts }) {
           blogPosts={relatedPosts.map(post => ({
             ...post,
             image: {
-              src: post.featured_image ? `/storage/${post.featured_image}` : '/images/placeholder-blog.jpg',
+              src: post.featured_image_url || '/images/placeholders/blog-placeholder.svg',
               alt: post.title,
             },
             avatar: {
-              src: post.author_profile_image ? 
-                (post.author_profile_image.startsWith('/') ? post.author_profile_image : `/storage/${post.author_profile_image}`)
-                : '/images/web-logo-black (2).svg',
+              src: post.author_profile_image || '/images/placeholders/avatar-placeholder.svg',
               alt: post.author?.name || 'Author',
             }
           }))}

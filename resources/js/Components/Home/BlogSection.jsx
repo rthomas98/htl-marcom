@@ -23,9 +23,9 @@ const BlogSection = ({ tagline, heading, description, button, blogPosts }) => {
             >
               <Link href={post.slug} className="w-full">
                 <img
-                  src={post.image.src}
+                  src={post.featured_image_url || post.image.src}
                   alt={post.image.alt}
-                  className="aspect-[3/2] size-full object-cover"
+                  className="aspect-[3/2] w-full object-cover"
                   loading="lazy"
                 />
               </Link>

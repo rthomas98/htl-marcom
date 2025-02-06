@@ -38,11 +38,29 @@ class BlogPost extends Model
         'view_count' => 'integer',
     ];
 
-    protected $appends = ['author_profile_image'];
+    protected $appends = [
+        'author_profile_image',
+        'featured_image_url',
+    ];
 
     public function getAuthorProfileImageAttribute()
     {
         return $this->author?->profile_photo_path ?? '/images/web-logo-black (2).svg';
+    }
+
+    public function getFeaturedImageUrlAttribute()
+    {
+        if (!$this->featured_image) {
+            return '/images/placeholders/blog-placeholder.svg';
+        }
+
+        // Check if it's an external URL (starts with http/https)
+        if (str_starts_with($this->featured_image, 'http://') || str_starts_with($this->featured_image, 'https://')) {
+            return $this->featured_image;
+        }
+
+        // Local file
+        return "/storage/{$this->featured_image}";
     }
 
     public function seoMetadata(): MorphOne

@@ -21,8 +21,9 @@ Route::get('/', function () {
         ->map(function ($post) {
             return [
                 'slug' => '/insights/' . $post->slug,
+                'featured_image_url' => $post->featured_image_url,
                 'image' => [
-                    'src' => $post->featured_image,
+                    'src' => $post->featured_image_url,
                     'alt' => $post->title,
                 ],
                 'category' => $post->category?->name ?? 'Blog',
@@ -101,6 +102,13 @@ Route::get('/insights', function (Request $request) {
     $blogPosts = $query->paginate(15);
     $categories = Category::orderBy('name')->get();
 
+    // Transform the blog posts data to include image URLs
+    $blogPosts->through(function ($post) {
+        $post->featured_image_url = $post->featured_image_url;
+        $post->author_profile_image = $post->author?->profile_photo_path;
+        return $post;
+    });
+
     return Inertia::render('Resources/Insights', [
         'blogPosts' => $blogPosts,
         'categories' => $categories,
@@ -117,8 +125,9 @@ Route::get('/insights/{slug}', function (string $slug) {
         ->where('slug', $slug)
         ->firstOrFail();
 
-    // Add author profile image to the post data
+    // Add author profile image and featured image URL to the post data
     $post->author_profile_image = $post->author?->profile_photo_path;
+    $post->featured_image_url = $post->featured_image_url;
 
     $relatedPosts = BlogPost::with(['category', 'author'])
         ->where('status', 'published')
@@ -131,18 +140,11 @@ Route::get('/insights/{slug}', function (string $slug) {
         ->take(3)
         ->get()
         ->map(function($post) {
-            $profilePhotoPath = $post->author?->profile_photo_path;
-            $avatarSrc = '/images/web-logo-black (2).svg';
-            
-            if ($profilePhotoPath) {
-                $avatarSrc = str_starts_with($profilePhotoPath, '/') ? 
-                    $profilePhotoPath : "/storage/{$profilePhotoPath}";
-            }
-
             return [
                 'url' => route('insight.detail', $post->slug),
+                'featured_image_url' => $post->featured_image_url,
                 'image' => [
-                    'src' => $post->featured_image ? "/storage/{$post->featured_image}" : '/images/placeholder-blog.jpg',
+                    'src' => $post->featured_image_url,
                     'alt' => $post->title
                 ],
                 'category' => $post->category->name,
@@ -150,7 +152,7 @@ Route::get('/insights/{slug}', function (string $slug) {
                 'title' => $post->title,
                 'description' => $post->excerpt,
                 'avatar' => [
-                    'src' => $avatarSrc,
+                    'src' => $post->author_profile_image,
                     'alt' => $post->author?->name ?? 'Author'
                 ],
                 'fullName' => $post->author?->name ?? 'Hebert-Thomas Law',

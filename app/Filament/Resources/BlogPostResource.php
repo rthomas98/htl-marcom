@@ -94,13 +94,12 @@ class BlogPostResource extends Resource
                                         }
                                     }),
                                 FileUpload::make('featured_image')
-                                    ->disk('public')
+                                    ->disk('do_spaces')
                                     ->directory('blog-images')
                                     ->image()
                                     ->maxSize(102400) // 100MB in KB
                                     ->preserveFilenames()
-                                    ->storeFileNamesIn('original_filename')
-                                    ->imageEditor()
+                                    ->visibility('public')
                                     ->columnSpanFull(),
                                 RichEditor::make('content')
                                     ->required()

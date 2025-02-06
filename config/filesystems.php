@@ -80,7 +80,10 @@ return [
             'use_path_style_endpoint' => false,
             'throw' => true,
             'visibility' => 'public',
-            'root' => '',
+            'options' => [
+                'ACL' => 'public-read',
+                'CacheControl' => 'max-age=31536000'
+            ],
         ],
 
     ],

@@ -96,12 +96,20 @@ export const Blog1 = (props) => {
               blogPosts.map((post, index) => (
                 <div key={index}>
                   <Link href={post.url} className="mb-6 inline-block w-full max-w-full">
-                    <div className="w-full overflow-hidden">
+                    <div className="w-full overflow-hidden rounded-2xl">
                       <img
                         src={post.image.src}
                         alt={post.image.alt}
-                        className="aspect-[3/2] w-full rounded-2xl object-cover transition-transform duration-300 hover:scale-105"
+                        className="aspect-[3/2] w-full object-cover transition-transform duration-300 hover:scale-105"
                         loading="lazy"
+                        onError={(e) => {
+                          console.error('Image failed to load:', {
+                            src: post.image.src,
+                            alt: post.image.alt
+                          });
+                          e.target.onerror = null;
+                          e.target.src = '/images/placeholders/blog-placeholder.svg';
+                        }}
                       />
                     </div>
                   </Link>

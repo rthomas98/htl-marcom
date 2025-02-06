@@ -60,11 +60,49 @@ class BlogPost extends Model
             return $this->featured_image;
         }
 
-        // Get the URL from DigitalOcean Spaces
         try {
-            return Storage::disk('do_spaces')->url($this->featured_image);
+            // Get the full URL using Storage facade
+            if (Storage::disk('do_spaces')->exists($this->featured_image)) {
+                $url = Storage::disk('do_spaces')->url($this->featured_image);
+                
+                \Log::info('Generated image URL:', [
+                    'original_path' => $this->featured_image,
+                    'exists' => true,
+                    'url' => $url,
+                    'disk' => 'do_spaces'
+                ]);
+                
+                return $url;
+            }
+            
+            \Log::error('Image file does not exist in DO Spaces:', [
+                'path' => $this->featured_image,
+                'disk' => 'do_spaces'
+            ]);
+
+            // Fallback: check if file exists in public disk
+            if (Storage::disk('public')->exists($this->featured_image)) {
+                $url = Storage::disk('public')->url($this->featured_image);
+                
+                \Log::info('Found image in public disk:', [
+                    'path' => $this->featured_image,
+                    'url' => $url,
+                    'disk' => 'public'
+                ]);
+                
+                return $url;
+            }
+            
+            \Log::error('Image file not found in any disk:', [
+                'path' => $this->featured_image
+            ]);
+            return '/images/placeholders/blog-placeholder.svg';
+            
         } catch (\Exception $e) {
-            \Log::error('Failed to get image URL: ' . $e->getMessage());
+            \Log::error('Failed to get image URL:', [
+                'error' => $e->getMessage(),
+                'path' => $this->featured_image
+            ]);
             return '/images/placeholders/blog-placeholder.svg';
         }
     }

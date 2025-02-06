@@ -110,27 +110,33 @@ export default function Insights() {
         active: filters.category === category.slug
       })) || [])
     ],
-    blogPosts: blogPosts.data?.map(post => ({
-      url: route('insight.detail', { slug: post.slug }),
-      image: {
-        src: post.featured_image_url || '/images/placeholders/blog-placeholder.svg',
-        alt: post.title,
-      },
-      category: post.category?.name || 'Legal Insights',
-      title: post.title,
-      description: post.excerpt,
-      avatar: {
-        src: post.author_profile_image || '/images/placeholders/avatar-placeholder.svg',
-        alt: post.author?.name || 'Author',
-      },
-      fullName: post.author?.name || 'Hebert-Thomas Law',
-      date: new Date(post.published_at).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      }),
-      readTime: `${Math.ceil(post.content?.split(' ').length / 200) || 5} min read`,
-    })) || [],
+    blogPosts: blogPosts.data?.map(post => {
+      console.log('Blog Post Data:', {
+        featured_image: post.featured_image,
+        featured_image_url: post.featured_image_url
+      });
+      return {
+        url: route('insight.detail', { slug: post.slug }),
+        image: {
+          src: post.featured_image_url || '/images/placeholders/blog-placeholder.svg',
+          alt: post.title || 'Blog post image',
+        },
+        category: post.category?.name || 'Legal Insights',
+        title: post.title,
+        description: post.excerpt,
+        avatar: {
+          src: post.author_profile_image || '/images/placeholders/avatar-placeholder.svg',
+          alt: post.author?.name || 'Author',
+        },
+        fullName: post.author?.name || 'Hebert-Thomas Law',
+        date: new Date(post.published_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        }),
+        readTime: `${Math.ceil((post.content?.length || 0) / 1000)} min read`,
+      };
+    }) || [],
     links: blogPosts.links
   };
 

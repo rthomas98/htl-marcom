@@ -80,8 +80,7 @@ Route::get('/insights', function (Request $request) {
     $search = $request->input('search');
     $category = $request->input('category');
     
-    $query = BlogPost::query()
-        ->with(['category', 'author'])
+    $query = BlogPost::with(['category', 'author'])
         ->where('status', 'published')
         ->when($search, function ($query, $search) {
             $query->where(function ($query) use ($search) {
@@ -102,11 +101,20 @@ Route::get('/insights', function (Request $request) {
     $blogPosts = $query->paginate(15);
     $categories = Category::orderBy('name')->get();
 
-    // Transform the blog posts data to include image URLs
+    // Transform the blog posts data
     $blogPosts->through(function ($post) {
-        $post->featured_image_url = $post->featured_image_url;
-        $post->author_profile_image = $post->author?->profile_photo_path;
-        return $post;
+        return [
+            'id' => $post->id,
+            'slug' => $post->slug,
+            'title' => $post->title,
+            'excerpt' => $post->excerpt,
+            'content' => $post->content,
+            'published_at' => $post->published_at,
+            'category' => $post->category,
+            'author' => $post->author,
+            'featured_image_url' => $post->featured_image_url,
+            'author_profile_image' => $post->author?->profile_photo_path,
+        ];
     });
 
     return Inertia::render('Resources/Insights', [

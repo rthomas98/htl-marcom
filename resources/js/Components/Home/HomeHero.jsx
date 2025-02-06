@@ -1,133 +1,172 @@
-import React from 'react';
+import React from "react";
 import { Link } from '@inertiajs/react';
-import { useMediaQuery } from "@relume_io/relume-ui";
-import { motion, useScroll, useTransform } from "framer-motion";
 
-const HomeHeroDefaults = {
-    heading: "Your Partner for Comprehensive Trademark Protection",
-    description: "At Hebert-Thomas Law, PLLC, we are dedicated to providing exceptional legal services tailored to the unique needs of Texas businesses and individuals. Our mission is to empower our clients with the knowledge and support they need to navigate the complexities of the law.",
-    buttons: [
-        { 
-            title: "Schedule a Call",
-            href: "/contact",
-            variant: "primary"
-        },
-        { 
-            title: "Learn More",
-            href: "/about",
-            variant: "secondary"
-        }
-    ],
-    imageLeft: {
-        src: "/images/home/hero/home-1.jpg",
-        alt: "Professional business meeting"
-    },
-    imageCenter: {
-        src: "/images/home/hero/h-hero-3.jpg",
-        alt: "Startup team collaboration"
-    },
-    imageRight: {
-        src: "/images/home/hero/h-hero-4.jpg",
-        alt: "Modern office environment"
-    }
+const imageColumns = [
+  { className: "-mt-[20%] animate-loop-vertically-top" },
+  { className: "-mt-[50%] animate-loop-vertically-bottom" },
+  { className: "animate-loop-vertically-top" },
+  { className: "mt-[-30%] animate-loop-vertically-bottom" },
+  { className: "mt-[-20%] animate-loop-vertically-top" },
+];
+
+export const Header79 = (props) => {
+  const { heading, description, buttons, imagesPartOne, imagesPartTwo } = {
+    ...Header79Defaults,
+    ...props,
+  };
+  return (
+    <section id="relume" className="relative bg-cod-gray">
+      <div className="px-[5%]">
+        <div className="flex max-h-[60rem] min-h-svh items-center">
+          <div className="container relative z-20 py-16 md:py-24 lg:py-28">
+            <div className="mx-auto max-w-lg text-center">
+              <h1 className="mb-5 font-heading text-6xl font-bold text-white md:mb-6 md:text-9xl lg:text-10xl">
+                {heading}
+              </h1>
+              <p className="font-sans text-white md:text-md">{description}</p>
+              <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
+                {buttons.map((button, index) => (
+                  <Link
+                    key={index}
+                    href={button.href}
+                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+                      button.variant === 'primary'
+                        ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
+                        : "border border-white text-white hover:bg-white hover:text-cod-gray"
+                    }`}
+                  >
+                    {button.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="absolute inset-0 z-10 overflow-hidden">
+            <div className="grid h-full w-full grid-cols-2 gap-x-4 px-4 md:grid-cols-3 lg:grid-cols-5">
+              {imageColumns.map((column, index) => (
+                <AnimatedImageColumn
+                  key={index}
+                  imagesPartOne={imagesPartOne}
+                  imagesPartTwo={imagesPartTwo}
+                  className={column.className}
+                />
+              ))}
+            </div>
+            <div className="absolute inset-0 bg-black/50 z-0" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
-export default function HomeHero(props) {
-    const { heading, description, buttons, imageLeft, imageCenter, imageRight } = {
-        ...HomeHeroDefaults,
-        ...props
-    };
+const ImageGrid = ({ images }) => (
+  <React.Fragment>
+    {images.map((image, index) => (
+      <div key={index} className="grid size-full grid-cols-1 gap-4">
+        <div className="relative w-full pt-[120%]">
+          <img
+            className="absolute inset-0 size-full object-cover"
+            src={image.src}
+            alt={image.alt}
+          />
+        </div>
+      </div>
+    ))}
+  </React.Fragment>
+);
 
-    const { scrollYProgress } = useScroll();
+const AnimatedImageColumn = ({
+  imagesPartOne,
+  imagesPartTwo,
+  className,
+}) => (
+  <div className={`grid size-full columns-2 grid-cols-1 gap-4 self-center ${className}`}>
+    <ImageGrid images={imagesPartOne} />
+    <ImageGrid images={imagesPartTwo} />
+  </div>
+);
 
-    const isMobile = useMediaQuery("(max-width: 767px)");
-    const isTablet = useMediaQuery("(max-width: 991px)");
+export const Header79Defaults = {
+  heading: "Empowering Your Business Through Legal Excellence",
+  description:
+    "Protecting your intellectual property and business interests with comprehensive legal solutions tailored to your needs.",
+  buttons: [
+    { 
+      title: "Schedule Consultation",
+      variant: "primary",
+      href: route('contact')
+    },
+    { 
+      title: "Learn More",
+      variant: "secondary",
+      href: route('about-me')
+    }
+  ],
+  imagesPartOne: [
+    {
+      src: "/images/home/hero/home-1.jpg",
+      alt: "Legal consultation",
+    },
+    {
+      src: "/images/home/hero/h-hero-2.jpg",
+      alt: "Business meeting",
+    },
+    {
+      src: "/images/home/hero/h-hero-3.jpg",
+      alt: "Legal document signing",
+    },
+    {
+      src: "/images/home/hero/shutterstock_1751360906.jpg",
+      alt: "Legal professionals",
+    },
+    {
+      src: "/images/home/hero/shutterstock_2149633471.jpg",
+      alt: "Business discussion",
+    },
+    {
+      src: "/images/home/hero/shutterstock_2155127675.jpg",
+      alt: "Corporate meeting",
+    },
+    {
+      src: "/images/home/hero/shutterstock_2250194205.jpg",
+      alt: "Legal consultation",
+    },
+  ],
+  imagesPartTwo: [
+    {
+      src: "/images/home/hero/h-hero-4.jpg",
+      alt: "Corporate law office",
+    },
+    {
+      src: "/images/home/hero/h-hero-5.jpg",
+      alt: "Legal team discussion",
+    },
+    {
+      src: "/images/home/hero/h-hero-6.jpg",
+      alt: "Client meeting",
+    },
+    {
+      src: "/images/home/hero/shutterstock_2570475845.jpg",
+      alt: "Legal advice",
+    },
+    {
+      src: "/images/home/hero/shutterstock_2575125383.jpg",
+      alt: "Business strategy",
+    },
+    {
+      src: "/images/home/hero/shutterstock_2578625115.jpg",
+      alt: "Professional meeting",
+    },
+    {
+      src: "/images/home/hero/h-hreo-7.jpg",
+      alt: "Legal research",
+    },
+    {
+      src: "/images/home/hero/h-hreo-8.jpg",
+      alt: "Modern law office",
+    },
+  ],
+};
 
-    const leftImageTranslate = {
-        y: useTransform(
-            scrollYProgress,
-            [0, 1],
-            isMobile ? ["-20.5%", "0%"] : isTablet ? ["-14%", "0%"] : ["-16%", "0%"]
-        )
-    };
-
-    const centerImageTranslate = {
-        y: useTransform(
-            scrollYProgress,
-            [0, 1],
-            isMobile ? ["19%", "0%"] : isTablet ? ["14%", "0%"] : ["15.5%", "0%"]
-        )
-    };
-
-    const rightImageTranslate = {
-        y: useTransform(
-            scrollYProgress,
-            [0, 0.5],
-            isMobile ? ["26%", "-20%"] : isTablet ? ["8%", "-20%"] : ["12%", "-20%"]
-        )
-    };
-
-    return (
-        <section className="px-[5%] py-16 md:py-24 lg:py-28">
-            <div className="container">
-                <div className="rb-12 mb-12 text-center md:mb-18 lg:mb-20">
-                    <div className="mx-auto w-full max-w-lg">
-                        <h1 className="mb-5 font-heading text-6xl font-bold text-cod-gray md:mb-6 md:text-9xl lg:text-10xl">
-                            {heading}
-                        </h1>
-                        <p className="md:text-md font-sans text-cod-gray-light">
-                            {description}
-                        </p>
-                        <div className="mt-6 flex items-center justify-center gap-4 md:mt-8">
-                            {buttons.map((button, index) => (
-                                <Link
-                                    key={index}
-                                    href={button.href}
-                                    className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
-                                        button.variant === "primary"
-                                            ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
-                                            : "bg-pippin text-cod-gray hover:bg-pippin-light"
-                                    }`}
-                                >
-                                    {button.title}
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                <div className="relative flex justify-center gap-6 sm:gap-8 md:gap-0">
-                    <motion.div 
-                        className="absolute bottom-0 left-0 z-10 w-2/5" 
-                        style={leftImageTranslate}
-                    >
-                        <img
-                            src={imageLeft.src}
-                            alt={imageLeft.alt}
-                            className="aspect-square size-full rounded-lg object-cover"
-                        />
-                    </motion.div>
-                    <motion.div 
-                        className="mx-[10%] mb-[10%] w-1/2" 
-                        style={centerImageTranslate}
-                    >
-                        <img
-                            src={imageCenter.src}
-                            alt={imageCenter.alt}
-                            className="aspect-square size-full rounded-lg object-cover"
-                        />
-                    </motion.div>
-                    <motion.div 
-                        className="absolute right-0 top-[10%] w-2/5" 
-                        style={rightImageTranslate}
-                    >
-                        <img
-                            src={imageRight.src}
-                            alt={imageRight.alt}
-                            className="aspect-[4/3] size-full rounded-lg object-cover"
-                        />
-                    </motion.div>
-                </div>
-            </div>
-        </section>
-    );
-}
+export default Header79;

@@ -59,8 +59,8 @@ class BlogPost extends Model
             return $this->featured_image;
         }
 
-        // Local file
-        return "/storage/{$this->featured_image}";
+        // Use DigitalOcean Spaces URL for stored images
+        return config('filesystems.disks.do_spaces.url') . '/' . $this->featured_image;
     }
 
     public function seoMetadata(): MorphOne

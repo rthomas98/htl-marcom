@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
@@ -98,18 +99,17 @@ class BlogPostResource extends Resource
                                     ->directory('blog-images')
                                     ->image()
                                     ->imageEditor()
-                                    ->downloadable()
-                                    ->deletable()
-                                    ->maxSize(102400) // 100MB in KB
                                     ->preserveFilenames()
                                     ->visibility('public')
+                                    ->storeFiles()
+                                    ->openable()
+                                    ->downloadable()
+                                    ->maxSize(5120) // 5MB
                                     ->imagePreviewHeight('250')
-                                    ->loadingIndicatorPosition('left')
                                     ->panelAspectRatio('16:9')
-                                    ->panelLayout('integrated')
-                                    ->urlGenerator(function($record) {
-                                        return $record ? route('image.proxy', ['path' => $record]) : null;
-                                    })
+                                    ->previewable(true)
+                                    ->loadingIndicatorPosition('left')
+                                    ->removeUploadedFileButtonPosition('right')
                                     ->columnSpanFull(),
                                 RichEditor::make('content')
                                     ->required()

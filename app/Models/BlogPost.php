@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class BlogPost extends Model
 {
@@ -60,7 +61,7 @@ class BlogPost extends Model
                     $avatarUrl = 'https://' . substr($avatarUrl, 7);
                 }
                 
-                \Log::info('Using author profile image:', [
+                Log::info('Using author profile image:', [
                     'author_id' => $this->author->id,
                     'url' => $avatarUrl,
                     'original_path' => $this->author->profile_image
@@ -69,7 +70,7 @@ class BlogPost extends Model
             }
         }
         
-        \Log::info('Using default avatar for author image:', [
+        Log::info('Using default avatar for author image:', [
             'post_id' => $this->id,
             'url' => '/images/placeholders/avatar-placeholder.svg'
         ]);
@@ -79,56 +80,83 @@ class BlogPost extends Model
     public function getFeaturedImageUrlAttribute()
     {
         if (!$this->featured_image) {
+            Log::info('No featured image set for blog post:', ['post_id' => $this->id]);
             return '/images/placeholders/blog-placeholder.svg';
         }
 
-        // Check if it's an external URL (starts with http/https)
+        // Check if it's already a full URL
         if (str_starts_with($this->featured_image, 'http://') || str_starts_with($this->featured_image, 'https://')) {
+            Log::info('Using external URL for featured image:', [
+                'post_id' => $this->id,
+                'url' => $this->featured_image
+            ]);
             return $this->featured_image;
         }
 
         try {
-            // Get the full URL using Storage facade
+            // Check DO Spaces
             if (Storage::disk('do_spaces')->exists($this->featured_image)) {
                 $url = Storage::disk('do_spaces')->url($this->featured_image);
                 
-                \Log::info('Generated image URL:', [
-                    'original_path' => $this->featured_image,
-                    'exists' => true,
-                    'url' => $url,
-                    'disk' => 'do_spaces'
-                ]);
+                // Ensure HTTPS
+                if (str_starts_with($url, 'http://')) {
+                    $url = 'https://' . substr($url, 7);
+                }
                 
-                return $url;
-            }
-            
-            \Log::error('Image file does not exist in DO Spaces:', [
-                'path' => $this->featured_image,
-                'disk' => 'do_spaces'
-            ]);
-
-            // Fallback: check if file exists in public disk
-            if (Storage::disk('public')->exists($this->featured_image)) {
-                $url = Storage::disk('public')->url($this->featured_image);
-                
-                \Log::info('Found image in public disk:', [
+                Log::info('Retrieved featured image from DO Spaces:', [
+                    'post_id' => $this->id,
                     'path' => $this->featured_image,
-                    'url' => $url,
-                    'disk' => 'public'
+                    'url' => $url
                 ]);
+                return $url;
+            }
+
+            // Check public storage as fallback
+            if (Storage::disk('public')->exists($this->featured_image)) {
+                // Get the file contents
+                $contents = Storage::disk('public')->get($this->featured_image);
                 
+                // Clean the filename
+                $filename = pathinfo($this->featured_image, PATHINFO_FILENAME);
+                $extension = pathinfo($this->featured_image, PATHINFO_EXTENSION);
+                $cleanFilename = Str::slug($filename) . '.' . $extension;
+                
+                // Define the DO Spaces path
+                $doSpacesPath = 'blog-images/' . $cleanFilename;
+                
+                // Store in DO Spaces
+                Storage::disk('do_spaces')->put($doSpacesPath, $contents, 'public');
+                
+                // Update the database
+                $this->update(['featured_image' => $doSpacesPath]);
+                
+                $url = Storage::disk('do_spaces')->url($doSpacesPath);
+                
+                // Ensure HTTPS
+                if (str_starts_with($url, 'http://')) {
+                    $url = 'https://' . substr($url, 7);
+                }
+                
+                Log::info('Migrated featured image to DO Spaces:', [
+                    'post_id' => $this->id,
+                    'old_path' => $this->featured_image,
+                    'new_path' => $doSpacesPath,
+                    'url' => $url
+                ]);
                 return $url;
             }
             
-            \Log::error('Image file not found in any disk:', [
+            Log::warning('Featured image not found in any storage:', [
+                'post_id' => $this->id,
                 'path' => $this->featured_image
             ]);
             return '/images/placeholders/blog-placeholder.svg';
             
         } catch (\Exception $e) {
-            \Log::error('Failed to get image URL:', [
-                'error' => $e->getMessage(),
-                'path' => $this->featured_image
+            Log::error('Error retrieving featured image:', [
+                'post_id' => $this->id,
+                'path' => $this->featured_image,
+                'error' => $e->getMessage()
             ]);
             return '/images/placeholders/blog-placeholder.svg';
         }

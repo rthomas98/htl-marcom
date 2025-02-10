@@ -97,11 +97,16 @@ class BlogPostResource extends Resource
                                     ->disk('do_spaces')
                                     ->directory('blog-images')
                                     ->image()
-                                    ->maxSize(102400) // 100MB in KB
-                                    ->preserveFilenames()
                                     ->imageEditor()
                                     ->downloadable()
                                     ->deletable()
+                                    ->maxSize(102400) // 100MB in KB
+                                    ->preserveFilenames()
+                                    ->visibility('public')
+                                    ->imagePreviewHeight('250')
+                                    ->loadingIndicatorPosition('left')
+                                    ->panelAspectRatio('16:9')
+                                    ->panelLayout('integrated')
                                     ->columnSpanFull(),
                                 RichEditor::make('content')
                                     ->required()

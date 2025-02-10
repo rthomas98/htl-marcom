@@ -87,9 +87,6 @@ export default function Insights() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({
-      emailInput,
-    });
   };
 
   const blog1Data = {
@@ -112,13 +109,7 @@ export default function Insights() {
     ],
     blogPosts: (blogPosts.data || [])
       .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
-      .map(post => {
-      console.log('Blog Post Data:', {
-        author_profile_image: post.author_profile_image,
-        author: post.author,
-        featured_image_url: post.featured_image_url
-      });
-      return {
+      .map(post => ({
         url: route('insight.detail', { slug: post.slug }),
         image: {
           src: post.featured_image_url || '/images/placeholders/blog-placeholder.svg',
@@ -138,8 +129,7 @@ export default function Insights() {
           day: 'numeric'
         }),
         readTime: `${Math.ceil((post.content?.length || 0) / 1000)} min read`,
-      };
-    }) || [],
+      })) || [],
     links: blogPosts.links
   };
 

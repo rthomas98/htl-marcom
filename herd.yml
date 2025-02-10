@@ -3,3 +3,6 @@ integrations:
     default:
       server-id: 883487
       site-id: 2608293
+    www.hebertthomaslaw.com:
+      server-id: 883487
+      site-id: 2610572

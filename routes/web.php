@@ -204,6 +204,9 @@ Route::post(
     [App\Http\Controllers\StripeWebhookController::class, 'handleWebhook']
 )->name('cashier.webhook');
 
+// Image Proxy Route
+Route::get('image-proxy/{path}', App\Http\Controllers\ImageProxyController::class)->name('image.proxy')->where('path', '.*');
+
 // Legalnar Routes
 Route::prefix('legalnars')->name('legalnars.')->group(function () {
     // Public routes

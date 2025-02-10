@@ -78,11 +78,16 @@ return [
             'url' => env('DO_SPACES_URL'),
             'endpoint' => env('DO_SPACES_ENDPOINT'),
             'use_path_style_endpoint' => false,
-            'throw' => true,
             'visibility' => 'public',
             'options' => [
+                'CacheControl' => 'max-age=31536000',
                 'ACL' => 'public-read',
-                'CacheControl' => 'max-age=31536000'
+                'Cors' => [
+                    'AllowedOrigins' => ['https://www.hebertthomaslaw.com/'],
+                    'AllowedMethods' => ['GET', 'PUT', 'DELETE', 'POST', 'HEAD'],
+                    'AllowedHeaders' => ['*'],
+                    'MaxAgeSeconds' => 86400
+                ]
             ],
         ],
 

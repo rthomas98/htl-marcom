@@ -19,7 +19,7 @@ export default function AboutHeader({ className = '', ...props }) {
 
     const content = {
         heading: "Experienced Trademark Attorney",
-        description: "With over a decade of experience in intellectual property law, I specialize in helping businesses protect their brands through comprehensive trademark services. My approach combines legal expertise with a deep understanding of business needs.",
+        description: "With over a decade of experience in intellectual property law, I focus on helping businesses protect their brands through comprehensive trademark services. My approach combines legal expertise with a deep understanding of business needs.",
         buttons: defaultButtons,
         firstImage: {
             src: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop",

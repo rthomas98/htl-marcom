@@ -90,18 +90,13 @@ export default function InsightDetail({ post, relatedPosts }) {
       {relatedPosts.length > 0 && (
         <Blog39 
           {...Blog39Defaults}
-          blogPosts={relatedPosts.map(post => ({
-            ...post,
-            image: {
-              src: post.featured_image_url || '/images/placeholders/blog-placeholder.svg',
-              alt: post.title,
-            },
-            avatar: {
-              src: post.author_profile_image || '/images/placeholders/avatar-placeholder.svg',
-              alt: post.author?.name || 'Author',
-            }
-          }))}
+          blogPosts={relatedPosts}
           className="bg-gallery"
+          button={{
+            title: "View all articles",
+            variant: "secondary",
+            href: route('insights')
+          }}
         />
       )}
 

@@ -1,4 +1,3 @@
-import { Button } from "@relume_io/relume-ui";
 import { Link } from '@inertiajs/react';
 
 export const Blog39 = (props) => {
@@ -68,13 +67,16 @@ export const Blog39 = (props) => {
           ))}
         </div>
         <div className="flex items-center justify-end">
-          <Button {...button} className={`inline-flex items-center justify-center gap-2 mt-6 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
+          <Link 
+            href={button.href}
+            className={`inline-flex items-center justify-center gap-2 mt-6 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${
                 button.variant === 'primary'
                     ? "bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray"
                     : "bg-pippin text-cod-gray hover:bg-pippin-light"
-            }`}>
+            }`}
+          >
             {button.title}
-          </Button>
+          </Link>
         </div>
       </div>
     </section>

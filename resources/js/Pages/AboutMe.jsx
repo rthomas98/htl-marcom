@@ -4,7 +4,7 @@ import AboutHeader from '../Components/About/AboutHeader';
 import AboutLayout3 from '../Components/About/AboutLayout3';
 import AboutServices from '../Components/About/AboutServices';
 import AboutPracticeAreas from '../Components/About/AboutPracticeAreas';
-import AboutBlog from '../Components/About/AboutBlog';
+import BlogSection from '@/Components/Home/BlogSection';
 import AboutCTA from '../Components/About/AboutCTA';
 
 export default function AboutMe({ posts }) {
@@ -45,7 +45,7 @@ export default function AboutMe({ posts }) {
             />
             <AboutServices />
             <AboutPracticeAreas />
-            <AboutBlog posts={posts} />
+            <BlogSection {...blogData} />
             <AboutCTA />
         </MarcomLayout>
     );

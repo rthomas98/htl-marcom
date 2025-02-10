@@ -42,6 +42,11 @@ class BlogPost extends Model
     protected $appends = [
         'author_profile_image',
         'featured_image_url',
+        'url',
+        'image',
+        'avatar',
+        'read_time',
+        'formatted_date'
     ];
 
     public function getAuthorProfileImageAttribute()
@@ -64,21 +69,11 @@ class BlogPost extends Model
             }
         }
         
-        // If no author profile image, try to use the blog post's featured image
-        if ($this->featured_image_url) {
-            \Log::info('Using featured image as author image:', [
-                'post_id' => $this->id,
-                'url' => $this->featured_image_url
-            ]);
-            return $this->featured_image_url;
-        }
-        
-        // If neither exists, use the default logo
-        \Log::info('Using default logo for author image:', [
+        \Log::info('Using default avatar for author image:', [
             'post_id' => $this->id,
-            'url' => '/images/web-logo-black (2).svg'
+            'url' => '/images/placeholders/avatar-placeholder.svg'
         ]);
-        return '/images/web-logo-black (2).svg';
+        return '/images/placeholders/avatar-placeholder.svg';
     }
 
     public function getFeaturedImageUrlAttribute()
@@ -137,6 +132,39 @@ class BlogPost extends Model
             ]);
             return '/images/placeholders/blog-placeholder.svg';
         }
+    }
+
+    public function getUrlAttribute()
+    {
+        return route('insights') . '/' . $this->slug;
+    }
+
+    public function getImageAttribute()
+    {
+        return [
+            'src' => $this->featured_image_url,
+            'alt' => $this->title
+        ];
+    }
+
+    public function getAvatarAttribute()
+    {
+        return [
+            'src' => $this->author_profile_image,
+            'alt' => $this->author ? $this->author->name : 'Author'
+        ];
+    }
+
+    public function getReadTimeAttribute()
+    {
+        $words = str_word_count(strip_tags($this->content));
+        $minutes = ceil($words / 200); // Assuming average reading speed of 200 words per minute
+        return $minutes . ' min read';
+    }
+
+    public function getFormattedDateAttribute()
+    {
+        return $this->published_at ? $this->published_at->format('M d, Y') : null;
     }
 
     public function seoMetadata(): MorphOne
@@ -229,8 +257,28 @@ class BlogPost extends Model
                         $query->whereIn('id', $this->tags->pluck('id'));
                     });
             })
+            ->with(['author', 'category']) // Eager load relationships
             ->limit(3)
-            ->get();
+            ->get()
+            ->map(function ($post) {
+                $readTime = ceil(str_word_count(strip_tags($post->content)) / 200);
+                
+                return [
+                    'slug' => route('insights') . '/' . $post->slug,
+                    'title' => $post->title,
+                    'description' => $post->excerpt,
+                    'category' => $post->category?->name,
+                    'readTime' => $readTime . ' min read',
+                    'featured_image_url' => $post->featured_image_url,
+                    'image' => [
+                        'src' => $post->featured_image_url,
+                        'alt' => $post->title
+                    ],
+                    'button' => [
+                        'title' => 'Read More'
+                    ]
+                ];
+            });
     }
 
     public function comments(): HasMany

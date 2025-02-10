@@ -194,7 +194,7 @@ export default function Insights() {
               <Link href={route('contact')}>
                 <Button
                   variant="secondary"
-                  className="bg-cod-gray text-white hover:bg-cod-gray-dark"
+                  className="bg-cod-gray text-white hover:bg-cod-gray-dark rounded-full"
                 >
                   {Faq5Defaults.button.title}
                 </Button>

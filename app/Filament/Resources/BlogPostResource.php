@@ -99,7 +99,9 @@ class BlogPostResource extends Resource
                                     ->image()
                                     ->maxSize(102400) // 100MB in KB
                                     ->preserveFilenames()
-                                    ->visibility('public')
+                                    ->imageEditor()
+                                    ->downloadable()
+                                    ->deletable()
                                     ->columnSpanFull(),
                                 RichEditor::make('content')
                                     ->required()

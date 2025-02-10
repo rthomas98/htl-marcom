@@ -73,23 +73,41 @@ export const Blog1 = (props) => {
           </div>
         </div>
         <div className="flex flex-col justify-start">
-          <div className="no-scrollbar mb-12 ml-[-5vw] flex w-screen items-center justify-start gap-2 overflow-scroll pl-[5vw] md:mb-16 md:ml-0 md:w-full md:justify-center md:overflow-hidden md:pl-0">
-            {buttons.map((button, index) => (
+          <div className="relative mb-12 w-full">
+            <div className="flex items-center gap-2">
+              {/* View All button - always visible */}
               <Link
-                key={index}
-                href={button.href}
-                className={clsx(
-                  "rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200",
-                  {
-                    "border border-cod-gray bg-cod-gray text-white hover:bg-pippin hover:text-cod-gray": index === 0,
-                    "border border-transparent text-cod-gray-light hover:border-cod-gray hover:text-cod-gray": !button.active && index !== 0,
-                    "border border-cod-gray text-cod-gray": button.active && index !== 0,
-                  }
-                )}
+                href={buttons[0].href}
+                className="shrink-0 rounded-full border border-cod-gray bg-cod-gray px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-pippin hover:text-cod-gray"
               >
-                {button.title}
+                {buttons[0].title}
               </Link>
-            ))}
+              
+              {/* Scrollable categories */}
+              <div className="no-scrollbar relative flex-1">
+                <div className="no-scrollbar flex items-center gap-2 overflow-x-auto pb-4 px-2">
+                  {buttons.slice(1).map((button, index) => (
+                    <Link
+                      key={index}
+                      href={button.href}
+                      className={clsx(
+                        "whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 shrink-0",
+                        {
+                          "border border-transparent text-cod-gray-light hover:border-cod-gray hover:text-cod-gray": !button.active,
+                          "border border-cod-gray text-cod-gray": button.active,
+                        }
+                      )}
+                    >
+                      {button.title}
+                    </Link>
+                  ))}
+                </div>
+                <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-gallery to-transparent pointer-events-none" 
+                     style={{ background: 'linear-gradient(to left, #F0F0F0 10%, transparent)' }} />
+                <div className="absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-gallery to-transparent pointer-events-none"
+                     style={{ background: 'linear-gradient(to right, #F0F0F0 10%, transparent)' }} />
+              </div>
+            </div>
           </div>
           <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
             {blogPosts.length > 0 ? (

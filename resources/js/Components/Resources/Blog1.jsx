@@ -128,7 +128,15 @@ export const Blog1 = (props) => {
                       <img
                         src={post.avatar.src}
                         alt={post.avatar.alt}
-                        className="size-12 min-h-12 min-w-12 rounded-full object-cover"
+                        className="size-12 min-h-12 min-w-12 rounded-full object-fill"
+                        onError={(e) => {
+                          console.error('Avatar failed to load:', {
+                            src: post.avatar.src,
+                            alt: post.avatar.alt
+                          });
+                          e.target.onerror = null;
+                          e.target.src = '/images/web-logo-black (2).svg';
+                        }}
                       />
                     </div>
                     <div>

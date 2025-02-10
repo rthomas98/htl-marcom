@@ -17,6 +17,8 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\LegalnarAttendee;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable implements MustVerifyEmail, FilamentUser, HasName, HasAvatar
 {
@@ -46,7 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
      * @return array<string, string>
      */
@@ -58,6 +60,15 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
             'profile_image' => 'string',
         ];
     }
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'profile_image_url',
+    ];
 
     // Override the default password validation
     public static function boot()
@@ -94,7 +105,52 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->profile_image ? asset('storage/' . $this->profile_image) : null;
+        return $this->profile_image_url;
+    }
+
+    public function getProfileImageUrlAttribute()
+    {
+        if (!$this->profile_image) {
+            Log::info('No profile image set for user:', ['user_id' => $this->id]);
+            return null;
+        }
+
+        // Check if it's an external URL
+        if (str_starts_with($this->profile_image, 'http://') || str_starts_with($this->profile_image, 'https://')) {
+            Log::info('Using external URL for profile image:', [
+                'user_id' => $this->id,
+                'url' => $this->profile_image
+            ]);
+            return $this->profile_image;
+        }
+
+        // Check if the file exists in DO Spaces
+        if (Storage::disk('do_spaces')->exists($this->profile_image)) {
+            $url = Storage::disk('do_spaces')->url($this->profile_image);
+            Log::info('Found profile image in DO Spaces:', [
+                'user_id' => $this->id,
+                'path' => $this->profile_image,
+                'url' => $url
+            ]);
+            return $url;
+        }
+
+        // Check if the file exists in public storage
+        if (Storage::disk('public')->exists($this->profile_image)) {
+            $url = Storage::disk('public')->url($this->profile_image);
+            Log::info('Found profile image in public storage:', [
+                'user_id' => $this->id,
+                'path' => $this->profile_image,
+                'url' => $url
+            ]);
+            return $url;
+        }
+
+        Log::warning('Profile image not found in any storage location:', [
+            'user_id' => $this->id,
+            'path' => $this->profile_image
+        ]);
+        return null;
     }
 
     public function notifications(): \Illuminate\Database\Eloquent\Relations\MorphMany

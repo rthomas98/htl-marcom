@@ -114,7 +114,8 @@ export default function Insights() {
       .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
       .map(post => {
       console.log('Blog Post Data:', {
-        featured_image: post.featured_image,
+        author_profile_image: post.author_profile_image,
+        author: post.author,
         featured_image_url: post.featured_image_url
       });
       return {
@@ -127,8 +128,8 @@ export default function Insights() {
         title: post.title,
         description: post.excerpt,
         avatar: {
-          src: post.author_profile_image || '/images/web-logo-black (2).svg',
-          alt: post.author?.name || 'Author',
+          src: post.author_profile_image ? encodeURI(post.author_profile_image) : '/images/web-logo-black (2).svg',
+          alt: `${post.author?.name || 'Author'}'s profile picture`,
         },
         fullName: post.author?.name || 'Hebert-Thomas Law',
         date: new Date(post.published_at).toLocaleDateString('en-US', {

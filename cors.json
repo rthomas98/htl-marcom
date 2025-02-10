@@ -1,0 +1,23 @@
+{
+    "CORSRules": [
+        {
+            "AllowedOrigins": [
+                "http://hebert-thomas-law.test",
+                "https://hebert-thomas-law.test",
+                "http://localhost:*",
+                "http://127.0.0.1:*"
+            ],
+            "AllowedHeaders": [
+                "*"
+            ],
+            "AllowedMethods": [
+                "GET",
+                "HEAD"
+            ],
+            "MaxAgeSeconds": 3000,
+            "ExposeHeaders": [
+                "ETag"
+            ]
+        }
+    ]
+}

@@ -105,7 +105,78 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->profile_image_url;
+        if (!$this->profile_image) {
+            Log::info('No profile image set for user:', ['user_id' => $this->id]);
+            return null;
+        }
+
+        // Check if it's already a full URL
+        if (str_starts_with($this->profile_image, 'http://') || str_starts_with($this->profile_image, 'https://')) {
+            Log::info('Using external URL for profile image:', [
+                'user_id' => $this->id,
+                'url' => $this->profile_image
+            ]);
+            return $this->profile_image;
+        }
+
+        // Check DO Spaces first
+        if (Storage::disk('do_spaces')->exists($this->profile_image)) {
+            $url = rtrim(config('filesystems.disks.do_spaces.url'), '/') . '/' . 
+                   str_replace(' ', '%20', ltrim($this->profile_image, '/'));
+            
+            Log::info('Found profile image in DO Spaces:', [
+                'user_id' => $this->id,
+                'path' => $this->profile_image,
+                'encoded_url' => $url
+            ]);
+            return $url;
+        }
+
+        // Fallback to public storage
+        if (Storage::disk('public')->exists($this->profile_image)) {
+            try {
+                // Get the file contents from public storage
+                $contents = Storage::disk('public')->get($this->profile_image);
+                
+                // Ensure we're using a clean path for DO Spaces
+                $doSpacesPath = 'profile-images/' . str_replace(' ', '-', basename($this->profile_image));
+                
+                // Store in DO Spaces
+                Storage::disk('do_spaces')->put($doSpacesPath, $contents);
+                
+                // Update the profile_image path in the database
+                $this->update(['profile_image' => $doSpacesPath]);
+                
+                $url = rtrim(config('filesystems.disks.do_spaces.url'), '/') . '/' . $doSpacesPath;
+                Log::info('Copied profile image from public to DO Spaces:', [
+                    'user_id' => $this->id,
+                    'original_path' => $this->profile_image,
+                    'new_path' => $doSpacesPath,
+                    'url' => $url
+                ]);
+                return $url;
+            } catch (\Exception $e) {
+                Log::error('Failed to copy profile image to DO Spaces:', [
+                    'user_id' => $this->id,
+                    'path' => $this->profile_image,
+                    'error' => $e->getMessage()
+                ]);
+                // Fallback to public URL if copy fails
+                $url = Storage::disk('public')->url($this->profile_image);
+                Log::info('Using public storage URL:', [
+                    'user_id' => $this->id,
+                    'path' => $this->profile_image,
+                    'url' => $url
+                ]);
+                return $url;
+            }
+        }
+
+        Log::warning('Profile image not found in any storage location:', [
+            'user_id' => $this->id,
+            'path' => $this->profile_image
+        ]);
+        return null;
     }
 
     public function getProfileImageUrlAttribute()
@@ -115,7 +186,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
             return null;
         }
 
-        // Check if it's an external URL
+        // Check if it's already a full URL
         if (str_starts_with($this->profile_image, 'http://') || str_starts_with($this->profile_image, 'https://')) {
             Log::info('Using external URL for profile image:', [
                 'user_id' => $this->id,
@@ -124,9 +195,10 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
             return $this->profile_image;
         }
 
-        // Check if the file exists in DO Spaces
+        // First try DO Spaces
         if (Storage::disk('do_spaces')->exists($this->profile_image)) {
-            $url = Storage::disk('do_spaces')->url($this->profile_image);
+            // Use the DO_SPACES_URL from config to ensure correct URL format
+            $url = config('filesystems.disks.do_spaces.url') . '/' . $this->profile_image;
             Log::info('Found profile image in DO Spaces:', [
                 'user_id' => $this->id,
                 'path' => $this->profile_image,
@@ -135,15 +207,38 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
             return $url;
         }
 
-        // Check if the file exists in public storage
+        // If not in DO Spaces but in public storage, copy to DO Spaces
         if (Storage::disk('public')->exists($this->profile_image)) {
-            $url = Storage::disk('public')->url($this->profile_image);
-            Log::info('Found profile image in public storage:', [
-                'user_id' => $this->id,
-                'path' => $this->profile_image,
-                'url' => $url
-            ]);
-            return $url;
+            try {
+                // Get the file contents from public storage
+                $contents = Storage::disk('public')->get($this->profile_image);
+                
+                // Ensure we're using a clean path for DO Spaces
+                $doSpacesPath = 'profile-images/' . basename($this->profile_image);
+                
+                // Store in DO Spaces
+                Storage::disk('do_spaces')->put($doSpacesPath, $contents);
+                
+                // Update the profile_image path in the database
+                $this->update(['profile_image' => $doSpacesPath]);
+                
+                $url = config('filesystems.disks.do_spaces.url') . '/' . $doSpacesPath;
+                Log::info('Copied profile image from public to DO Spaces:', [
+                    'user_id' => $this->id,
+                    'original_path' => $this->profile_image,
+                    'new_path' => $doSpacesPath,
+                    'url' => $url
+                ]);
+                return $url;
+            } catch (\Exception $e) {
+                Log::error('Failed to copy profile image to DO Spaces:', [
+                    'user_id' => $this->id,
+                    'path' => $this->profile_image,
+                    'error' => $e->getMessage()
+                ]);
+                // Fallback to public URL if copy fails
+                return Storage::disk('public')->url($this->profile_image);
+            }
         }
 
         Log::warning('Profile image not found in any storage location:', [

@@ -46,7 +46,39 @@ class BlogPost extends Model
 
     public function getAuthorProfileImageAttribute()
     {
-        return $this->author?->profile_image_url ?? '/images/web-logo-black (2).svg';
+        // First try to get the author's profile image
+        if ($this->author) {
+            $avatarUrl = $this->author->getFilamentAvatarUrl();
+            if ($avatarUrl) {
+                // Ensure the URL uses HTTPS
+                if (str_starts_with($avatarUrl, 'http://')) {
+                    $avatarUrl = 'https://' . substr($avatarUrl, 7);
+                }
+                
+                \Log::info('Using author profile image:', [
+                    'author_id' => $this->author->id,
+                    'url' => $avatarUrl,
+                    'original_path' => $this->author->profile_image
+                ]);
+                return $avatarUrl;
+            }
+        }
+        
+        // If no author profile image, try to use the blog post's featured image
+        if ($this->featured_image_url) {
+            \Log::info('Using featured image as author image:', [
+                'post_id' => $this->id,
+                'url' => $this->featured_image_url
+            ]);
+            return $this->featured_image_url;
+        }
+        
+        // If neither exists, use the default logo
+        \Log::info('Using default logo for author image:', [
+            'post_id' => $this->id,
+            'url' => '/images/web-logo-black (2).svg'
+        ]);
+        return '/images/web-logo-black (2).svg';
     }
 
     public function getFeaturedImageUrlAttribute()

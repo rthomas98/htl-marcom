@@ -8,6 +8,18 @@ import BlogSection from '@/Components/Home/BlogSection';
 import AboutCTA from '../Components/About/AboutCTA';
 
 export default function AboutMe({ posts }) {
+    const blogData = {
+        tagline: "Latest Blog Posts",
+        heading: "Stay Updated with Legal Insights",
+        description: "Expert analysis and practical guidance on intellectual property and business law topics that matter to your business.",
+        button: {
+            title: "View all articles",
+            variant: "secondary",
+            href: route('insights')
+        },
+        blogPosts: posts
+    };
+
     return (
         <MarcomLayout
             title="About Me | Hebert Thomas Law"

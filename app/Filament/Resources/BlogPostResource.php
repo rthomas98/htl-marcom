@@ -107,9 +107,7 @@ class BlogPostResource extends Resource
                                     ->loadingIndicatorPosition('left')
                                     ->panelAspectRatio('16:9')
                                     ->panelLayout('integrated')
-                                    ->getUploadedFileUrlUsing(
-                                        fn ($record) => $record ? route('image.proxy', ['path' => $record]) : null
-                                    )
+                                    ->url(fn ($record) => $record ? route('image.proxy', ['path' => $record]) : null)
                                     ->columnSpanFull(),
                                 RichEditor::make('content')
                                     ->required()

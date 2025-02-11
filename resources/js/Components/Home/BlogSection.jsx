@@ -2,7 +2,13 @@ import React from 'react';
 import { ChevronRight } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 
-const BlogSection = ({ tagline, heading, description, button, blogPosts }) => {
+const BlogSection = ({ tagline, heading, description, button, blogPosts = [] }) => {
+  // Add data validation
+  if (!Array.isArray(blogPosts)) {
+    console.warn('BlogPosts is not an array');
+    return null;
+  }
+
   return (
     <section className="bg-white px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container mx-auto">
@@ -21,39 +27,43 @@ const BlogSection = ({ tagline, heading, description, button, blogPosts }) => {
               key={index}
               className="flex size-full flex-col items-center justify-start border border-cod-gray/10 bg-white transition-all duration-300 hover:shadow-md"
             >
-              <Link href={post.slug} className="w-full">
+              <Link href={post?.slug || '#'} className="w-full">
                 <img
-                  src={post.featured_image_url || post.image.src}
-                  alt={post.image.alt}
+                  src={post?.featured_image_url || post?.image?.src}
+                  alt={post?.image?.alt || 'Blog post image'}
                   className="aspect-[3/2] w-full object-cover"
                   loading="lazy"
                 />
+                <div className="px-5 py-6 md:p-6">
+                  <div className="rb-4 mb-4 flex w-full items-center justify-start">
+                    <p className="mr-4 bg-pippin-lighter px-2 py-1 font-heading text-sm font-semibold text-cod-gray">
+                      {post?.category || 'Blog'}
+                    </p>
+                    <p className="inline font-heading text-sm font-semibold text-cod-gray-light">
+                      {post?.readTime || '5 min read'}
+                    </p>
+                  </div>
+                  <div className="flex w-full flex-col items-start justify-start">
+                    <Link className="mb-2 hover:text-cod-gray-light" href={post?.slug || '#'}>
+                      <h2 className="font-heading text-xl font-bold text-cod-gray md:text-2xl line-clamp-2">
+                        {post?.title || 'Untitled Post'}
+                      </h2>
+                    </Link>
+                    <p className="font-sans text-cod-gray-light line-clamp-3">
+                      {post?.description || 'No description available'}
+                    </p>
+                    {post?.button && (
+                      <Link
+                        href={post.slug}
+                        className="group mt-4 inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light"
+                      >
+                        {post.button.title || 'Read More'}
+                        <ChevronRight className="size-4 transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    )}
+                  </div>
+                </div>
               </Link>
-              <div className="px-5 py-6 md:p-6">
-                <div className="rb-4 mb-4 flex w-full items-center justify-start">
-                  <p className="mr-4 bg-pippin-lighter px-2 py-1 font-heading text-sm font-semibold text-cod-gray">
-                    {post.category}
-                  </p>
-                  <p className="inline font-heading text-sm font-semibold text-cod-gray-light">
-                    {post.readTime}
-                  </p>
-                </div>
-                <div className="flex w-full flex-col items-start justify-start">
-                  <Link className="mb-2 hover:text-cod-gray-light" href={post.slug}>
-                    <h2 className="font-heading text-xl font-bold text-cod-gray md:text-2xl line-clamp-2">
-                      {post.title}
-                    </h2>
-                  </Link>
-                  <p className="font-sans text-cod-gray-light line-clamp-3">{post.description}</p>
-                  <Link
-                    href={post.slug}
-                    className="group mt-4 inline-flex items-center gap-2 rounded-full text-cod-gray transition hover:text-cod-gray-light"
-                  >
-                    {post.button.title}
-                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </div>
             </div>
           ))}
         </div>
